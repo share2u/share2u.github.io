@@ -6,8 +6,12 @@ categories:
 tags:
 - hexo
 ---
-在github pages搭建hexo风格的博客
+在github pages搭建hexo风格的博客，next主题,多电脑方便使用
+
+
+
 <!-- more -->
+
 ## 搭建全新的博客
 ### 安装git，
 
