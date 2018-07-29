@@ -1,5 +1,10 @@
 ---
 title: Hexo博客
+date: 2018-07-28 03:53:48
+categories:
+- 工具
+tags:
+- hexo
 ---
 在github pages搭建hexo风格的博客
 <!-- more -->
@@ -31,6 +36,10 @@ https://www.heqiangfly.com/2016/01/12/blog-optimize-next-theme/
 #### 关于我页面
 
 http://www.5isjyx.com/coding/201704/hexonextabout.html
+
+#### 分类与标签
+
+https://linlif.github.io/2017/05/27/Hexo%E4%BD%BF%E7%94%A8%E6%94%BB%E7%95%A5-%E6%B7%BB%E5%8A%A0%E5%88%86%E7%B1%BB%E5%8F%8A%E6%A0%87%E7%AD%BE/
 
 ## 新电脑搭建博客
 
