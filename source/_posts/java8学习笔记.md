@@ -38,6 +38,22 @@ tags:
 
 ### 为什么使用Lambda
 
+是一个匿名函数=====一段可以传递的代码
+
+```java
+//匿名内部类
+Comparator<Integer> com = new Comparator<Integer>(){
+    public int compare(Integer o1,Integer o2){
+        return Integer.compare(o1,o2);
+    }
+};
+//lambda
+Comparator<Integer> com = (x,y) -> Integer.compare(x,y);
+TreeSet<Integer> ts = new TreeSet<>(com);
+```
+
+
+
 ### Lambda 基本语法
 
 ## 四大内置核心函数式接口
