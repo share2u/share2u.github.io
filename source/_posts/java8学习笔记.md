@@ -1,0 +1,88 @@
+---
+title: java8学习笔记
+date: 2018-08-01 21:47:39
+categories:
+ - java
+tags:
+ - java8
+---
+
+- **Lambda表达式**
+- 函数式接口
+- 方法引用和构造器引用
+- **Stream APi**
+- 接口中的默认方法与静态方法
+- 新时间日期API
+- 其他新特性
+
+<!--more-->
+
+## 新特性简介
+
+- 速度更快
+  - hashmap
+    - 1.7数组链表
+    - 1.8数组链表-红黑树
+  - ConcurrentHashMap
+    - 1.7 分段锁
+    - 1.8cas无锁算法
+  - 内存结构变化
+    - 1.7方法区是永久区的一部分，存放加载的类信息等
+    - 1.8把永久区去掉了，并将方法区叫做元空间MetaSpace,并使用物理内存
+- 代码更少（Lambda表达式）
+- 强大的Stream API（像sql一样简单）
+- 便于并行
+- 最大化减少空指针异常Optional
+
+## Lambda
+
+### 为什么使用Lambda
+
+是一个匿名函数=====一段可以传递的代码
+
+```java
+//匿名内部类
+Comparator<Integer> com = new Comparator<Integer>(){
+    public int compare(Integer o1,Integer o2){
+        return Integer.compare(o1,o2);
+    }
+};
+//lambda
+Comparator<Integer> com = (x,y) -> Integer.compare(x,y);
+TreeSet<Integer> ts = new TreeSet<>(com);
+```
+
+
+
+### Lambda 基本语法
+
+## 四大内置核心函数式接口
+
+## 方法引用，构造器引用，数组引用
+
+## Stream
+
+### 创建Stream
+
+### 筛选与切片
+
+### 映射
+
+### 排序
+
+### 查找与排序
+
+### 归纳与收集
+
+## 并行流与串行流
+
+## optional容器类
+
+## 接口中的默认方法
+
+## 日期时间API
+
+## 重复注解与类型注解
+
+
+
