@@ -338,6 +338,21 @@ Type:new
 
 代表一个值存在或不存在，原来用null表示一个值不存在，现在Optional 可以更好的表达这个概念，并且可以避免空指针异常。
 
+### 常用方法
+
+| 方法                                                         | 描述                                                         |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| Optional.of(T)                                               | 创建指定引用的Optional实例，若引用为null则快速失败           |
+| Optional.absent()                                            | 创建一个空的Optional实例                                     |
+| Optional.ofNullable()                                        | 若t不为null,创建Optinal实例，否则创建空实例                  |
+| boolean isPresent()                                          | 判断是否包含值                                               |
+| T orElse(T other)                                            | 如果调用对象包含值，返回值，否则返回other                    |
+| T orElseGet(Supplier<? extends T> other)                     | 如果调用对象包含值，返回该值，否则返回other获取到的值        |
+| Optional<U> map(Function<? super T, ? extends U> mapper)     | 如果有值对其处理，并返回处理后的optinal,否则返回Optional.empty() |
+| Optional<U> flatMap(Function<? super T, Optional<U>> mapper) | 与map类似                                                    |
+
+有点鸡肋，麻烦的狠
+
 ## 接口优化
 
 ### 默认方法
