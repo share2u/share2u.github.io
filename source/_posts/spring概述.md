@@ -1,16 +1,15 @@
 ---
-title: spring概述
+title: springmvc基本原理
 date: 2018-08-21 12:37:28
 categories:
- - spring
+- spring
 tags:
+- springmvc
 ---
 
 Spring 面试题
 
 Spring MVC基本原理
-
-Spring 核心功能
 
 总结
 
@@ -71,13 +70,16 @@ Springweb开发的入口
 
 #### 初始化handlermapping
 
-map<String,handler>,存储requestmapping配置的url等
+- map<String,handler>,存储requestmapping配置的url等
+- list<Handler>中存储映射关系，包括正则url,参数，
+
+将ioc中被controller注解的class中的url作为baseUrl，其中的方法为url后缀
 
 ### 远行阶段
 
 #### servlet.service(Request,Response)
 
-线程阻塞，用户请求自动调用
+线程阻塞，用户请求，封装参数，反射自动调用方法
 
 #### request.getURL()
 
@@ -87,10 +89,6 @@ map<String,handler>,存储requestmapping配置的url等
 
 #### 调用method
 
-反射动态调用method
+封装参数，反射动态调用method
 
 #### 利用Response将调用结果输出到浏览器
-
-## Spring 核心功能
-
-## 总结
