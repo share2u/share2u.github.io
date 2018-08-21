@@ -43,7 +43,6 @@ powermock拓展了esaymock和mockito框架，增加了对static 和final方法mo
 4. 验证（Verfications）:验证结果
 ## 注解概述
 ### @RunWith(PowerMockRunner.class)
-相当于
 ```java
 @Before  
 public void initMocks() {
@@ -54,7 +53,8 @@ public void initMocks() {
 ### @PrepareForTest({Student.class})
 如果mock的对象的方法是静态、final、私有方法，将类加到注解数组中
 ### @Mock
-mock的对象
+mock的对象，mock创建一个空白实例，没有属性没有方法 
+
 ### @InjectMocks
 mock对象自动注入到该测试类中,尝试类型注入，如果有多个类型的mock对象，那么会根据名称进行注入，当注入失败的时候，不会抛出异常
 
@@ -72,6 +72,11 @@ public class T1 {
     public void test1(){
         T1 t1 = PowerMockito.mock(T1.class);
         when(t1.isExist(any())).thenReturn(true);
+         //会真实的调用，但是返回的是mock的内容，如果不想调用的话
+        T1 t1 =spy(T1.class);;
+        PowerMockito.doReturn(true).when(t1).isExist(any());
+         
+        
         assertTrue(t1.isExist(new File("xx.xml")));
 
     }
@@ -216,3 +221,4 @@ Mockito.verify(mock, Mockito.never()).update();验证没有调用update方法。
 1. https://www.cnblogs.com/IamThat/p/5072499.html
 2. https://blog.csdn.net/qisibajie/article/details/79068086#mockito%E5%92%8Cpowermock%E7%9A%84%E7%94%A8%E6%B3%95
 3. http://hotdog.iteye.com/blog/937862
+4. https://blog.csdn.net/vipshop_fin_dev/article/details/79439334
