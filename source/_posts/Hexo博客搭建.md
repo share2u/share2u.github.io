@@ -45,6 +45,14 @@ http://www.5isjyx.com/coding/201704/hexonextabout.html
 
 https://linlif.github.io/2017/05/27/Hexo%E4%BD%BF%E7%94%A8%E6%94%BB%E7%95%A5-%E6%B7%BB%E5%8A%A0%E5%88%86%E7%B1%BB%E5%8F%8A%E6%A0%87%E7%AD%BE/
 
+#### 评论
+
+https://www.bluelzy.com/articles/use_valine_for_your_blog.html
+
+#### 阅读次数
+
+http://www.yangyong.xyz/2018/01/03/add-hexo-next-post-views/
+
 ## 新电脑搭建博客
 
 https://www.titanjun.top/2018/04/12/Hexo%E5%8D%9A%E5%AE%A2%E5%A4%9A%E5%8F%B0%E7%94%B5%E8%84%91%E8%AE%BE%E5%A4%87%E5%90%8C%E6%AD%A5%E7%AE%A1%E7%90%86/

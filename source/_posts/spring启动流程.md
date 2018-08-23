@@ -7,6 +7,12 @@ tags:
 - spring
 ---
 
+1. web容器加载web.xml中的ContextLoaderListener
+2. 初始化spring容器
+3. 加载配置文件，创建bean
+
+<!--more-->
+
 ## Web.xml
 
 web容器为spring提供了宿主环境Servletcontext,启动时读取web.xml/包括ContextLoaderListener启动spring容器、DispathcherServlet springmvc分发器，
@@ -56,8 +62,8 @@ public WebApplicationContext initWebApplicationContext(ServletContext servletCon
 //判断是否已经有webApplicationContext容器，如果有抛异常	
     if (servletContext.getAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE) != null) {
 		throw new IllegalStateException(
-					"Cannot initialize context because there is already a root application context present - " +
-					"check whether you have multiple ContextLoader* definitions in your web.xml!");
+"Cannot initialize context because there is already a root application context present - " +
+"check whether you have multiple ContextLoader* definitions in your web.xml!");
 		}
 
 		log.....
