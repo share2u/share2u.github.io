@@ -45,6 +45,8 @@ protected final void refreshBeanFactory() {
 
 ### loadBeanDefinitions
 
+有不同的实现类
+
 #### XmlWebApplicationContext
 
 默认的spring容器
@@ -121,5 +123,89 @@ protected int doLoadBeanDefinitions(InputSource inputSource, Resource resource) 
 
 ```java
 private final Map<String, BeanDefinition> beanDefinitionMap = new ConcurrentHashMap<String, BeanDefinition>(64);
+```
+
+创建一个转换器实例然后调用注册benaDefinitions
+
+```java
+public int registerBeanDefinitions(Document doc, Resource resource) {
+    BeanDefinitionDocumentReader documentReader = createBeanDefinitionDocumentReader();
+    documentReader.setEnvironment(getEnvironment());
+    int countBefore = getRegistry().getBeanDefinitionCount();
+    documentReader.registerBeanDefinitions(doc, createReaderContext(resource));
+    return getRegistry().getBeanDefinitionCount() - countBefore;
+}
+```
+
+```java
+protected void doRegisterBeanDefinitions(Element root) {
+    BeanDefinitionParserDelegate parent = this.delegate;
+    this.delegate = createDelegate(getReaderContext(), root, parent);
+    if (this.delegate.isDefaultNamespace(root)) {
+        String profileSpec = root.getAttribute(PROFILE_ATTRIBUTE);
+        if (StringUtils.hasText(profileSpec)) {
+            String[] specifiedProfiles = StringUtils.tokenizeToStringArray(
+                profileSpec, BeanDefinitionParserDelegate.MULTI_VALUE_ATTRIBUTE_DELIMITERS);
+            if (!getReaderContext().getEnvironment().acceptsProfiles(specifiedProfiles)) {
+                return;
+            }
+        }
+    }
+    preProcessXml(root);
+    //装换文档中的标签
+    parseBeanDefinitions(root, this.delegate);
+    postProcessXml(root);
+
+    this.delegate = parent;
+}
+```
+
+```java
+protected void parseBeanDefinitions(Element root, BeanDefinitionParserDelegate delegate) {
+    if (delegate.isDefaultNamespace(root)) {
+        NodeList nl = root.getChildNodes();
+        for (int i = 0; i < nl.getLength(); i++) {
+            Node node = nl.item(i);
+            if (node instanceof Element) {
+                Element ele = (Element) node;
+                if (delegate.isDefaultNamespace(ele)) {
+                    parseDefaultElement(ele, delegate);
+                }
+                else {
+                    delegate.parseCustomElement(ele);
+                }
+            }
+        }
+    }
+    else {
+        delegate.parseCustomElement(root);
+    }
+}
+```
+
+```java
+public BeanDefinition parseCustomElement(Element ele, BeanDefinition containingBd) {
+    String namespaceUri = getNamespaceURI(ele);
+    NamespaceHandler handler = this.readerContext.getNamespaceHandlerResolver().resolve(namespaceUri);
+    return handler.parse(ele, new ParserContext(this.readerContext, this, containingBd));
+}
+```
+
+各种方法的标签解析，如何选择的呢？
+
+```java
+NamespaceHandler
+	SimplePropertyNamespaceHandler
+	SimpleConstructorNamespaceHandler
+	NamespaceHandlerSupport
+		JeeNamespaceHandler
+		AopNamespaceHandler
+		ContextNamespaceHandler
+		LangNamespaceHandler
+		UtilNamespaceHandler
+		MvcNamespaceHandler
+		TaskNamespaceHandler
+		CacheNamespaceHandler
+		TxNamespaceHandler
 ```
 
