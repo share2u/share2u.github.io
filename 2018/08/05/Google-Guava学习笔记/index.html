@@ -5,7 +5,6 @@
   
 
 
-
 <html class="theme-next pisces use-motion" lang="zh-Hans">
 <head>
   <meta charset="UTF-8"/>
@@ -67,7 +66,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="guava," />
 
 
 
@@ -78,14 +77,18 @@
 
 
 
-<meta property="og:type" content="website">
-
-<meta property="og:title" content="Chen&#39;s Blog">
-<meta property="og:url" content="http://share2u.github.io/archives/index.html">
+<meta name="description" content="简介  基本工具  集合Collections  缓存Caches  函数式风格  并发Concurrency  字符串处理Strings  原生类型  区间Ranges  I/O  hash  事件总线EventBus  数学运算Math  反射Reflections">
+<meta name="keywords" content="guava">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Google Guava学习笔记">
+<meta property="og:url" content="http://share2u.github.io/2018/08/05/Google-Guava学习笔记/index.html">
 <meta property="og:site_name" content="Chen&#39;s Blog">
+<meta property="og:description" content="简介  基本工具  集合Collections  缓存Caches  函数式风格  并发Concurrency  字符串处理Strings  原生类型  区间Ranges  I/O  hash  事件总线EventBus  数学运算Math  反射Reflections">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-09-02T14:40:01.235Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Chen&#39;s Blog">
+<meta name="twitter:title" content="Google Guava学习笔记">
+<meta name="twitter:description" content="简介  基本工具  集合Collections  缓存Caches  函数式风格  并发Concurrency  字符串处理Strings  原生类型  区间Ranges  I/O  hash  事件总线EventBus  数学运算Math  反射Reflections">
 
 
 
@@ -115,17 +118,13 @@
 
 
 
-
-  <link rel="canonical" href="http://share2u.github.io/archives/"/>
-
+  <link rel="canonical" href="http://share2u.github.io/2018/08/05/Google-Guava学习笔记/"/>
 
 
 
 
 
-
-  <title>归档 | Chen's Blog</title>
-
+  <title>Google Guava学习笔记 | Chen's Blog</title>
   
 
 
@@ -137,7 +136,6 @@
 
 </head>
 
-
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
@@ -145,7 +143,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -156,13 +154,11 @@
     <div class="custom-logo-site-title">
       <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-
         <span class="site-title">Chen's Blog</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
       
-
         <p class="site-subtitle">技术债务</p>
       
   </div>
@@ -188,7 +184,6 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-
             首页
           </a>
         </li>
@@ -200,7 +195,6 @@
               <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
             
             关于
-
           </a>
         </li>
       
@@ -210,9 +204,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-
             归档
-
           </a>
         </li>
       
@@ -225,9 +217,7 @@
             
               <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
             
-
             搜索
-
           </a>
         </li>
       
@@ -247,7 +237,6 @@
     </span>
     <div class="local-search-input-wrapper">
       <input autocomplete="off"
-
              placeholder="搜索..." spellcheck="false"
              type="text" id="local-search-input">
     </div>
@@ -272,415 +261,275 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://share2u.github.io/2018/08/05/Google-Guava学习笔记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://ou02tuh60.bkt.clouddn.com/touxiang/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chen's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
+          <h1 class="post-title" itemprop="name headline">Google Guava学习笔记</h1>
         
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-05T09:05:02+08:00">
+                2018-08-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-        
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
 
-        嗯..! 目前共计 16 篇日志。 继续努力。
-
-      </span>
-
-      
-
-        
-        
-        
-
-        
+                
+                
+              
+            </span>
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2018">2018</h1>
-          </div>
-        
-        
 
-        
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/08/05/Google-Guava学习笔记/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/08/05/Google-Guava学习笔记/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
+          
+             <span id="/2018/08/05/Google-Guava学习笔记/" class="leancloud_visitors" data-flag-title="Google Guava学习笔记">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/09/04/ThreadLocal/" itemprop="url">
-              
-                <span itemprop="name">ThreadLocal</span>
-              
-            </a>
-        
-      </h2>
+          
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-09-04T14:11:08+08:00"
-              content="2018-09-04" >
-          09-04
-        </time>
-      </div>
+          
 
-    </header>
-  </article>
+          
 
+        </div>
+      </header>
+    
 
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/08/27/反射/" itemprop="url">
-              
-                <span itemprop="name">反射</span>
-
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-
-              datetime="2018-08-27T08:40:51+08:00"
-              content="2018-08-27" >
-          08-27
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-
-            <a class="post-title-link" href="/2018/08/21/spring-xml配置文件的解析流程/" itemprop="url">
-              
-                <span itemprop="name">spring-xml配置文件的解析流程</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-
-              datetime="2018-08-21T20:42:15+08:00"
-              content="2018-08-21" >
-          08-21
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/08/21/spring-bean的创建和初始化/" itemprop="url">
-              
-                <span itemprop="name">spring-bean的创建和初始化</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-08-21T20:41:10+08:00"
-              content="2018-08-21" >
-          08-21
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+      
+        <ol>
+<li><p>简介</p>
+</li>
+<li><p>基本工具</p>
+</li>
+<li><p>集合Collections</p>
+</li>
+<li><p>缓存Caches</p>
+</li>
+<li><p>函数式风格</p>
+</li>
+<li><p>并发Concurrency</p>
+</li>
+<li><p>字符串处理Strings</p>
+</li>
+<li><p>原生类型</p>
+</li>
+<li><p>区间Ranges</p>
+</li>
+<li><p>I/O</p>
+</li>
+<li><p>hash</p>
+</li>
+<li><p>事件总线EventBus</p>
+</li>
+<li><p>数学运算Math</p>
+</li>
+<li><p>反射Reflections</p>
+<a id="more"></a>
+</li>
+</ol>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><h3 id="源码包的简单说明"><a href="#源码包的简单说明" class="headerlink" title="源码包的简单说明"></a>源码包的简单说明</h3><ul>
+<li>com.google.common.annotations：普通注解类型。  　　</li>
+<li>com.google.common.base：基本工具类库和接口。  <ul>
+<li>使用和避免使用null</li>
+<li>前置条件：快速失败</li>
+<li>常见的对象方法：简化Object常用方法的实现</li>
+<li>排序：fluent comparator比较器，提供多关键字排序</li>
+<li>Throwable类：简化异常检查和错误传播　　</li>
+</ul>
+</li>
+<li>com.google.common.cache：缓存工具包，非常简单易用且功能强大的JVM内缓存</li>
+<li>com.google.common.collect：带泛型的集合接口扩展和实现，以及工具类<ul>
+<li>Immutable collections(不变的集合)：不可修改的集合</li>
+<li>新集合类型：multisets，multimaps，tables， bidirectional maps等 </li>
+<li>集合工具类</li>
+<li>拓展工具类：给集合对象添加功能</li>
+</ul>
+</li>
+<li>com.google.common.eventbus：发布订阅风格的事件总线。  　　</li>
+<li>com.google.common.hash： 哈希工具包。  　　</li>
+<li>com.google.common.io：I/O工具包。  　　</li>
+<li>com.google.common.math：原始算术类型和超大数的运算工具包。  　　</li>
+<li>com.google.common.net：网络工具包。  　　</li>
+<li>com.google.common.primitives：八种原始类型和无符号类型的静态工具包。  　　</li>
+<li>com.google.common.reflect：反射工具包。  　　</li>
+<li>com.google.common.util.concurrent：多线程工具包。 </li>
+</ul>
+<h2 id="基本工具"><a href="#基本工具" class="headerlink" title="基本工具"></a>基本工具</h2><h3 id="Optional-类：使用和避免使用null"><a href="#Optional-类：使用和避免使用null" class="headerlink" title="Optional 类：使用和避免使用null"></a>Optional 类：使用和避免使用null</h3><p>参见java8 Optional</p>
+<h3 id="前置条件：快速失败"><a href="#前置条件：快速失败" class="headerlink" title="前置条件：快速失败"></a>前置条件：快速失败</h3><h3 id="常见的对象方法：简化Object常用方法的实现"><a href="#常见的对象方法：简化Object常用方法的实现" class="headerlink" title="常见的对象方法：简化Object常用方法的实现"></a>常见的对象方法：简化Object常用方法的实现</h3><h3 id="排序：fluent-comparator比较器，提供多关键字排序"><a href="#排序：fluent-comparator比较器，提供多关键字排序" class="headerlink" title="排序：fluent comparator比较器，提供多关键字排序"></a>排序：fluent comparator比较器，提供多关键字排序</h3><h3 id="Throwable类：简化异常检查和错误传播"><a href="#Throwable类：简化异常检查和错误传播" class="headerlink" title="Throwable类：简化异常检查和错误传播"></a>Throwable类：简化异常检查和错误传播</h3><h2 id="集合"><a href="#集合" class="headerlink" title="集合"></a>集合</h2><h3 id="Immutable-collections-不变的集合"><a href="#Immutable-collections-不变的集合" class="headerlink" title="Immutable collections(不变的集合)"></a>Immutable collections(不变的集合)</h3><h3 id="新集合类型："><a href="#新集合类型：" class="headerlink" title="新集合类型："></a>新集合类型：</h3><h3 id="集合工具类"><a href="#集合工具类" class="headerlink" title="集合工具类"></a>集合工具类</h3><h3 id="拓展工具类：给集合对象添加功能"><a href="#拓展工具类：给集合对象添加功能" class="headerlink" title="拓展工具类：给集合对象添加功能"></a>拓展工具类：给集合对象添加功能</h3><h2 id="缓存"><a href="#缓存" class="headerlink" title="缓存"></a>缓存</h2><h2 id="函数式风格"><a href="#函数式风格" class="headerlink" title="函数式风格"></a>函数式风格</h2><h2 id="并发"><a href="#并发" class="headerlink" title="并发"></a>并发</h2><h3 id="ListenableFuture"><a href="#ListenableFuture" class="headerlink" title="ListenableFuture"></a><a href="https://github.com/google/guava/wiki/ListenableFutureExplained" target="_blank" rel="noopener">ListenableFuture</a></h3><h3 id="Service"><a href="#Service" class="headerlink" title="Service"></a>Service</h3><h2 id="字符串处理"><a href="#字符串处理" class="headerlink" title="字符串处理"></a>字符串处理</h2><h2 id="原生类型"><a href="#原生类型" class="headerlink" title="原生类型"></a>原生类型</h2><h2 id="区间"><a href="#区间" class="headerlink" title="区间"></a>区间</h2><h2 id="I-O"><a href="#I-O" class="headerlink" title="I/O"></a>I/O</h2><h2 id="hash"><a href="#hash" class="headerlink" title="hash"></a>hash</h2><h2 id="事件总线"><a href="#事件总线" class="headerlink" title="事件总线"></a>事件总线</h2><h2 id="数学运算"><a href="#数学运算" class="headerlink" title="数学运算"></a>数学运算</h2><h2 id="反射"><a href="#反射" class="headerlink" title="反射"></a>反射</h2><h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ol>
+<li>官网 <a href="https://github.com/google/guava/wiki" target="_blank" rel="noopener">https://github.com/google/guava/wiki</a></li>
+<li>并发编程网 <a href="http://ifeve.com/google-guava/" target="_blank" rel="noopener">http://ifeve.com/google-guava/</a></li>
+<li><a href="http://www.cnblogs.com/peida/p/Guava.htm" target="_blank" rel="noopener">http://www.cnblogs.com/peida/p/Guava.htm</a></li>
+</ol>
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/08/21/spring启动流程/" itemprop="url">
-              
-                <span itemprop="name">spring启动流程</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-08-21T20:39:45+08:00"
-              content="2018-08-21" >
-          08-21
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/08/21/springmvc基本原理/" itemprop="url">
-              
-                <span itemprop="name">springmvc基本原理</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-08-21T12:37:28+08:00"
-              content="2018-08-21" >
-          08-21
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/08/11/常用linux命令/" itemprop="url">
-              
-                <span itemprop="name">常用linux命令</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-08-11T08:59:12+08:00"
-              content="2018-08-11" >
-          08-11
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/08/05/Google-Guava学习笔记/" itemprop="url">
-              
-                <span itemprop="name">Google Guava学习笔记</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-08-05T09:05:02+08:00"
-              content="2018-08-05" >
-          08-05
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/08/04/Powermockto/" itemprop="url">
-              
-                <span itemprop="name">Powermockto</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-08-04T23:30:36+08:00"
-              content="2018-08-04" >
-          08-04
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/08/01/java8学习笔记/" itemprop="url">
-              
-                <span itemprop="name">java8学习笔记</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-08-01T21:47:39+08:00"
-              content="2018-08-01" >
-          08-01
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    Chen
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://share2u.github.io/2018/08/05/Google-Guava学习笔记/" title="Google Guava学习笔记">http://share2u.github.io/2018/08/05/Google-Guava学习笔记/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/guava/" rel="tag"># guava</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/04/Powermockto/" rel="next" title="Powermockto">
+                <i class="fa fa-chevron-left"></i> Powermockto
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/08/11/常用linux命令/" rel="prev" title="常用linux命令">
+                常用linux命令 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
 
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="extend next" rel="next" href="/archives/page/2/"><i class="fa fa-angle-right"></i></a>
-  </nav>
 
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -688,6 +537,13 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
 
         </div>
         
@@ -708,12 +564,20 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
-
               <img class="site-author-image" itemprop="image"
                 src="http://ou02tuh60.bkt.clouddn.com/touxiang/avatar.jpg"
                 alt="Chen" />
@@ -729,7 +593,6 @@
               
                 <a href="/archives/">
               
-
                   <span class="site-state-item-count">16</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
@@ -737,7 +600,6 @@
             
 
             
-
               
               
               <div class="site-state-item site-state-categories">
@@ -777,6 +639,22 @@
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#源码包的简单说明"><span class="nav-number">1.1.</span> <span class="nav-text">源码包的简单说明</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本工具"><span class="nav-number">2.</span> <span class="nav-text">基本工具</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Optional-类：使用和避免使用null"><span class="nav-number">2.1.</span> <span class="nav-text">Optional 类：使用和避免使用null</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#前置条件：快速失败"><span class="nav-number">2.2.</span> <span class="nav-text">前置条件：快速失败</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常见的对象方法：简化Object常用方法的实现"><span class="nav-number">2.3.</span> <span class="nav-text">常见的对象方法：简化Object常用方法的实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#排序：fluent-comparator比较器，提供多关键字排序"><span class="nav-number">2.4.</span> <span class="nav-text">排序：fluent comparator比较器，提供多关键字排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Throwable类：简化异常检查和错误传播"><span class="nav-number">2.5.</span> <span class="nav-text">Throwable类：简化异常检查和错误传播</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#集合"><span class="nav-number">3.</span> <span class="nav-text">集合</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Immutable-collections-不变的集合"><span class="nav-number">3.1.</span> <span class="nav-text">Immutable collections(不变的集合)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#新集合类型："><span class="nav-number">3.2.</span> <span class="nav-text">新集合类型：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#集合工具类"><span class="nav-number">3.3.</span> <span class="nav-text">集合工具类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#拓展工具类：给集合对象添加功能"><span class="nav-number">3.4.</span> <span class="nav-text">拓展工具类：给集合对象添加功能</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#缓存"><span class="nav-number">4.</span> <span class="nav-text">缓存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数式风格"><span class="nav-number">5.</span> <span class="nav-text">函数式风格</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#并发"><span class="nav-number">6.</span> <span class="nav-text">并发</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ListenableFuture"><span class="nav-number">6.1.</span> <span class="nav-text">ListenableFuture</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Service"><span class="nav-number">6.2.</span> <span class="nav-text">Service</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字符串处理"><span class="nav-number">7.</span> <span class="nav-text">字符串处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#原生类型"><span class="nav-number">8.</span> <span class="nav-text">原生类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#区间"><span class="nav-number">9.</span> <span class="nav-text">区间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#I-O"><span class="nav-number">10.</span> <span class="nav-text">I/O</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hash"><span class="nav-number">11.</span> <span class="nav-text">hash</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#事件总线"><span class="nav-number">12.</span> <span class="nav-text">事件总线</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数学运算"><span class="nav-number">13.</span> <span class="nav-text">数学运算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#反射"><span class="nav-number">14.</span> <span class="nav-text">反射</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文献"><span class="nav-number">15.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
 
@@ -795,12 +673,10 @@
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
-
   <span class="author" itemprop="copyrightHolder">Chen</span>
 
   
 </div>
-
 
 
   <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
@@ -808,7 +684,6 @@
 
 
   <span class="post-meta-divider">|</span>
-
 
 
 
@@ -920,6 +795,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
@@ -949,7 +828,6 @@
 
 
   
-
 
 
 
