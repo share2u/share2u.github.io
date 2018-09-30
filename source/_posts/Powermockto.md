@@ -10,7 +10,7 @@ tags:
 mock是模拟对象，用于模拟真实对象的行为  
 powermock拓展了esaymock和mockito框架，增加了对static 和final方法mock支持等功能，
 
-本文阐述powermockto简单用法，未包含 answer,spy,captor等
+本文阐述powermockto简单用法，未包含 spy,captor等
 
 <!-- more-->
 
@@ -190,7 +190,36 @@ public class testMock {
 }
 ```
 
+### doAnswer
 
+对method内容进行mock，根据invocation接口进行书写，进而对callmethod进行测试
+
+```java
+PowerMockito.doAnswer(invocation -> {
+    System.out.println("load commute minutes by db");
+    return Integer.MAX_VALUE;
+}).when(configDao).getCommuteMinutesByCityIdAndServiceType(anyInt(), anyInt());
+```
+
+InvocationOnMock
+
+```java
+//获取mock的对象
+Object getMock();
+//返回方法
+Method getMethod();
+//返回参数
+Object[] getArguments();
+/**
+    * Returns casted argument using position
+    * @param index argument position
+    * @param clazz argument type
+    * @return casted argument on position
+    */
+<T> T getArgumentAt(int index, Class<T> clazz);
+//调用真实的方法
+Object callRealMethod() throws Throwable;
+```
 
 ## verfications
 ### 验证方法调用
