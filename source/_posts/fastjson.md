@@ -8,6 +8,10 @@ tags:
 - json
 ---
 
+json基本格式，以及fastjson基本用法，包括序列化与反序列化
+
+<!--more-->
+
 ## JSON 是什么
 
 是一种文本方式展示结构化数据的方式
@@ -96,7 +100,7 @@ List<User> users = JSON.parseArray(s,User.class);
 #### 泛型集合的反序列化
 
 ```java
-Map<String,User> userMap = JSON.parseObject(s,new TypePeference<Map<String,User>>(){});
+Map<String,User> userMap = JSON.parseObject(s,new TypeReference<Map<String,User>>(){});
 ```
 
 

@@ -7,6 +7,12 @@ tags:
 - threadlocal
 ---
 
+treadlocal定义，使用，基本原理以及注意点
+
+代办：未完整
+
+<!--more-->
+
 ## 定义
 
 Threadlocal提供了线程本地的变量，这些变量绑定于自己的线程，独立的进行初始化。使用上通常是private static 变量，并且关联一个有状态的变量，如user ID 或Transaction ID.
