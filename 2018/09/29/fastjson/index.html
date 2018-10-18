@@ -77,18 +77,18 @@
 
 
 
-<meta name="description" content="JSON 是什么是一种文本方式展示结构化数据的方式 结构和类型对象用{}，内部是“key”:”value” 数组用[]表示，不同值用逗号分开 优缺点优点：平台无关性 缺点：性能一般，缺少schema API序列化基本序列化12User u = new User();JSON.toJSONString(u); 使用WriteClassName特性序列化的时候写入类型信息，反序列化的时候，可以根据类型">
+<meta name="description" content="json基本格式，以及fastjson基本用法，包括序列化与反序列化">
 <meta name="keywords" content="fastjson,json">
 <meta property="og:type" content="article">
 <meta property="og:title" content="fastjson">
 <meta property="og:url" content="http://share2u.github.io/2018/09/29/fastjson/index.html">
 <meta property="og:site_name" content="Chen&#39;s Blog">
-<meta property="og:description" content="JSON 是什么是一种文本方式展示结构化数据的方式 结构和类型对象用{}，内部是“key”:”value” 数组用[]表示，不同值用逗号分开 优缺点优点：平台无关性 缺点：性能一般，缺少schema API序列化基本序列化12User u = new User();JSON.toJSONString(u); 使用WriteClassName特性序列化的时候写入类型信息，反序列化的时候，可以根据类型">
+<meta property="og:description" content="json基本格式，以及fastjson基本用法，包括序列化与反序列化">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-09-30T01:02:32.233Z">
+<meta property="og:updated_time" content="2018-10-18T11:33:48.545Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="fastjson">
-<meta name="twitter:description" content="JSON 是什么是一种文本方式展示结构化数据的方式 结构和类型对象用{}，内部是“key”:”value” 数组用[]表示，不同值用逗号分开 优缺点优点：平台无关性 缺点：性能一般，缺少schema API序列化基本序列化12User u = new User();JSON.toJSONString(u); 使用WriteClassName特性序列化的时候写入类型信息，反序列化的时候，可以根据类型">
+<meta name="twitter:description" content="json基本格式，以及fastjson基本用法，包括序列化与反序列化">
 
 
 
@@ -385,7 +385,9 @@
       
 
       
-        <h2 id="JSON-是什么"><a href="#JSON-是什么" class="headerlink" title="JSON 是什么"></a>JSON 是什么</h2><p>是一种文本方式展示结构化数据的方式</p>
+        <p>json基本格式，以及fastjson基本用法，包括序列化与反序列化</p>
+<a id="more"></a>
+<h2 id="JSON-是什么"><a href="#JSON-是什么" class="headerlink" title="JSON 是什么"></a>JSON 是什么</h2><p>是一种文本方式展示结构化数据的方式</p>
 <h4 id="结构和类型"><a href="#结构和类型" class="headerlink" title="结构和类型"></a>结构和类型</h4><p>对象用{}，内部是“key”:”value”</p>
 <p>数组用[]表示，不同值用逗号分开</p>
 <h4 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h4><p>优点：平台无关性</p>
@@ -397,7 +399,7 @@
 <h4 id="使用-JSONField-Annotation"><a href="#使用-JSONField-Annotation" class="headerlink" title="使用@JSONField Annotation"></a>使用@JSONField Annotation</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@JSONField</span>(name =<span class="string">"hah"</span>)</span><br><span class="line"><span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">A a = <span class="keyword">new</span> A();</span><br><span class="line">a.setName(<span class="string">"xxx"</span>);</span><br><span class="line">System.out.println(JSON.toJSONString(a));</span><br><span class="line"><span class="comment">//&#123;"hah":"xxx"&#125;</span></span><br></pre></td></tr></table></figure>
 <h3 id="反序列化"><a href="#反序列化" class="headerlink" title="反序列化"></a>反序列化</h3><h4 id="指定CLass信息反序列化"><a href="#指定CLass信息反序列化" class="headerlink" title="指定CLass信息反序列化"></a>指定CLass信息反序列化</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">JSON.parseObject(s，User.class);</span><br></pre></td></tr></table></figure>
 <h4 id="类型集合的反序列化"><a href="#类型集合的反序列化" class="headerlink" title="类型集合的反序列化"></a>类型集合的反序列化</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List&lt;User&gt; users = JSON.parseArray(s,User.class);</span><br></pre></td></tr></table></figure>
-<h4 id="泛型集合的反序列化"><a href="#泛型集合的反序列化" class="headerlink" title="泛型集合的反序列化"></a>泛型集合的反序列化</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;String,User&gt; userMap = JSON.parseObject(s,<span class="keyword">new</span> TypePeference&lt;Map&lt;String,User&gt;&gt;()&#123;&#125;);</span><br></pre></td></tr></table></figure>
+<h4 id="泛型集合的反序列化"><a href="#泛型集合的反序列化" class="headerlink" title="泛型集合的反序列化"></a>泛型集合的反序列化</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;String,User&gt; userMap = JSON.parseObject(s,<span class="keyword">new</span> TypeReference&lt;Map&lt;String,User&gt;&gt;()&#123;&#125;);</span><br></pre></td></tr></table></figure>
 <h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p><a href="http://zyjustin9.iteye.com/blog/2020533" target="_blank" rel="noopener">http://zyjustin9.iteye.com/blog/2020533</a></p>
 
       
@@ -458,6 +460,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/10/15/位操作符/" rel="prev" title="位操作符">
+                位操作符 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -541,7 +547,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-count">18</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -563,7 +569,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-count">21</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

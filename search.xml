@@ -1,9 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[位操作符]]></title>
+    <url>%2F2018%2F10%2F15%2F%E4%BD%8D%E6%93%8D%E4%BD%9C%E7%AC%A6%2F</url>
+    <content type="text"><![CDATA[基本数据类型，进制以及常用的用法 进制 二进制位 简称“位”，一个二进制包含的信息称为一比特（bit）.每一个bit可以代表0或1的数位信号，是电脑记忆体中最小的单位； 字节：bye:是计算机可寻址的最小单位，每个字节有8个二进制位。 word 字，有2byte组成， 十进制：10 八进制：012 十六进制：0x0a 二进制：1010 CPU主要有32位，64位，32位cpu能够寻址的范围是4GB,,通常一个cpu指令是4byte,执行一次就读取32bit内容 基本数据类型c.c++在不同的操作系统平台，给基本类型变量分配的字节是不一样的。java是跨平台语言，JVM包装后的基本数据字节长度是一样的 12345678byte:1字节short:2字节int:4字节long:8字节float:4字节double:8字节char:2字节boolean:在存储的时候不使用字节，仅仅使用1位来存储，范围为0或1 int long等整数类型最高位是符号位，正数是0 ，负数是1 原码将一个数字转换为二进制就是这个数字的原码 反码正数的反码是原码 负数的反码是在原码的基础上，符号位不变，其他位都取反 -3 原码 1000 0000 0000 0011 -3 反码 1111 1111 1111 1100 补码正数的补码是原码，也就是反码 负数的补码的基础上加1 -3 的补码: 1111 1111 1111 1101 补码是因为计算机在进行数值计算的时候，是通过补码来表示每个数值，好处是减法的计算方式与加法一样 1234565 - 3 = 5 + (-3) =2 00000000 00000000 00000000 00000101+ 11111111 11111111 11111111 11111101 =================================== 100000000 00000000 00000000 00000010 = 2 //最高位溢出 double float位操作符与 &amp;两个位 都为1 结果是1 应用： 清零：与一个各位都是0的数值相与，结果是0 去一个数中的指定位：取4位，，，，A &amp; 0000 1111= 0000 AAAA,得到A的最后四位 或 |只要有一位是1，结果就是1 应用： 置1：将指定位置置为1 非 ~对操作数的每一位进行操作，1变0，0变1 异或 ^两个数 数值相同则为0，数值不同则为1 应用： 简单的数值加密：与某一个数值异或，再与该数值异或，变为原来的数值 翻转特定为：X = 1010 1110将低4位翻转，X^0000 1111 = 1010 0001 右移&gt;&gt;符号位不变，整体向右方向移动n位，高位空出来的位数值为0 a&gt;&gt;b = a/(2^b) 左移&lt;&lt;符号位不变，低位空出来的位补数值0 a&lt;&lt;b = a*(2^b) 使用其他进制转二进制字符串在java里Integer、Long这两个类里都以下三个方法： //将i转换成二进制 toBinaryString(long i); toBinaryString(int i); //将i转换成十六进制 toHexString(long i); toHexString(int i); //将i转换成八进制 toOctalString(long i); toOctalString(int i); 二进制转其他进制Integer、Long两个类里都将字符串转换成各种不同进制的方法： parseInt(String s, int radix); parseLong(String s, int radix); 参考文献 https://blog.csdn.net/briblue/article/details/70296326 https://blog.csdn.net/xwu_09/article/details/78285785 https://blog.csdn.net/luoweifu/article/details/8180509]]></content>
+      <categories>
+        <category>java</category>
+      </categories>
+      <tags>
+        <tag>java</tag>
+        <tag>位操作符</tag>
+        <tag>基本数据类型</tag>
+        <tag>进制</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[fastjson]]></title>
     <url>%2F2018%2F09%2F29%2Ffastjson%2F</url>
-    <content type="text"><![CDATA[JSON 是什么是一种文本方式展示结构化数据的方式 结构和类型对象用{}，内部是“key”:”value” 数组用[]表示，不同值用逗号分开 优缺点优点：平台无关性 缺点：性能一般，缺少schema API序列化基本序列化12User u = new User();JSON.toJSONString(u); 使用WriteClassName特性序列化的时候写入类型信息，反序列化的时候，可以根据类型自动识别 123456789Color color = Color.RED;String text = JSON.toJSONString(color, SerializerFeature.WriteClassName);System.out.println(text);&#123;"@type":"java.awt.Color","r":255,"g":0,"b":0,"alpha":255&#125;Color color = (Color) JSON.parse(text); 循环引用123456789A a = new A();B b = new B();a.setB(b);b.setA(a);System.out.println(JSON.toJSONString(a));//&#123;"b":&#123;"a":&#123;"$ref":".."&#125;&#125;&#125; 使用toJSON会栈溢出A a1 = JSON.parseObject(JSON.toJSONString(a), A.class);System.out.println(a1 == a1.getB().getA());//true 使用@JSONField Annotation1234567@JSONField(name ="hah")private String name;A a = new A();a.setName("xxx");System.out.println(JSON.toJSONString(a));//&#123;"hah":"xxx"&#125; 反序列化指定CLass信息反序列化1JSON.parseObject(s，User.class); 类型集合的反序列化1List&lt;User&gt; users = JSON.parseArray(s,User.class); 泛型集合的反序列化1Map&lt;String,User&gt; userMap = JSON.parseObject(s,new TypePeference&lt;Map&lt;String,User&gt;&gt;()&#123;&#125;); 参考文献http://zyjustin9.iteye.com/blog/2020533]]></content>
+    <content type="text"><![CDATA[json基本格式，以及fastjson基本用法，包括序列化与反序列化 JSON 是什么是一种文本方式展示结构化数据的方式 结构和类型对象用{}，内部是“key”:”value” 数组用[]表示，不同值用逗号分开 优缺点优点：平台无关性 缺点：性能一般，缺少schema API序列化基本序列化12User u = new User();JSON.toJSONString(u); 使用WriteClassName特性序列化的时候写入类型信息，反序列化的时候，可以根据类型自动识别 123456789Color color = Color.RED;String text = JSON.toJSONString(color, SerializerFeature.WriteClassName);System.out.println(text);&#123;"@type":"java.awt.Color","r":255,"g":0,"b":0,"alpha":255&#125;Color color = (Color) JSON.parse(text); 循环引用123456789A a = new A();B b = new B();a.setB(b);b.setA(a);System.out.println(JSON.toJSONString(a));//&#123;"b":&#123;"a":&#123;"$ref":".."&#125;&#125;&#125; 使用toJSON会栈溢出A a1 = JSON.parseObject(JSON.toJSONString(a), A.class);System.out.println(a1 == a1.getB().getA());//true 使用@JSONField Annotation1234567@JSONField(name ="hah")private String name;A a = new A();a.setName("xxx");System.out.println(JSON.toJSONString(a));//&#123;"hah":"xxx"&#125; 反序列化指定CLass信息反序列化1JSON.parseObject(s，User.class); 类型集合的反序列化1List&lt;User&gt; users = JSON.parseArray(s,User.class); 泛型集合的反序列化1Map&lt;String,User&gt; userMap = JSON.parseObject(s,new TypeReference&lt;Map&lt;String,User&gt;&gt;()&#123;&#125;); 参考文献http://zyjustin9.iteye.com/blog/2020533]]></content>
       <categories>
         <category>json</category>
       </categories>
@@ -15,7 +29,7 @@
   <entry>
     <title><![CDATA[ThreadLocal]]></title>
     <url>%2F2018%2F09%2F04%2FThreadLocal%2F</url>
-    <content type="text"><![CDATA[定义Threadlocal提供了线程本地的变量，这些变量绑定于自己的线程，独立的进行初始化。使用上通常是private static 变量，并且关联一个有状态的变量，如user ID 或Transaction ID. 通常是保存 线程中的状态的变量 使用123456789101112131415161718public class ThreadId &#123; // Atomic integer containing the next thread ID to be assigned private static final AtomicInteger nextId = new AtomicInteger(0); // Thread local variable containing each thread's ID private static final ThreadLocal&lt;Integer&gt; threadId = new ThreadLocal&lt;Integer&gt;() &#123; @Override protected Integer initialValue() &#123; return nextId.getAndIncrement(); &#125; &#125;; // Returns the current thread's unique ID, assigning it if necessary public static int get() &#123; return threadId.get(); &#125;&#125; 只要这个线程活着，并且threadllocal实例可用，那么每一个线程保持一个引用与threadlocal中变量的拷贝， ThreadLocal() 无参构造器 withInitial(Supplier&lt;? extends S&gt;):ThreadLocal 1234567891011121314151617public static &lt;S&gt; ThreadLocal&lt;S&gt; withInitial(Supplier&lt;? extends S&gt; supplier) &#123; return new SuppliedThreadLocal&lt;&gt;(supplier);&#125;static final class SuppliedThreadLocal&lt;T&gt; extends ThreadLocal&lt;T&gt; &#123; private final Supplier&lt;? extends T&gt; supplier; SuppliedThreadLocal(Supplier&lt;? extends T&gt; supplier) &#123; this.supplier = Objects.requireNonNull(supplier); &#125; @Override protected T initialValue() &#123; return supplier.get(); &#125;&#125; get():T 1234567891011121314public T get() &#123; Thread t = Thread.currentThread(); ThreadLocalMap map = getMap(t); if (map != null) &#123; ThreadLocalMap.Entry e = map.getEntry(this); if (e != null) &#123; @SuppressWarnings("unchecked") T result = (T)e.value; return result; &#125; &#125; //如果没有值，那么就返回初始化值 return setInitialValue();&#125; set(T):void 12345678public void set(T value) &#123; Thread t = Thread.currentThread(); ThreadLocalMap map = getMap(t); if (map != null) map.set(this, value); else createMap(t, value);&#125; remove():void 12345public void remove() &#123; ThreadLocalMap m = getMap(Thread.currentThread()); if (m != null) m.remove(this);&#125; 原理分析ThreadLocalMap每个线程都有一个threadlocalmap成员变量 threalLocalMap底层是一个散列表(数组链表) tail -f /opt/web/dianshangwuxian_order-server/logs/catalina.log.2018-09-12 tail -f /opt/web/dianshangwuxian_order-server/logs/order-server.log entryentry定位注意点参考文献http://www.jasongj.com/java/threadlocal/#comments https://segmentfault.com/a/1190000014738647]]></content>
+    <content type="text"><![CDATA[treadlocal定义，使用，基本原理以及注意点 代办：未完整 定义Threadlocal提供了线程本地的变量，这些变量绑定于自己的线程，独立的进行初始化。使用上通常是private static 变量，并且关联一个有状态的变量，如user ID 或Transaction ID. 通常是保存 线程中的状态的变量 使用123456789101112131415161718public class ThreadId &#123; // Atomic integer containing the next thread ID to be assigned private static final AtomicInteger nextId = new AtomicInteger(0); // Thread local variable containing each thread's ID private static final ThreadLocal&lt;Integer&gt; threadId = new ThreadLocal&lt;Integer&gt;() &#123; @Override protected Integer initialValue() &#123; return nextId.getAndIncrement(); &#125; &#125;; // Returns the current thread's unique ID, assigning it if necessary public static int get() &#123; return threadId.get(); &#125;&#125; 只要这个线程活着，并且threadllocal实例可用，那么每一个线程保持一个引用与threadlocal中变量的拷贝， ThreadLocal() 无参构造器 withInitial(Supplier&lt;? extends S&gt;):ThreadLocal 1234567891011121314151617public static &lt;S&gt; ThreadLocal&lt;S&gt; withInitial(Supplier&lt;? extends S&gt; supplier) &#123; return new SuppliedThreadLocal&lt;&gt;(supplier);&#125;static final class SuppliedThreadLocal&lt;T&gt; extends ThreadLocal&lt;T&gt; &#123; private final Supplier&lt;? extends T&gt; supplier; SuppliedThreadLocal(Supplier&lt;? extends T&gt; supplier) &#123; this.supplier = Objects.requireNonNull(supplier); &#125; @Override protected T initialValue() &#123; return supplier.get(); &#125;&#125; get():T 1234567891011121314public T get() &#123; Thread t = Thread.currentThread(); ThreadLocalMap map = getMap(t); if (map != null) &#123; ThreadLocalMap.Entry e = map.getEntry(this); if (e != null) &#123; @SuppressWarnings("unchecked") T result = (T)e.value; return result; &#125; &#125; //如果没有值，那么就返回初始化值 return setInitialValue();&#125; set(T):void 12345678public void set(T value) &#123; Thread t = Thread.currentThread(); ThreadLocalMap map = getMap(t); if (map != null) map.set(this, value); else createMap(t, value);&#125; remove():void 12345public void remove() &#123; ThreadLocalMap m = getMap(Thread.currentThread()); if (m != null) m.remove(this);&#125; 原理分析ThreadLocalMap每个线程都有一个threadlocalmap成员变量 threalLocalMap底层是一个散列表(数组链表) tail -f /opt/web/dianshangwuxian_order-server/logs/catalina.log.2018-09-12 tail -f /opt/web/dianshangwuxian_order-server/logs/order-server.log entryentry定位注意点参考文献http://www.jasongj.com/java/threadlocal/#comments https://segmentfault.com/a/1190000014738647]]></content>
       <categories>
         <category>多线程</category>
       </categories>
@@ -126,17 +140,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[servlet学习笔记]]></title>
-    <url>%2F2018%2F07%2F30%2FServlet%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%2F</url>
-    <content type="text"><![CDATA[servlet 容器 Servlet体系结构 servlet容器常见的Servlet容器是tomcat，jetty等 tomcat容器模型 tomcat容器分为四个等级，真正管理servlet的容器是Context容器，一个Context对应一个web工程 tomcat添加一个web项目12345678910111213public Context addWebapp(Host host, String url, String path) &#123; //silence(url); Context ctx = new StandardContext(); ctx.setPath( url );//设置访问路径 ctx.setDocBase(path);//设置项目路径 ctx.setRealm(new NullRealm());//设置权限 ctx.addLifecycleListener(new Tomcat.DefaultWebXmlListener()); ContextConfig ctxCfg = new ContextConfig(); ctx.addLifecycleListener(ctxCfg); ctxCfg.setDefaultWebXml("org/apache/catalin/startup/NO_DEFAULT_XML"); host.addChild(ctx);//添加到host父容器中 return ctx; &#125; tomcat 启动容器初始化应用初始化 主要是解析web.xml文件，解析文件中的属性保存到WebXML对象中， 然后将WebXML对象中的属性设置到Context中，这里包括Servlet，filter,listener等 Servlet将被包装成Context容器中的StandardWrapper，其具有容器的特征，转换将使得开发者不需要强耦合tomcat 创建servlet实例 创建Servlet对象 如果Servlet的load-on-startup配置项大于0，那么context容器启动的时候就会被实例化，例如DefaultServlet和JSPServlet 调用wrapper.loadServlet方法：获取servletclasss交给instanceManager去创建一个机遇servletclass.class对象 初始化Servlet 调用servlet的init方法，同时把包装了Standandwrapper对象de standardwrapperfacade作为servletconfig传给Servlet Servlet体系结构servlet​ Servlet 的运行模式是一个典型的“握手型的交互式”运行模式。所谓“握手型的交互式”就是两个模块为了交换数据通常都会准备一个交易场景，这个场景一直跟随个这个交易过程直到这个交易完成为止。这个交易场景的初始化是根据这次交易对象指定的参数来定制的，这些指定参数通常就会是一个配置类。所以对号入座，交易场景就由 ServletContext 来描述，而定制的参数集合就由 ServletConfig 来描述。而 ServletRequest 和 ServletResponse 就是要交互的具体对象了，它们通常都是作为运输工具来传递交互结果。 与servlet主动关联的三个类：Servletconfig、servletRequest和ServletResponse,这三个类都是通过容器传递给Servlet的。servletconfig是在servlet是Serevlet初始化时候 传递，后两个是请求到达的时候传递过来的。 Servletconfig接口声明的方法是为了获取Servlet的一些配置信息，包括servletcontext ServletRequest和ServletResponse是请求响应使用,由tomcat将请求封装为org.apache.coyote.Request ，交给一个用户线程处理请求会创建org.apache.catalina.connector. Request ，穿越整个Servlet容器直到传给Servlet，传递给的是request的门面类requestfacade servletconfig standardwrapper和standardwrapperfacade都实现了servletconfig接口，而standwrapperfacade是门面类，传递给servlet,这个类能够保证从 StandardWrapper 中拿到 ServletConfig 所规定的数据，而又不把 ServletConfig 不关心的数据暴露给 Servlet servletconfg 湖区servletcontext的实际对象是ApplicationContextFacade对象，对容器数据的封装 参考文献Servlet 工作原理解析 https://www.ibm.com/developerworks/cn/java/j-lo-servlet/index.html]]></content>
-      <categories>
-        <category>web</category>
-      </categories>
-      <tags>
-        <tag>servlet</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[Filter学习笔记]]></title>
     <url>%2F2018%2F07%2F30%2FFilter%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%2F</url>
     <content type="text"><![CDATA[]]></content>
@@ -145,6 +148,17 @@
       </categories>
       <tags>
         <tag>Filter</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[servlet学习笔记]]></title>
+    <url>%2F2018%2F07%2F30%2FServlet%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%2F</url>
+    <content type="text"><![CDATA[servlet 容器 Servlet体系结构 servlet容器常见的Servlet容器是tomcat，jetty等 tomcat容器模型 tomcat容器分为四个等级，真正管理servlet的容器是Context容器，一个Context对应一个web工程 tomcat添加一个web项目12345678910111213public Context addWebapp(Host host, String url, String path) &#123; //silence(url); Context ctx = new StandardContext(); ctx.setPath( url );//设置访问路径 ctx.setDocBase(path);//设置项目路径 ctx.setRealm(new NullRealm());//设置权限 ctx.addLifecycleListener(new Tomcat.DefaultWebXmlListener()); ContextConfig ctxCfg = new ContextConfig(); ctx.addLifecycleListener(ctxCfg); ctxCfg.setDefaultWebXml("org/apache/catalin/startup/NO_DEFAULT_XML"); host.addChild(ctx);//添加到host父容器中 return ctx; &#125; tomcat 启动容器初始化应用初始化 主要是解析web.xml文件，解析文件中的属性保存到WebXML对象中， 然后将WebXML对象中的属性设置到Context中，这里包括Servlet，filter,listener等 Servlet将被包装成Context容器中的StandardWrapper，其具有容器的特征，转换将使得开发者不需要强耦合tomcat 创建servlet实例 创建Servlet对象 如果Servlet的load-on-startup配置项大于0，那么context容器启动的时候就会被实例化，例如DefaultServlet和JSPServlet 调用wrapper.loadServlet方法：获取servletclasss交给instanceManager去创建一个机遇servletclass.class对象 初始化Servlet 调用servlet的init方法，同时把包装了Standandwrapper对象de standardwrapperfacade作为servletconfig传给Servlet Servlet体系结构servlet​ Servlet 的运行模式是一个典型的“握手型的交互式”运行模式。所谓“握手型的交互式”就是两个模块为了交换数据通常都会准备一个交易场景，这个场景一直跟随个这个交易过程直到这个交易完成为止。这个交易场景的初始化是根据这次交易对象指定的参数来定制的，这些指定参数通常就会是一个配置类。所以对号入座，交易场景就由 ServletContext 来描述，而定制的参数集合就由 ServletConfig 来描述。而 ServletRequest 和 ServletResponse 就是要交互的具体对象了，它们通常都是作为运输工具来传递交互结果。 与servlet主动关联的三个类：Servletconfig、servletRequest和ServletResponse,这三个类都是通过容器传递给Servlet的。servletconfig是在servlet是Serevlet初始化时候 传递，后两个是请求到达的时候传递过来的。 Servletconfig接口声明的方法是为了获取Servlet的一些配置信息，包括servletcontext ServletRequest和ServletResponse是请求响应使用,由tomcat将请求封装为org.apache.coyote.Request ，交给一个用户线程处理请求会创建org.apache.catalina.connector. Request ，穿越整个Servlet容器直到传给Servlet，传递给的是request的门面类requestfacade servletconfig standardwrapper和standardwrapperfacade都实现了servletconfig接口，而standwrapperfacade是门面类，传递给servlet,这个类能够保证从 StandardWrapper 中拿到 ServletConfig 所规定的数据，而又不把 ServletConfig 不关心的数据暴露给 Servlet servletconfg 湖区servletcontext的实际对象是ApplicationContextFacade对象，对容器数据的封装 参考文献Servlet 工作原理解析 https://www.ibm.com/developerworks/cn/java/j-lo-servlet/index.html]]></content>
+      <categories>
+        <category>web</category>
+      </categories>
+      <tags>
+        <tag>servlet</tag>
       </tags>
   </entry>
   <entry>
@@ -199,13 +213,13 @@
     <content type="text"><![CDATA[微信]]></content>
   </entry>
   <entry>
-    <title><![CDATA[tags]]></title>
-    <url>%2Ftags%2Findex.html</url>
+    <title><![CDATA[categories]]></title>
+    <url>%2Fcategories%2Findex.html</url>
     <content type="text"></content>
   </entry>
   <entry>
-    <title><![CDATA[categories]]></title>
-    <url>%2Fcategories%2Findex.html</url>
+    <title><![CDATA[tags]]></title>
+    <url>%2Ftags%2Findex.html</url>
     <content type="text"></content>
   </entry>
 </search>

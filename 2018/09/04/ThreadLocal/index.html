@@ -77,18 +77,18 @@
 
 
 
-<meta name="description" content="定义Threadlocal提供了线程本地的变量，这些变量绑定于自己的线程，独立的进行初始化。使用上通常是private static 变量，并且关联一个有状态的变量，如user ID 或Transaction ID. 通常是保存 线程中的状态的变量 使用123456789101112131415161718public class ThreadId &amp;#123;    // Atomic inte">
+<meta name="description" content="treadlocal定义，使用，基本原理以及注意点 代办：未完整">
 <meta name="keywords" content="threadlocal">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ThreadLocal">
 <meta property="og:url" content="http://share2u.github.io/2018/09/04/ThreadLocal/index.html">
 <meta property="og:site_name" content="Chen&#39;s Blog">
-<meta property="og:description" content="定义Threadlocal提供了线程本地的变量，这些变量绑定于自己的线程，独立的进行初始化。使用上通常是private static 变量，并且关联一个有状态的变量，如user ID 或Transaction ID. 通常是保存 线程中的状态的变量 使用123456789101112131415161718public class ThreadId &amp;#123;    // Atomic inte">
+<meta property="og:description" content="treadlocal定义，使用，基本原理以及注意点 代办：未完整">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-09-12T11:53:39.107Z">
+<meta property="og:updated_time" content="2018-10-18T11:35:56.305Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ThreadLocal">
-<meta name="twitter:description" content="定义Threadlocal提供了线程本地的变量，这些变量绑定于自己的线程，独立的进行初始化。使用上通常是private static 变量，并且关联一个有状态的变量，如user ID 或Transaction ID. 通常是保存 线程中的状态的变量 使用123456789101112131415161718public class ThreadId &amp;#123;    // Atomic inte">
+<meta name="twitter:description" content="treadlocal定义，使用，基本原理以及注意点 代办：未完整">
 
 
 
@@ -385,7 +385,10 @@
       
 
       
-        <h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>Threadlocal提供了线程本地的变量，这些变量绑定于自己的线程，独立的进行初始化。使用上通常是private static 变量，并且关联一个有状态的变量，如user ID 或Transaction ID.</p>
+        <p>treadlocal定义，使用，基本原理以及注意点</p>
+<p>代办：未完整</p>
+<a id="more"></a>
+<h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>Threadlocal提供了线程本地的变量，这些变量绑定于自己的线程，独立的进行初始化。使用上通常是private static 变量，并且关联一个有状态的变量，如user ID 或Transaction ID.</p>
 <p><strong>通常是保存 线程中的状态的变量</strong></p>
 <h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadId</span> </span>&#123;</span><br><span class="line">    <span class="comment">// Atomic integer containing the next thread ID to be assigned</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> AtomicInteger nextId = <span class="keyword">new</span> AtomicInteger(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Thread local variable containing each thread's ID</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> ThreadLocal&lt;Integer&gt; threadId =</span><br><span class="line">        <span class="keyword">new</span> ThreadLocal&lt;Integer&gt;() &#123;</span><br><span class="line">        <span class="meta">@Override</span> </span><br><span class="line">        <span class="function"><span class="keyword">protected</span> Integer <span class="title">initialValue</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> nextId.getAndIncrement();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Returns the current thread's unique ID, assigning it if necessary</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">get</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> threadId.get();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>只要这个线程活着，并且threadllocal实例可用，那么每一个线程保持一个引用与threadlocal中变量的拷贝，</p>
@@ -549,7 +552,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-count">18</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -571,7 +574,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-count">21</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
