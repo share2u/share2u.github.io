@@ -1,12 +1,73 @@
----
-title: shiro工作流程
-date: 2018-10-24 09:42:02
-categories:
-- shiro
-tags:
-- shiro
-- filter
----
+## 基本描述
+
+- Apache Shiro是Java的一个安全（权限）框架
+- 可以在JavaSE，javaEE环境
+- 功能点：认证，授权，加密、会话管理、web集成、缓存等
+
+![shiro功能点](http://ou02tuh60.bkt.clouddn.com/shiro/shiro%E5%8A%9F%E8%83%BD%E7%82%B9.png)
+
+
+
+### 应用程序角度
+
+![shiro外部架构](http://ou02tuh60.bkt.clouddn.com/shiro/shiro%E5%A4%96%E9%83%A8%E6%9E%B6%E6%9E%84.png)
+
+### Shiro内部架构
+
+![1532848598409](http://ou02tuh60.bkt.clouddn.com/shiro/shiro%E5%86%85%E9%83%A8%E6%9E%B6%E6%9E%84.png)
+
+## 例子
+
+```java
+public class UserRealm extends AuthorizingRealm {
+ 
+    private UserService userService;
+ 
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
+ 
+	// 从数据库中获取权限信息
+    @Override
+    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
+        String username = (String)principals.getPrimaryPrincipal();
+ 
+        SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
+		// 从数据库中查询当前用户所拥有的角色
+        authorizationInfo.setRoles(userService.findRoles(username));
+		// 从数据库中查询当前用户所拥有的权限
+        authorizationInfo.setStringPermissions(userService.findPermissions(username));
+        return authorizationInfo;
+    }
+	
+	// 从数据库中获取认证信息
+    @Override
+    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
+        String username = (String)token.getPrincipal();
+        User user = userService.findByUsername(username);
+        if(user == null) {
+            throw new UnknownAccountException();//没找到帐号
+        }
+        if(Boolean.TRUE.equals(user.getLocked())) {
+            throw new LockedAccountException(); //帐号锁定
+        }
+        //交给AuthenticatingRealm使用CredentialsMatcher进行密码匹配，如果觉得人家的不好可以自定义实现
+        SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(
+                user.getUsername(), //用户名 principal
+                user.getPassword(), //密码   hashedCredentials
+            	//注册的时候生成盐值   credentialsSalt
+                ByteSource.Util.bytes(user.getCredentialsSalt()),//salt=username+salt 
+                getName()  //realmName
+        );
+        return authenticationInfo;
+    }
+ 
+}
+```
+
+## 工作流程
+
+### 入口：DelegatingFilterProxy 
 
 web.xml中的shiro入口
 
@@ -40,18 +101,18 @@ DelegatingFilterProxy 是Filter的代理，代理的是spring容器中的filter-
         -->
     <property name="filterChainDefinitions">
         <value>
-            /loginsuccess = anon
+            /loginsuccess = anon   ===AnonymousFilter
             /logout = logout
-            /user.jsp = roles[user]
-            /** = authc
+            /user.jsp = roles[user]====RolesAuthorizationFilter
+            /** = authc            ====FormAuthenticationFilter
         </value>
     </property>
 </bean>
 ```
 
-### shiroFilter
+### 初始化：shiroFilter
 
-![1540385548793](C:\Users\cwm\AppData\Local\Temp\1540385548793.png)
+![1540385548793](http://ou02tuh60.bkt.clouddn.com/1540385548793.png)
 
 ShiroFilterFactoryBean 实现了spring FactoryBean ,getObject获取实例
 
@@ -186,7 +247,64 @@ user(UserFilter.class);
 
 2. pathMatchingFilterChainResolver设置创建的FilterChainManager对象，所以URL匹配上后可以获取该URL需要应用的FilterChain了。 
 
-### 执行---doFilter
+### filter执行---匹配filter
+
+(错误)通过请求的url,获取要走的过滤链，或者说，所有请求都走一样的过滤链，过滤器中由判断自己是否支持该请求
+
+（正解）,所有的请求走一个过滤器org.springframework.web.filter.DelegatingFilterProxy#doFilter 
+
+```java
+org.apache.shiro.web.servlet.OncePerRequestFilter#doFilter==执行被代理类doFilter
+	org.apache.shiro.web.servlet.AbstractShiroFilter#doFilterInternal	
+		createSubject  AbstractShiroFilter#createSubject== 创建subject
+		updateSessionLastAccessTime                     == 更新session最后访问时间
+		executeChain AbstractShiroFilter#executeChain   ==获取过滤链，执行过滤方法
+```
+
+```java
+protected void executeChain(ServletRequest request, ServletResponse response, FilterChain origChain){
+    FilterChain chain = getExecutionChain(request, response, origChain);
+    //获取过滤链：如FormAuthenticationFilter
+    chain.doFilter(request, response);
+}
+```
+
+```java
+eg:FormAuthenticationFilter#doFilter===父类OncePerRequestFilter的doFilter
+		OncePerRequestFilter#doFilter---doFilterInternal---AdviceFilter#doFilterInternal
+```
+
+```java
+AdviceFilter#doFilterInternal
+	preHandle
+			AdviceFilter#preHandle  true
+			LogoutFilter#preHandle  false
+			PathMatchingFilter#preHandle--isFilterChainContinued--onPreHandle
+				AnonymousFilter#onPreHandle true
+				NoSessionCreationFilter#onPreHandle true
+				PathMatchingFilter#onPreHandle  true
+				AccessControlFilter#onPreHandle
+					isAccessAllowed
+					onAccessDenied
+			executeChain 							==其他过滤器执行
+			postHandle   							==没有实现类
+			cleanup
+				AdviceFilter#cleanup                  ==没实现
+				AuthenticatingFilter#cleanup
+					onAccessDenied   
+						FormAuthenticationFilter#onAccessDenied   
+						BasicHttpAuthenticationFilter#onAccessDenied
+```
+
+
+
+filter 执行顺序
+
+https://www.cnblogs.com/ljdblog/p/6237683.html
+
+https://www.cnblogs.com/q95265/p/6928081.html
+
+### filter执行---doFilter
 
 ```java
 public final void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain){
@@ -213,7 +331,7 @@ public final void doFilter(ServletRequest request, ServletResponse response, Fil
 
 shiro通过一系列url匹配符配置URL应用上的Filter，然后在Filter中完成相应的任务。核心逻辑-doFilterInternal
 
-OncePerRequestFilter
+OncePerRequestFilter：保证每个filter都执行一次
 
 ​	--AbstractShiroFilter
 
@@ -354,6 +472,10 @@ public boolean onPreHandle(ServletRequest request, ServletResponse response, Obj
 }
 ```
 
+isAccessAllowed：表示是否允许访问；mappedValue就是[urls]配置中拦截器参数部分，如果允许访问返回true，否则false；
+
+onAccessDenied：表示当访问拒绝时是否已经处理了；如果返回true表示需要继续处理；如果返回false表示该拦截器实例已经处理了，将直接返回即可
+
 org.apache.shiro.web.filter.authc.AuthenticatingFilter#isAccessAllowed
 
 ```java
@@ -427,8 +549,375 @@ protected boolean executeLogin(ServletRequest request, ServletResponse response)
 }
 ```
 
+## 认证流程
+
+```java
+public void login(AuthenticationToken token) throws AuthenticationException {
+    clearRunAsIdentitiesInternal();
+    //securityManager 登录
+    Subject subject = securityManager.login(this, token);
+
+    PrincipalCollection principals;
+
+    String host = null;
+
+    if (subject instanceof DelegatingSubject) {
+        DelegatingSubject delegating = (DelegatingSubject) subject;
+        //we have to do this in case there are assumed identities - we don't want to lose the 'real' principals:
+        principals = delegating.principals;
+        host = delegating.host;
+    } else {
+        principals = subject.getPrincipals();
+    }
+
+    if (principals == null || principals.isEmpty()) {
+        String msg = "Principals returned from securityManager.login( token ) returned a null or " +
+            "empty value.  This value must be non null and populated with one or more elements.";
+        throw new IllegalStateException(msg);
+    }
+    this.principals = principals;
+    this.authenticated = true;
+    if (token instanceof HostAuthenticationToken) {
+        host = ((HostAuthenticationToken) token).getHost();
+    }
+    if (host != null) {
+        this.host = host;
+    }
+    Session session = subject.getSession(false);
+    if (session != null) {
+        this.session = decorate(session);
+    } else {
+        this.session = null;
+    }
+}
+```
+
+```java
+public Subject login(Subject subject, AuthenticationToken token) throws AuthenticationException {
+    AuthenticationInfo info;
+    try {
+        //关键逻辑
+        info = authenticate(token);
+    } catch (AuthenticationException ae) {
+        try {
+            onFailedLogin(token, ae, subject);
+        } catch (Exception e) {
+            if (log.isInfoEnabled()) {
+                log.info("onFailedLogin method threw an " +
+                         "exception.  Logging and propagating original AuthenticationException.", e);
+            }
+        }
+        throw ae; //propagate
+    }
+    //认证成功，重新创建subject
+    Subject loggedIn = createSubject(token, info, subject);
+    //处理rememberme逻辑
+    onSuccessfulLogin(token, info, loggedIn);
+
+    return loggedIn;
+}
+```
+
+org.apache.shiro.mgt.AuthenticatingSecurityManager#authenticate
+
+```java
+public AuthenticationInfo authenticate(AuthenticationToken token) {
+    return this.authenticator.authenticate(token);
+}
+```
+
+org.apache.shiro.authc.AbstractAuthenticator#authenticate
+
+​	org.apache.shiro.authc.pam.ModularRealmAuthenticator#authenticate
+
+模板方法模式
+
+```java
+ protected AuthenticationInfo doAuthenticate(AuthenticationToken authenticationToken) throws AuthenticationException {
+        assertRealmsConfigured();
+        Collection<Realm> realms = getRealms();
+        if (realms.size() == 1) {
+            return doSingleRealmAuthentication(realms.iterator().next(), authenticationToken);
+        } else {
+            return doMultiRealmAuthentication(realms, authenticationToken);
+        }
+    }
+```
+
+```java
+protected AuthenticationInfo doMultiRealmAuthentication(Collection<Realm> realms, AuthenticationToken token) {
+    //多realm下的认证策略默认实现为AtLeastOneSuccessfulStrategy
+    AuthenticationStrategy strategy = getAuthenticationStrategy();
+    AuthenticationInfo aggregate = strategy.beforeAllAttempts(realms, token);
+    for (Realm realm : realms) {
+        aggregate = strategy.beforeAttempt(realm, token, aggregate);
+        if (realm.supports(token)) {
+            //关键实现方法
+            AuthenticationInfo info = realm.getAuthenticationInfo(token);
+            aggregate = strategy.afterAttempt(realm, token, info, aggregate, t);
+        } else {
+            log.debug("Realm [{}] does not support token {}.  Skipping realm.", realm, token);
+        }
+    }
+    aggregate = strategy.afterAllAttempts(token, aggregate);
+    return aggregate;
+}
+```
+
+```java
+public final AuthenticationInfo getAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
+    AuthenticationInfo info = getCachedAuthenticationInfo(token);
+    if (info == null) {
+        //覆盖实现核心认证信息
+        info = doGetAuthenticationInfo(token);
+        if (token != null && info != null) {
+            cacheAuthenticationInfoIfPossible(token, info);
+        }
+    }
+    if (info != null) {
+        assertCredentialsMatch(token, info);
+    }
+    return info;
+}
+```
+
+eg:自定义realmA实现AuthenticatingRealm
+
+```java
+public class ShiroRealmA extends AuthenticatingRealm {
+    @Override
+    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
+        System.out.println("===>ShiroRealmA<=====" + JSON.toJSONString(token));
+        /**
+         * 1. 吧AuthenticationToken转为usernamepasswordtoken
+         * 2. 获取用户名与密码
+         * 3. 调用数据库的方法
+         * 4. 根据数据库用户情况抛出异常或构建AuthenticationInfo
+         */
+        UsernamePasswordToken usernamePasswordToken = (UsernamePasswordToken) token;
+        String username = usernamePasswordToken.getUsername();
+        // 数据库获取的密码，，前端加密 密码加密
+        //盐值一般是唯一值，可以是用户名
+        ByteSource salt = ByteSource.Util.bytes(username);
+        Object credentials = "123";
+        Object credentialsMD5 = new SimpleHash("MD5", credentials, salt, 2);
+
+        if ("zs".equals(username)) {
+            return new SimpleAuthenticationInfo(username,credentialsMD5, salt, this.getName());
+        } else {
+            throw new AuthenticationException();
+        }
+    }
+}
+```
+
+## 授权流程
+
+perms(PermissionsAuthorizationFilter.class) ：url是否有权限
+
+roles(RolesAuthorizationFilter.class), ：url是否有该角色
+
+```java
+public boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) throws IOException {
+    Subject subject = getSubject(request, response);
+    //访问需要的权限
+    String[] perms = (String[]) mappedValue;
+    //subject判断是否有权限
+    boolean isPermitted = true;
+    if (perms != null && perms.length > 0) {
+        if (perms.length == 1) {
+            if (!subject.isPermitted(perms[0])) {
+                isPermitted = false;
+            }
+        } else {
+            if (!subject.isPermittedAll(perms)) {
+                isPermitted = false;
+            }
+        }
+    }
+    return isPermitted;
+}
+```
+
+ModularRealmAuthorizer.isPermitted 
+
+```java
+public boolean isPermitted(PrincipalCollection principals, String permission) {
+    assertRealmsConfigured();
+    for (Realm realm : getRealms()) {
+        if (!(realm instanceof Authorizer)) continue;
+        // 调用Realm的isPermitted方法
+        if (((Authorizer) realm).isPermitted(principals, permission)) {
+            return true;
+        }
+    }
+    return false;
+}
+```
+
+```java
+public boolean isPermitted(String permission) {
+    return hasPrincipals() && securityManager.isPermitted(getPrincipals(), permission);
+}
+```
+
+```java
+public boolean isPermitted(PrincipalCollection principals, String permissionString) {
+    return this.authorizer.isPermitted(principals, permissionString);
+```
+
+```java
+  public boolean isPermitted(PrincipalCollection principals, String permission) {
+        Permission p = getPermissionResolver().resolvePermission(permission);
+        return isPermitted(principals, p);
+    }
+
+    public boolean isPermitted(PrincipalCollection principals, Permission permission) {
+        AuthorizationInfo info = getAuthorizationInfo(principals);
+        return isPermitted(permission, info);
+    }
+```
+
+```java
+protected AuthorizationInfo getAuthorizationInfo(PrincipalCollection principals) {
+
+    AuthorizationInfo info = null;
+	//缓存中获取授权信息
+    Cache<Object, AuthorizationInfo> cache = getAvailableAuthorizationCache();
+    if (cache != null) {
+        Object key = getAuthorizationCacheKey(principals);
+        info = cache.get(key);
+    }
+    if (info == null) {
+        // 继承覆盖实现获取授权信息
+        info = doGetAuthorizationInfo(principals);
+        if (info != null && cache != null) {
+            Object key = getAuthorizationCacheKey(principals);
+            cache.put(key, info);
+        }
+    }
+
+    return info;
+}
+```
+
+ModularRealmAuthorizer.isPermittedAll 
+
+AuthorizationFilter#onAccessDenied
+
+```java
+protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws IOException {
+    Subject subject = getSubject(request, response);
+    //未登陆，跳转到登陆界面
+    if (subject.getPrincipal() == null) {
+        saveRequestAndRedirectToLogin(request, response);
+    } else {
+        //登陆未授权、返回未授权界面或者401状态码
+        String unauthorizedUrl = getUnauthorizedUrl();
+        if (StringUtils.hasText(unauthorizedUrl)) {
+            WebUtils.issueRedirect(request, response, unauthorizedUrl);
+        } else {
+            WebUtils.toHttp(response).sendError(HttpServletResponse.SC_UNAUTHORIZED);
+        }
+    }
+    return false;
+}
+```
+
+
+
+## FormAuthenticationFilter
+
+Onceperrequestfilter#doFilter
+
+adviceFilter#doFilterInternal
+
+AdviceFilter#preHandle  true
+
+AuthenticatingFilter#cleanup
+
+FormAuthenticationFilter#onAccessDenied
+
+```java
+protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
+    //是否为登陆请求
+    if (isLoginRequest(request, response)) {
+        //是否是post请求
+        if (isLoginSubmission(request, response)) {
+            return executeLogin(request, response);
+        } else {
+            return true;
+        }
+    } else {
+        saveRequestAndRedirectToLogin(request, response);
+        return false;
+    }
+}
+```
+
+org.apache.shiro.web.filter.authc.AuthenticatingFilter#executeLogin
+
+```java
+protected boolean executeLogin(ServletRequest request, ServletResponse response) throws Exception {
+    AuthenticationToken token = createToken(request, response);
+    try {
+        Subject subject = getSubject(request, response);
+        subject.login(token);
+        return onLoginSuccess(token, subject, request, response);
+    } catch (AuthenticationException e) {
+        return onLoginFailure(token, e, request, response);
+    }
+}
+```
+
+go to 认证流程
+
+## PermissionsAuthorizationFilter
+
+Onceperrequestfilter#doFilter
+
+adviceFilter#doFilterInternal
+
+PathMatchingFilter#preHandle
+
+AccessControlFilter#onPreHandle
+
+go to 授权流程
+
+​	PermissionsAuthorizationFilter#isAccessAllowed
+
+​	AuthorizationFilter#onAccessDenied
+
+## RolesAuthorizationFilter
+
+与PermissionsAuthorizationFilter类似
+
+## UserFilter
+
+是登录页面或者必须登录后获得principalCollection，才能通过
+
+```java
+protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {  
+        if (isLoginRequest(request, response)) {  
+            return true;  
+        } else {  
+            Subject subject = getSubject(request, response);  
+            return subject.getPrincipal() != null;  
+        }  
+}
+```
+
+```java
+protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {  
+        saveRequestAndRedirectToLogin(request, response);  
+        return false;  
+} 
+```
+
+
+
 参考文献
 
 https://blog.csdn.net/xtayfjpk/article/details/53729135 
 
-http://suichangkele.iteye.com/blog/2277023
+http://suichangkele.iteye.com/blog/2277023 

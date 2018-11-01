@@ -3,7 +3,7 @@ title: ContextLoaderListener & DispatcherServlet
 date: 2018-07-29 11:31:16
 author: 阿润
 categories:
-- spring framework
+- spring
 tags:
 - spring
 - servlet
