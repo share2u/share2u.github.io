@@ -1,5 +1,5 @@
 ---
-title: servlet/filter/listener/interceptor
+title: servlet-filter-listener-interceptor
 date: 2018-10-25 19:08:40
 categories:
 - web
@@ -81,11 +81,11 @@ filter1--------------------------web.xml中的配置顺序
 
 ->filter1
 
-![1540519294642](..\..\images\blog\struts结构.png)
+![1540519294642](servlet-filter-listener-interceptor\struts结构.png)
 
 
 
-![springmvc拦截器](..\..\images\blog\springmvc结构.png)
+![springmvc拦截器](servlet-filter-listener-interceptor\springmvc结构.png)
 
 ## 应用举例
 

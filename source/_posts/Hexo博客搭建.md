@@ -53,6 +53,10 @@ https://www.bluelzy.com/articles/use_valine_for_your_blog.html
 
 http://www.yangyong.xyz/2018/01/03/add-hexo-next-post-views/
 
+#### 图片
+
+https://blog.csdn.net/sugar_rainbow/article/details/57415705
+
 ## 新电脑搭建博客
 
 https://www.titanjun.top/2018/04/12/Hexo%E5%8D%9A%E5%AE%A2%E5%A4%9A%E5%8F%B0%E7%94%B5%E8%84%91%E8%AE%BE%E5%A4%87%E5%90%8C%E6%AD%A5%E7%AE%A1%E7%90%86/

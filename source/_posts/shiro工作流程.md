@@ -14,17 +14,17 @@ tags:
 - 可以在JavaSE，javaEE环境
 - 功能点：认证，授权，加密、会话管理、web集成、缓存等
 
-![shiro功能点](..\..\images\blog\shiro基本结构.png)
+![shiro功能点](shiro工作流程\shiro基本结构.png)
 
 
 
 ### 应用程序角度
 
-![shiro外部架构](..\..\images\blog\shiro外部架构.png)
+![shiro外部架构](shiro工作流程\shiro外部架构.png)
 
 ### Shiro内部架构
 
-![1532848598409](..\..\images\blog\shiro内部结构.png)
+![1532848598409](shiro工作流程\shiro内部结构.png)
 
 ## 例子
 
