@@ -107,9 +107,8 @@ Map<String,User> userMap = JSON.parseObject(s,new TypeReference<Map<String,User>
 
 ## 参考文献
 
+http://kimmking.github.io/2017/06/06/json-best-practice/
 
-
-[1]: http://kimmking.github.io/2017/06/06/json-best-practice/	"json最佳实践"
-[2]: https://blog.csdn.net/qq_35873847/article/details/78850528	"解决FastJson中“$ref 循环引用”的问题&lt;三种方式对应不同需求&gt;"
+https://blog.csdn.net/qq_35873847/article/details/78850528
 
 http://zyjustin9.iteye.com/blog/2020533

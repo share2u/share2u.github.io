@@ -19,7 +19,7 @@ tags:
 
 ### tomcat容器模型
 
-![1532928329345](http://ou02tuh60.bkt.clouddn.com/web/tomcat%E5%AE%B9%E5%99%A8%E6%A8%A1%E5%9E%8B.png)
+![1532928329345](..\..\images\blog\tomca容器模型.png)
 
 tomcat容器分为四个等级，真正管理servlet的容器是Context容器，一个Context对应一个web工程
 
@@ -69,7 +69,7 @@ tomcat容器分为四个等级，真正管理servlet的容器是Context容器，
 
 ​	Servlet 的运行模式是一个典型的“握手型的交互式”运行模式。所谓“握手型的交互式”就是两个模块为了交换数据通常都会准备一个交易场景，这个场景一直跟随个这个交易过程直到这个交易完成为止。这个交易场景的初始化是根据这次交易对象指定的参数来定制的，这些指定参数通常就会是一个配置类。所以对号入座，交易场景就由 ServletContext 来描述，而定制的参数集合就由 ServletConfig 来描述。而 ServletRequest 和 ServletResponse 就是要交互的具体对象了，它们通常都是作为运输工具来传递交互结果。 
 
-![1532954375886](http://ou02tuh60.bkt.clouddn.com/web/Servlet%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84.png)
+![1532954375886](..\..\images\blog\Servlet体系结构.png)
 
 - 与servlet主动关联的三个类：Servletconfig、servletRequest和ServletResponse,这三个类都是通过容器传递给Servlet的。servletconfig是在servlet是Serevlet初始化时候 传递，后两个是请求到达的时候传递过来的。
   - Servletconfig接口声明的方法是为了获取Servlet的一些配置信息，包括servletcontext

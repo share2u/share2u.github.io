@@ -1,20 +1,30 @@
+---
+title: shiro工作流程
+date: 2018-11-01 11:09:58
+categories:
+- shiro
+tags:
+- shiro
+- filter
+---
+
 ## 基本描述
 
 - Apache Shiro是Java的一个安全（权限）框架
 - 可以在JavaSE，javaEE环境
 - 功能点：认证，授权，加密、会话管理、web集成、缓存等
 
-![shiro功能点](http://ou02tuh60.bkt.clouddn.com/shiro/shiro%E5%8A%9F%E8%83%BD%E7%82%B9.png)
+![shiro功能点](..\..\images\blog\shiro基本结构.png)
 
 
 
 ### 应用程序角度
 
-![shiro外部架构](http://ou02tuh60.bkt.clouddn.com/shiro/shiro%E5%A4%96%E9%83%A8%E6%9E%B6%E6%9E%84.png)
+![shiro外部架构](..\..\images\blog\shiro外部架构.png)
 
 ### Shiro内部架构
 
-![1532848598409](http://ou02tuh60.bkt.clouddn.com/shiro/shiro%E5%86%85%E9%83%A8%E6%9E%B6%E6%9E%84.png)
+![1532848598409](..\..\images\blog\shiro内部结构.png)
 
 ## 例子
 
@@ -112,7 +122,7 @@ DelegatingFilterProxy 是Filter的代理，代理的是spring容器中的filter-
 
 ### 初始化：shiroFilter
 
-![1540385548793](http://ou02tuh60.bkt.clouddn.com/1540385548793.png)
+![1540385548793](..\..\images\blog\shiroFilter对象.png)
 
 ShiroFilterFactoryBean 实现了spring FactoryBean ,getObject获取实例
 
