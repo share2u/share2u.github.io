@@ -85,14 +85,14 @@
 <meta property="og:site_name" content="Chen&#39;s Blog">
 <meta property="og:description" content="servlet 容器 Servlet体系结构">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://share2u.github.io/2018/07/images/blog/tomca容器模型.png">
-<meta property="og:image" content="https://github.com/share2u/share2u.github.io/raw/hexo/images/blog/Servlet%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84.png">
-<meta property="og:image" content="http://ou02tuh60.bkt.clouddn.com/web/servletconfig.png">
-<meta property="og:updated_time" content="2018-11-06T05:26:12.076Z">
+<meta property="og:image" content="http://share2u.github.io/2018/07/30/Servlet学习笔记/servlet学习笔记/tomca容器模型.png">
+<meta property="og:image" content="http://share2u.github.io/2018/07/30/Servlet学习笔记/servlet学习笔记/Servlet体系结构.png">
+<meta property="og:image" content="http://share2u.github.io/2018/07/30/Servlet学习笔记/servlet学习笔记/servletconfig.jpg">
+<meta property="og:updated_time" content="2018-11-06T06:30:40.687Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="servlet学习笔记">
 <meta name="twitter:description" content="servlet 容器 Servlet体系结构">
-<meta name="twitter:image" content="http://share2u.github.io/2018/07/images/blog/tomca容器模型.png">
+<meta name="twitter:image" content="http://share2u.github.io/2018/07/30/Servlet学习笔记/servlet学习笔记/tomca容器模型.png">
 
 
 
@@ -395,7 +395,7 @@
 </ul>
 <a id="more"></a>
 <h2 id="servlet容器"><a href="#servlet容器" class="headerlink" title="servlet容器"></a>servlet容器</h2><p>常见的Servlet容器是tomcat，jetty等</p>
-<h3 id="tomcat容器模型"><a href="#tomcat容器模型" class="headerlink" title="tomcat容器模型"></a>tomcat容器模型</h3><p><img src="/2018/07/30/Servlet学习笔记/../..\images\blog\tomca容器模型.png" alt="1532928329345"></p>
+<h3 id="tomcat容器模型"><a href="#tomcat容器模型" class="headerlink" title="tomcat容器模型"></a>tomcat容器模型</h3><p><img src="/2018/07/30/Servlet学习笔记/servlet学习笔记/tomca容器模型.png" alt="1532928329345"></p>
 <p>tomcat容器分为四个等级，真正管理servlet的容器是Context容器，一个Context对应一个web工程</p>
 <h3 id="tomcat添加一个web项目"><a href="#tomcat添加一个web项目" class="headerlink" title="tomcat添加一个web项目"></a>tomcat添加一个web项目</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> Context <span class="title">addWebapp</span><span class="params">(Host host, String url, String path)</span> </span>&#123;</span><br><span class="line">      <span class="comment">//silence(url);</span></span><br><span class="line">      Context ctx = <span class="keyword">new</span> StandardContext();</span><br><span class="line">      ctx.setPath( url );<span class="comment">//设置访问路径</span></span><br><span class="line">      ctx.setDocBase(path);<span class="comment">//设置项目路径</span></span><br><span class="line">      ctx.setRealm(<span class="keyword">new</span> NullRealm());<span class="comment">//设置权限</span></span><br><span class="line">      ctx.addLifecycleListener(<span class="keyword">new</span> Tomcat.DefaultWebXmlListener());</span><br><span class="line">      ContextConfig ctxCfg = <span class="keyword">new</span> ContextConfig();</span><br><span class="line">      ctx.addLifecycleListener(ctxCfg);</span><br><span class="line">      ctxCfg.setDefaultWebXml(<span class="string">"org/apache/catalin/startup/NO_DEFAULT_XML"</span>);</span><br><span class="line">      host.addChild(ctx);<span class="comment">//添加到host父容器中</span></span><br><span class="line">      <span class="keyword">return</span> ctx;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
 <h3 id="tomcat-启动"><a href="#tomcat-启动" class="headerlink" title="tomcat 启动"></a>tomcat 启动</h3><h4 id="容器初始化"><a href="#容器初始化" class="headerlink" title="容器初始化"></a>容器初始化</h4><h4 id="应用初始化"><a href="#应用初始化" class="headerlink" title="应用初始化"></a>应用初始化</h4><ol>
@@ -413,7 +413,7 @@
 </li>
 </ol>
 <h2 id="Servlet体系结构"><a href="#Servlet体系结构" class="headerlink" title="Servlet体系结构"></a>Servlet体系结构</h2><h3 id="servlet"><a href="#servlet" class="headerlink" title="servlet"></a>servlet</h3><p>​    Servlet 的运行模式是一个典型的“握手型的交互式”运行模式。所谓“握手型的交互式”就是两个模块为了交换数据通常都会准备一个交易场景，这个场景一直跟随个这个交易过程直到这个交易完成为止。这个交易场景的初始化是根据这次交易对象指定的参数来定制的，这些指定参数通常就会是一个配置类。所以对号入座，交易场景就由 ServletContext 来描述，而定制的参数集合就由 ServletConfig 来描述。而 ServletRequest 和 ServletResponse 就是要交互的具体对象了，它们通常都是作为运输工具来传递交互结果。 </p>
-<p><img src="https://github.com/share2u/share2u.github.io/raw/hexo/images/blog/Servlet%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84.png" alt="1532954375886"></p>
+<p><img src="/2018/07/30/Servlet学习笔记/servlet学习笔记/Servlet体系结构.png" alt="Servlet体系结构"></p>
 <ul>
 <li>与servlet主动关联的三个类：Servletconfig、servletRequest和ServletResponse,这三个类都是通过容器传递给Servlet的。servletconfig是在servlet是Serevlet初始化时候 传递，后两个是请求到达的时候传递过来的。<ul>
 <li>Servletconfig接口声明的方法是为了获取Servlet的一些配置信息，包括servletcontext</li>
@@ -421,7 +421,7 @@
 </ul>
 </li>
 </ul>
-<h3 id="servletconfig"><a href="#servletconfig" class="headerlink" title="servletconfig"></a>servletconfig</h3><p><img src="http://ou02tuh60.bkt.clouddn.com/web/servletconfig.png" alt="1533000128343"></p>
+<h3 id="servletconfig"><a href="#servletconfig" class="headerlink" title="servletconfig"></a>servletconfig</h3><p><img src="/2018/07/30/Servlet学习笔记/servlet学习笔记/servletconfig.jpg" alt="1533000128343"></p>
 <ul>
 <li>standardwrapper和standardwrapperfacade都实现了servletconfig接口，而standwrapperfacade是门面类，传递给servlet,这个类能够保证从 StandardWrapper 中拿到 ServletConfig 所规定的数据，而又不把 ServletConfig 不关心的数据暴露给 Servlet</li>
 <li>servletconfg 湖区servletcontext的实际对象是ApplicationContextFacade对象，对容器数据的封装</li>
@@ -476,8 +476,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/07/29/ContextLoaderListener-DispatcherServlet/" rel="next" title="ContextLoaderListener & DispatcherServlet">
-                <i class="fa fa-chevron-left"></i> ContextLoaderListener & DispatcherServlet
+              <a href="/2018/07/30/Listener学习笔记/" rel="next" title="listener学习笔记">
+                <i class="fa fa-chevron-left"></i> listener学习笔记
               </a>
             
           </div>
@@ -486,8 +486,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/07/30/Listener学习笔记/" rel="prev" title="listener学习笔记">
-                listener学习笔记 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/08/01/java8学习笔记/" rel="prev" title="java8学习笔记">
+                java8学习笔记 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -572,7 +572,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-count">22</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
