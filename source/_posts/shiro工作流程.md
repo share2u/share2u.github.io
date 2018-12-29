@@ -8,6 +8,8 @@ tags:
 - filter
 ---
 
+基本描述以及shiro是如何执行的，包含认证和授权流程
+
 ## 基本描述
 
 - Apache Shiro是Java的一个安全（权限）框架
