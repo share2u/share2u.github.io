@@ -77,22 +77,22 @@
 
 
 
-<meta name="description" content="基本描述 Apache Shiro是Java的一个安全（权限）框架 可以在JavaSE，javaEE环境 功能点：认证，授权，加密、会话管理、web集成、缓存等   应用程序角度 Shiro内部架构 例子1234567891011121314151617181920212223242526272829303132333435363738394041424344public class UserRe">
+<meta name="description" content="基本描述以及shiro是如何执行的，包含认证和授权流程 基本描述 Apache Shiro是Java的一个安全（权限）框架 可以在JavaSE，javaEE环境 功能点：认证，授权，加密、会话管理、web集成、缓存等   应用程序角度 Shiro内部架构 例子1234567891011121314151617181920212223242526272829303132333435363738394">
 <meta name="keywords" content="filter,shiro">
 <meta property="og:type" content="article">
 <meta property="og:title" content="shiro工作流程">
 <meta property="og:url" content="http://share2u.github.io/2018/11/01/shiro工作流程/index.html">
 <meta property="og:site_name" content="Chen&#39;s Blog">
-<meta property="og:description" content="基本描述 Apache Shiro是Java的一个安全（权限）框架 可以在JavaSE，javaEE环境 功能点：认证，授权，加密、会话管理、web集成、缓存等   应用程序角度 Shiro内部架构 例子1234567891011121314151617181920212223242526272829303132333435363738394041424344public class UserRe">
+<meta property="og:description" content="基本描述以及shiro是如何执行的，包含认证和授权流程 基本描述 Apache Shiro是Java的一个安全（权限）框架 可以在JavaSE，javaEE环境 功能点：认证，授权，加密、会话管理、web集成、缓存等   应用程序角度 Shiro内部架构 例子1234567891011121314151617181920212223242526272829303132333435363738394">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://share2u.github.io/2018/11/01/shiro工作流程/shiro基本结构.png">
 <meta property="og:image" content="http://share2u.github.io/2018/11/01/shiro工作流程/shiro外部架构.png">
 <meta property="og:image" content="http://share2u.github.io/2018/11/01/shiro工作流程/shiro内部结构.png">
 <meta property="og:image" content="http://share2u.github.io/2018/11/images/blog/shiroFilter对象.png">
-<meta property="og:updated_time" content="2018-11-06T06:15:01.419Z">
+<meta property="og:updated_time" content="2018-12-29T07:50:04.773Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="shiro工作流程">
-<meta name="twitter:description" content="基本描述 Apache Shiro是Java的一个安全（权限）框架 可以在JavaSE，javaEE环境 功能点：认证，授权，加密、会话管理、web集成、缓存等   应用程序角度 Shiro内部架构 例子1234567891011121314151617181920212223242526272829303132333435363738394041424344public class UserRe">
+<meta name="twitter:description" content="基本描述以及shiro是如何执行的，包含认证和授权流程 基本描述 Apache Shiro是Java的一个安全（权限）框架 可以在JavaSE，javaEE环境 功能点：认证，授权，加密、会话管理、web集成、缓存等   应用程序角度 Shiro内部架构 例子1234567891011121314151617181920212223242526272829303132333435363738394">
 <meta name="twitter:image" content="http://share2u.github.io/2018/11/01/shiro工作流程/shiro基本结构.png">
 
 
@@ -390,7 +390,8 @@
       
 
       
-        <h2 id="基本描述"><a href="#基本描述" class="headerlink" title="基本描述"></a>基本描述</h2><ul>
+        <p>基本描述以及shiro是如何执行的，包含认证和授权流程</p>
+<h2 id="基本描述"><a href="#基本描述" class="headerlink" title="基本描述"></a>基本描述</h2><ul>
 <li>Apache Shiro是Java的一个安全（权限）框架</li>
 <li>可以在JavaSE，javaEE环境</li>
 <li>功能点：认证，授权，加密、会话管理、web集成、缓存等</li>
@@ -661,7 +662,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-count">24</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -672,7 +673,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -683,7 +684,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-count">32</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

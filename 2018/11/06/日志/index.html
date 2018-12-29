@@ -77,19 +77,19 @@
 
 
 
-<meta name="description" content="java中基本日志的使用，包括log4j,logback等 常用的日志组件​                  门面接口Common-loggingapache提供的一个通用的日志接口、用户可以选择第三方的日志组件作为具体实现、eg log4j,logging等。通过动态查找（查找配置文件）的机制、在程序运行时自动找出真正使用的日志库。好处时代码依赖的时common-logging而非log4j，">
+<meta name="description" content="java中基本日志的使用，包括log4j,logback等">
 <meta name="keywords" content="log4j,logback,jcl">
 <meta property="og:type" content="article">
 <meta property="og:title" content="基本日志">
 <meta property="og:url" content="http://share2u.github.io/2018/11/06/日志/index.html">
 <meta property="og:site_name" content="Chen&#39;s Blog">
-<meta property="og:description" content="java中基本日志的使用，包括log4j,logback等 常用的日志组件​                  门面接口Common-loggingapache提供的一个通用的日志接口、用户可以选择第三方的日志组件作为具体实现、eg log4j,logging等。通过动态查找（查找配置文件）的机制、在程序运行时自动找出真正使用的日志库。好处时代码依赖的时common-logging而非log4j，">
+<meta property="og:description" content="java中基本日志的使用，包括log4j,logback等">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://share2u.github.io/2018/11/06/日志/日志框架.png">
-<meta property="og:updated_time" content="2018-11-06T10:58:46.275Z">
+<meta property="og:updated_time" content="2018-12-29T07:46:33.081Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="基本日志">
-<meta name="twitter:description" content="java中基本日志的使用，包括log4j,logback等 常用的日志组件​                  门面接口Common-loggingapache提供的一个通用的日志接口、用户可以选择第三方的日志组件作为具体实现、eg log4j,logging等。通过动态查找（查找配置文件）的机制、在程序运行时自动找出真正使用的日志库。好处时代码依赖的时common-logging而非log4j，">
+<meta name="twitter:description" content="java中基本日志的使用，包括log4j,logback等">
 <meta name="twitter:image" content="http://share2u.github.io/2018/11/06/日志/日志框架.png">
 
 
@@ -388,6 +388,7 @@
 
       
         <p>java中基本日志的使用，包括log4j,logback等</p>
+<a id="more"></a>
 <h2 id="常用的日志组件"><a href="#常用的日志组件" class="headerlink" title="常用的日志组件"></a>常用的日志组件</h2><p>​                <img src="/2018/11/06/日志/日志框架.png" alt="aaa"> </p>
 <h3 id="门面接口"><a href="#门面接口" class="headerlink" title="门面接口"></a>门面接口</h3><h4 id="Common-logging"><a href="#Common-logging" class="headerlink" title="Common-logging"></a>Common-logging</h4><p>apache提供的一个通用的日志接口、用户可以选择第三方的日志组件作为具体实现、eg log4j,logging等。通过<strong>动态查找（查找配置文件）</strong>的机制、在程序运行时自动找出真正使用的日志库。好处时代码依赖的时common-logging而非log4j，避免和具体的日志方案直接耦合，可以随时更换日志实现的第三方库。</p>
 <h5 id="动态查找方案："><a href="#动态查找方案：" class="headerlink" title="动态查找方案："></a>动态查找方案：</h5><ol>
@@ -442,7 +443,8 @@
 </ol>
 <h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><h3 id="其他日志迁入SLF4j"><a href="#其他日志迁入SLF4j" class="headerlink" title="其他日志迁入SLF4j"></a>其他日志迁入SLF4j</h3><p>加入xxx-over-slf4j.jar包桥接包，使得xxx输出的日志交给slf4j</p>
 <h3 id="死循环"><a href="#死循环" class="headerlink" title="死循环"></a>死循环</h3><p>当第一种情况发生时，slf4j,如果加入了slf4j-xxx-version.jar,slf4j会将日志交给xxx,这样导致死循环，</p>
-<h3 id="多个绑定、打印不出日志等"><a href="#多个绑定、打印不出日志等" class="headerlink" title="多个绑定、打印不出日志等"></a>多个绑定、打印不出日志等</h3><ol>
+<h3 id="多个绑定、打印不出日志等"><a href="#多个绑定、打印不出日志等" class="headerlink" title="多个绑定、打印不出日志等"></a>多个绑定、打印不出日志等</h3><p>Class path contains multiple SLF4J bindings</p>
+<ol>
 <li>理清关系，要什么日志方案，推荐slf4j+logback</li>
 <li>排包</li>
 <li>如果排包可以完成，执行方案需要的jar包，如果有一些直接使用impl的方法，需要桥接包完成</li>
@@ -457,10 +459,17 @@
 <p>ConsoleAppender  ：控制台</p>
 <p>FileAppender ：文件</p>
 <p>RollingFileAppender </p>
-<h3 id="logger"><a href="#logger" class="headerlink" title="logger"></a>logger</h3><p>用来设置某一个包或具体的某一个类的日志打印级别、以及指定<code>&lt;appender&gt;</code>。<code>&lt;loger&gt;</code>仅有一个name属性，一个可选的level和一个可选的addtivity属性 </p>
-<h3 id="root"><a href="#root" class="headerlink" title="root"></a>root</h3><p>它也是<code>&lt;loger&gt;</code>元素，但是它是根loger,是所有<code>&lt;loger&gt;</code>的上级 </p>
+<h3 id="logger"><a href="#logger" class="headerlink" title="logger"></a>logger</h3><p>用来设置某一个包或具体的某一个类的日志打印级别、</p>
+<ul>
+<li>appender：没有设置，则本身不打印任何消息</li>
+<li>name属性，</li>
+<li>可选level:默认继承上级</li>
+<li>可选的addtivity属性：是否向上级loger传递打印信息,默认是true)</li>
+</ul>
+<h3 id="root"><a href="#root" class="headerlink" title="root"></a>root</h3><p>它也是<code>&lt;loger&gt;</code>元素，但是它是根loger,是所有<code>&lt;loger&gt;</code>的上级 ，只有level属性，默认都是debug</p>
 <h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p><a href="https://blog.csdn.net/yycdaizi/article/details/8276265" target="_blank" rel="noopener">https://blog.csdn.net/yycdaizi/article/details/8276265</a></p>
 <p><a href="https://blog.csdn.net/NowUSeeMe/article/details/55010715" target="_blank" rel="noopener">https://blog.csdn.net/NowUSeeMe/article/details/55010715</a></p>
+<p><a href="https://blog.csdn.net/u012129558/article/details/79947477" target="_blank" rel="noopener">https://blog.csdn.net/u012129558/article/details/79947477</a></p>
 
       
     </div>
@@ -522,6 +531,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/11/16/maven-setting/" rel="prev" title="maven-setting">
+                maven-setting <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -605,7 +618,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-count">24</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -616,7 +629,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -627,7 +640,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-count">32</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
