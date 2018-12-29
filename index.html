@@ -438,12 +438,12 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://share2u.github.io/2018/09/04/ThreadLocal/">
+    <link itemprop="mainEntityOfPage" href="http://share2u.github.io/2018/12/29/跨域/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Chen">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://ou02tuh60.bkt.clouddn.com/touxiang/avatar.jpg">
+      <meta itemprop="image" content="https://github.com/share2u/share2u.github.io/raw/hexo/images/zhifubao.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -457,7 +457,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/09/04/ThreadLocal/" itemprop="url">ThreadLocal</a></h1>
+                <a class="post-title-link" href="/2018/12/29/跨域/" itemprop="url">跨域</a></h1>
         
 
         <div class="post-meta">
@@ -469,8 +469,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-04T14:11:08+08:00">
-                2018-09-04
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-29T13:26:18+08:00">
+                2018-12-29
               </time>
             
 
@@ -480,28 +480,6 @@
           </span>
 
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/多线程/" itemprop="url" rel="index">
-                    <span itemprop="name">多线程</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -510,8 +488,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/09/04/ThreadLocal/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2018/09/04/ThreadLocal/" itemprop="commentCount"></span>
+                <a href="/2018/12/29/跨域/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/12/29/跨域/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -519,7 +497,7 @@
 
           
           
-             <span id="/2018/09/04/ThreadLocal/" class="leancloud_visitors" data-flag-title="ThreadLocal">
+             <span id="/2018/12/29/跨域/" class="leancloud_visitors" data-flag-title="跨域">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -551,183 +529,12 @@
 
       
         
-          
-            <h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>Threadlocal提供了线程本地的变量，这些变量绑定于自己的线程，独立的进行初始化。使用上通常是private static 变量，并且关联一个有状态的变量，如user ID 或Transaction ID.</p>
-<p>通常是保存 线程中的状态的变量</p>
-<p>例如：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadId</span> </span>&#123;</span><br><span class="line">    <span class="comment">// Atomic integer containing the next thread ID to be assigned</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> AtomicInteger nextId = <span class="keyword">new</span> AtomicInteger(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Thread local variable containing each thread's ID</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> ThreadLocal&lt;Integer&gt; threadId =</span><br><span class="line">        <span class="keyword">new</span> ThreadLocal&lt;Integer&gt;() &#123;</span><br><span class="line">        <span class="meta">@Override</span> </span><br><span class="line">        <span class="function"><span class="keyword">protected</span> Integer <span class="title">initialValue</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> nextId.getAndIncrement();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Returns the current thread's unique ID, assigning it if necessary</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">get</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> threadId.get();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>只要这个线程活着，并且threadllocal实例可用，那么每一个线程保持一个引用与threadlocal中变量的拷贝，</p>
-<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><h2 id="原理分析"><a href="#原理分析" class="headerlink" title="原理分析"></a>原理分析</h2><h2 id="注意点"><a href="#注意点" class="headerlink" title="注意点"></a>注意点</h2><h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p><a href="http://www.jasongj.com/java/threadlocal/#comments" target="_blank" rel="noopener">http://www.jasongj.com/java/threadlocal/#comments</a></p>
-<p><a href="https://segmentfault.com/a/1190000014738647" target="_blank" rel="noopener">https://segmentfault.com/a/1190000014738647</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://share2u.github.io/2018/08/27/反射/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://ou02tuh60.bkt.clouddn.com/touxiang/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chen's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/08/27/反射/" itemprop="url">反射</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-27T08:40:51+08:00">
-                2018-08-27
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/08/27/反射/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2018/08/27/反射/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/2018/08/27/反射/" class="leancloud_visitors" data-flag-title="反射">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>概述</p>
-<p>CLass类以及获取方法</p>
-<p>类加载器ClassLoader</p>
-<p>反射创建运行的类、获取属性与构造方法、</p>
-<p>反射应用：动态代理、AOP</p>
+          <p>跨域</p>
+<p>浏览器的同源策略</p>
+<p>跨域资源共享cors</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/08/27/反射/#more" rel="contents">
+            <a class="btn" href="/2018/12/29/跨域/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -778,12 +585,12 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://share2u.github.io/2018/08/21/spring-xml配置文件的解析流程/">
+    <link itemprop="mainEntityOfPage" href="http://share2u.github.io/2018/11/16/maven-setting/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Chen">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://ou02tuh60.bkt.clouddn.com/touxiang/avatar.jpg">
+      <meta itemprop="image" content="https://github.com/share2u/share2u.github.io/raw/hexo/images/zhifubao.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -797,7 +604,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/08/21/spring-xml配置文件的解析流程/" itemprop="url">spring-xml配置文件的解析流程</a></h1>
+                <a class="post-title-link" href="/2018/11/16/maven-setting/" itemprop="url">maven-setting</a></h1>
         
 
         <div class="post-meta">
@@ -809,8 +616,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-21T20:42:15+08:00">
-                2018-08-21
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-16T11:20:38+08:00">
+                2018-11-16
               </time>
             
 
@@ -832,8 +639,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/spring/" itemprop="url" rel="index">
-                    <span itemprop="name">spring</span>
+                  <a href="/categories/maven/" itemprop="url" rel="index">
+                    <span itemprop="name">maven</span>
                   </a>
                 </span>
 
@@ -850,8 +657,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/08/21/spring-xml配置文件的解析流程/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2018/08/21/spring-xml配置文件的解析流程/" itemprop="commentCount"></span>
+                <a href="/2018/11/16/maven-setting/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/11/16/maven-setting/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -859,7 +666,7 @@
 
           
           
-             <span id="/2018/08/21/spring-xml配置文件的解析流程/" class="leancloud_visitors" data-flag-title="spring-xml配置文件的解析流程">
+             <span id="/2018/11/16/maven-setting/" class="leancloud_visitors" data-flag-title="maven-setting">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -891,10 +698,10 @@
 
       
         
-          <p>加载xml配置文件,将bean注册到Map中</p>
+          <p>maven settings 配置详解<br></p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/08/21/spring-xml配置文件的解析流程/#more" rel="contents">
+            <a class="btn" href="/2018/11/16/maven-setting/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -945,12 +752,12 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://share2u.github.io/2018/08/21/spring-bean的创建和初始化/">
+    <link itemprop="mainEntityOfPage" href="http://share2u.github.io/2018/11/06/日志/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Chen">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://ou02tuh60.bkt.clouddn.com/touxiang/avatar.jpg">
+      <meta itemprop="image" content="https://github.com/share2u/share2u.github.io/raw/hexo/images/zhifubao.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -964,7 +771,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/08/21/spring-bean的创建和初始化/" itemprop="url">spring-bean的创建和初始化</a></h1>
+                <a class="post-title-link" href="/2018/11/06/日志/" itemprop="url">基本日志</a></h1>
         
 
         <div class="post-meta">
@@ -976,8 +783,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-21T20:41:10+08:00">
-                2018-08-21
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-06T09:09:24+08:00">
+                2018-11-06
               </time>
             
 
@@ -999,8 +806,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/spring/" itemprop="url" rel="index">
-                    <span itemprop="name">spring</span>
+                  <a href="/categories/基本日志/" itemprop="url" rel="index">
+                    <span itemprop="name">基本日志</span>
                   </a>
                 </span>
 
@@ -1017,8 +824,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/08/21/spring-bean的创建和初始化/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2018/08/21/spring-bean的创建和初始化/" itemprop="commentCount"></span>
+                <a href="/2018/11/06/日志/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/11/06/日志/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1026,7 +833,7 @@
 
           
           
-             <span id="/2018/08/21/spring-bean的创建和初始化/" class="leancloud_visitors" data-flag-title="spring-bean的创建和初始化">
+             <span id="/2018/11/06/日志/" class="leancloud_visitors" data-flag-title="基本日志">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1058,10 +865,10 @@
 
       
         
-          <p>反射创建bean以及初始化</p>
+          <p>java中基本日志的使用，包括log4j,logback等</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/08/21/spring-bean的创建和初始化/#more" rel="contents">
+            <a class="btn" href="/2018/11/06/日志/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1112,12 +919,12 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://share2u.github.io/2018/08/21/spring启动流程/">
+    <link itemprop="mainEntityOfPage" href="http://share2u.github.io/2018/11/01/shiro工作流程/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Chen">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://ou02tuh60.bkt.clouddn.com/touxiang/avatar.jpg">
+      <meta itemprop="image" content="https://github.com/share2u/share2u.github.io/raw/hexo/images/zhifubao.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -1131,7 +938,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/08/21/spring启动流程/" itemprop="url">spring启动流程</a></h1>
+                <a class="post-title-link" href="/2018/11/01/shiro工作流程/" itemprop="url">shiro工作流程</a></h1>
         
 
         <div class="post-meta">
@@ -1143,8 +950,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-21T20:39:45+08:00">
-                2018-08-21
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-01T11:09:58+08:00">
+                2018-11-01
               </time>
             
 
@@ -1166,8 +973,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/spring/" itemprop="url" rel="index">
-                    <span itemprop="name">spring</span>
+                  <a href="/categories/shiro/" itemprop="url" rel="index">
+                    <span itemprop="name">shiro</span>
                   </a>
                 </span>
 
@@ -1184,8 +991,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/08/21/spring启动流程/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2018/08/21/spring启动流程/" itemprop="commentCount"></span>
+                <a href="/2018/11/01/shiro工作流程/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/11/01/shiro工作流程/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1193,7 +1000,7 @@
 
           
           
-             <span id="/2018/08/21/spring启动流程/" class="leancloud_visitors" data-flag-title="spring启动流程">
+             <span id="/2018/11/01/shiro工作流程/" class="leancloud_visitors" data-flag-title="shiro工作流程">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1225,361 +1032,135 @@
 
       
         
-          <ol>
-<li>web容器加载web.xml中的ContextLoaderListener</li>
-<li>初始化spring容器</li>
-<li>加载配置文件，创建bean</li>
-</ol>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/08/21/spring启动流程/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://share2u.github.io/2018/08/21/springmvc基本原理/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://ou02tuh60.bkt.clouddn.com/touxiang/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chen's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/08/21/springmvc基本原理/" itemprop="url">springmvc基本原理</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-21T12:37:28+08:00">
-                2018-08-21
-              </time>
-            
-
-            
-
-            
-          </span>
-
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/spring/" itemprop="url" rel="index">
-                    <span itemprop="name">spring</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/08/21/springmvc基本原理/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2018/08/21/springmvc基本原理/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/2018/08/21/springmvc基本原理/" class="leancloud_visitors" data-flag-title="springmvc基本原理">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>Spring 面试题</p>
-<p>Spring MVC基本原理</p>
-<p>总结</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/08/21/springmvc基本原理/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://share2u.github.io/2018/08/11/常用linux命令/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Chen">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://ou02tuh60.bkt.clouddn.com/touxiang/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chen's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/08/11/常用linux命令/" itemprop="url">常用linux命令</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-11T08:59:12+08:00">
-                2018-08-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/08/11/常用linux命令/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2018/08/11/常用linux命令/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/2018/08/11/常用linux命令/" class="leancloud_visitors" data-flag-title="常用linux命令">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>Linux 实用命令：</p>
-<ul>
-<li>帮助命令 :man,help</li>
-<li>文件目录类：pwd\ls\cd\mkdir\rmdir\touch\cp\rm\mv\cat\more\less\echo\head\tail\ln\history</li>
-<li>时间日期类：date\cal</li>
-<li>搜索查找类：find\locate\grep</li>
-<li>压缩和解压类：gzip\tar</li>
+            <p>基本描述以及shiro是如何执行的，包含认证和授权流程</p>
+<h2 id="基本描述"><a href="#基本描述" class="headerlink" title="基本描述"></a>基本描述</h2><ul>
+<li>Apache Shiro是Java的一个安全（权限）框架</li>
+<li>可以在JavaSE，javaEE环境</li>
+<li>功能点：认证，授权，加密、会话管理、web集成、缓存等</li>
 </ul>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/08/11/常用linux命令/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
+<p><img src="/2018/11/01/shiro工作流程/shiro基本结构.png" alt="shiro功能点"></p>
+<h3 id="应用程序角度"><a href="#应用程序角度" class="headerlink" title="应用程序角度"></a>应用程序角度</h3><p><img src="/2018/11/01/shiro工作流程/shiro外部架构.png" alt="shiro外部架构"></p>
+<h3 id="Shiro内部架构"><a href="#Shiro内部架构" class="headerlink" title="Shiro内部架构"></a>Shiro内部架构</h3><p><img src="/2018/11/01/shiro工作流程/shiro内部结构.png" alt="1532848598409"></p>
+<h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserRealm</span> <span class="keyword">extends</span> <span class="title">AuthorizingRealm</span> </span>&#123;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">private</span> UserService userService;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setUserService</span><span class="params">(UserService userService)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.userService = userService;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">	<span class="comment">// 从数据库中获取权限信息</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> AuthorizationInfo <span class="title">doGetAuthorizationInfo</span><span class="params">(PrincipalCollection principals)</span> </span>&#123;</span><br><span class="line">        String username = (String)principals.getPrimaryPrincipal();</span><br><span class="line"> </span><br><span class="line">        SimpleAuthorizationInfo authorizationInfo = <span class="keyword">new</span> SimpleAuthorizationInfo();</span><br><span class="line">		<span class="comment">// 从数据库中查询当前用户所拥有的角色</span></span><br><span class="line">        authorizationInfo.setRoles(userService.findRoles(username));</span><br><span class="line">		<span class="comment">// 从数据库中查询当前用户所拥有的权限</span></span><br><span class="line">        authorizationInfo.setStringPermissions(userService.findPermissions(username));</span><br><span class="line">        <span class="keyword">return</span> authorizationInfo;</span><br><span class="line">    &#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// 从数据库中获取认证信息</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> AuthenticationInfo <span class="title">doGetAuthenticationInfo</span><span class="params">(AuthenticationToken token)</span> <span class="keyword">throws</span> AuthenticationException </span>&#123;</span><br><span class="line">        String username = (String)token.getPrincipal();</span><br><span class="line">        User user = userService.findByUsername(username);</span><br><span class="line">        <span class="keyword">if</span>(user == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> UnknownAccountException();<span class="comment">//没找到帐号</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(Boolean.TRUE.equals(user.getLocked())) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> LockedAccountException(); <span class="comment">//帐号锁定</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//交给AuthenticatingRealm使用CredentialsMatcher进行密码匹配，如果觉得人家的不好可以自定义实现</span></span><br><span class="line">        SimpleAuthenticationInfo authenticationInfo = <span class="keyword">new</span> SimpleAuthenticationInfo(</span><br><span class="line">                user.getUsername(), <span class="comment">//用户名 principal</span></span><br><span class="line">                user.getPassword(), <span class="comment">//密码   hashedCredentials</span></span><br><span class="line">            	<span class="comment">//注册的时候生成盐值   credentialsSalt</span></span><br><span class="line">                ByteSource.Util.bytes(user.getCredentialsSalt()),<span class="comment">//salt=username+salt </span></span><br><span class="line">                getName()  <span class="comment">//realmName</span></span><br><span class="line">        );</span><br><span class="line">        <span class="keyword">return</span> authenticationInfo;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="工作流程"><a href="#工作流程" class="headerlink" title="工作流程"></a>工作流程</h2><h3 id="入口：DelegatingFilterProxy"><a href="#入口：DelegatingFilterProxy" class="headerlink" title="入口：DelegatingFilterProxy"></a>入口：DelegatingFilterProxy</h3><p>web.xml中的shiro入口</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">filter</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>shiroFilter<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-class</span>&gt;</span>org.springframework.web.filter.DelegatingFilterProxy<span class="tag">&lt;/<span class="name">filter-class</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">init-param</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>targetFilterLifecycle<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>true<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">init-param</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">filter</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">filter-mapping</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>shiroFilter<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/*<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">filter-mapping</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>DelegatingFilterProxy 是Filter的代理，代理的是spring容器中的filter-name一样的bean,</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"shiroFilter"</span> <span class="attr">class</span>=<span class="string">"org.apache.shiro.spring.web.ShiroFilterFactoryBean"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"securityManager"</span> <span class="attr">ref</span>=<span class="string">"securityManager"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"loginUrl"</span> <span class="attr">value</span>=<span class="string">"/login.jsp"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"successUrl"</span> <span class="attr">value</span>=<span class="string">"/loginsuccess"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"unauthorizedUrl"</span> <span class="attr">value</span>=<span class="string">"/unauthorized.jsp"</span>/&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--</span></span><br><span class="line"><span class="comment">        配置哪些页面需要受保护，以及访问这些页面需要的权限  过滤实现</span></span><br><span class="line"><span class="comment">            anon 可以被匿名访问</span></span><br><span class="line"><span class="comment">            authc 必须认证后才可以访问的页面</span></span><br><span class="line"><span class="comment">        --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"filterChainDefinitions"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span></span><br><span class="line">            /loginsuccess = anon   ===AnonymousFilter</span><br><span class="line">            /logout = logout</span><br><span class="line">            /user.jsp = roles[user]====RolesAuthorizationFilter</span><br><span class="line">            /** = authc            ====FormAuthenticationFilter</span><br><span class="line">        <span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="初始化：shiroFilter"><a href="#初始化：shiroFilter" class="headerlink" title="初始化：shiroFilter"></a>初始化：shiroFilter</h3><p><img src="/2018/11/01/shiro工作流程/../..\images\blog\shiroFilter对象.png" alt="1540385548793"></p>
+<p>ShiroFilterFactoryBean 实现了spring FactoryBean ,getObject获取实例</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">getObject</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.instance == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">this</span>.instance = <span class="keyword">this</span>.createInstance();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.instance;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> AbstractShiroFilter <span class="title">createInstance</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    log.debug(<span class="string">"Creating Shiro Filter instance."</span>);</span><br><span class="line">    <span class="comment">//1、安全管理器</span></span><br><span class="line">    SecurityManager securityManager = <span class="keyword">this</span>.getSecurityManager();</span><br><span class="line">    <span class="comment">//2、过滤器链管理器</span></span><br><span class="line">    FilterChainManager manager = <span class="keyword">this</span>.createFilterChainManager();</span><br><span class="line">    <span class="comment">//3、基于路径匹配的过滤器链解析器</span></span><br><span class="line">    PathMatchingFilterChainResolver chainResolver = <span class="keyword">new</span> PathMatchingFilterChainResolver();</span><br><span class="line">    chainResolver.setFilterChainManager(manager);</span><br><span class="line">    <span class="comment">//返回shirofilter对象到spring容器中</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> ShiroFilterFactoryBean.SpringShiroFilter((WebSecurityManager)securityManager, chainResolver);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>property filterChainDefinitions 属性，会调用setFilterChainDefinitions</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setFilterChainDefinitions</span><span class="params">(String definitions)</span> </span>&#123;</span><br><span class="line">    Ini ini = <span class="keyword">new</span> Ini();</span><br><span class="line">    ini.load(definitions);</span><br><span class="line">    <span class="comment">//section key为url,value 为filter名称</span></span><br><span class="line">    Section section = ini.getSection(<span class="string">"urls"</span>);</span><br><span class="line">    <span class="keyword">this</span>.setFilterChainDefinitionMap(section);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="SecurityManager"><a href="#SecurityManager" class="headerlink" title="SecurityManager"></a>SecurityManager</h4><h4 id="FilterChainManager"><a href="#FilterChainManager" class="headerlink" title="FilterChainManager"></a>FilterChainManager</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> FilterChainManager <span class="title">createFilterChainManager</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">//创建DefaultFilterChainManager，添加默认的filters到manager</span></span><br><span class="line">    DefaultFilterChainManager manager = <span class="keyword">new</span> DefaultFilterChainManager();</span><br><span class="line">    <span class="comment">//设置默认Filter的基本属性</span></span><br><span class="line">    Map&lt;String, Filter&gt; defaultFilters = manager.getFilters();</span><br><span class="line">    <span class="keyword">for</span> (Filter filter : defaultFilters.values()) &#123;</span><br><span class="line">        	<span class="comment">//设置相关FilterURL的loginurl,successurl,unauthorizedUrl属性</span></span><br><span class="line">            applyGlobalPropertiesIfNecessary(filter);</span><br><span class="line">        &#125;</span><br><span class="line">    <span class="comment">//获取在spring配置文件中的配置的Filter，eg:logout</span></span><br><span class="line">    Map&lt;String, Filter&gt; filters = getFilters();</span><br><span class="line">    <span class="keyword">if</span> (!CollectionUtils.isEmpty(filters)) &#123;</span><br><span class="line">        <span class="keyword">for</span> (Map.Entry&lt;String, Filter&gt; entry : filters.entrySet()) &#123;</span><br><span class="line">            String name = entry.getKey();</span><br><span class="line">            Filter filter = entry.getValue();</span><br><span class="line">            applyGlobalPropertiesIfNecessary(filter);</span><br><span class="line">            <span class="keyword">if</span> (filter <span class="keyword">instanceof</span> Nameable) &#123;</span><br><span class="line">                ((Nameable) filter).setName(name);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 将配置的Filter添加至manager中，如果同名Filter已存在则覆盖默认Filter</span></span><br><span class="line">            manager.addFilter(name, filter, <span class="keyword">false</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//配置的FilterChainDefinition</span></span><br><span class="line">    Map&lt;String, String&gt; chains = <span class="keyword">this</span>.getFilterChainDefinitionMap();</span><br><span class="line">    <span class="keyword">if</span> (!CollectionUtils.isEmpty(chains)) &#123;</span><br><span class="line">        <span class="keyword">for</span> (Map.Entry&lt;String, String&gt; entry : chains.entrySet()) &#123;</span><br><span class="line">            String url = entry.getKey();</span><br><span class="line">            String chainDefinition = entry.getValue();</span><br><span class="line">            <span class="comment">// 为配置的每一个URL匹配创建FilterChain定义，</span></span><br><span class="line">            <span class="comment">// 这样当访问一个URL的时候，一旦该URL配置上则就知道该URL需要应用上哪些Filter</span></span><br><span class="line">            <span class="comment">// 由于URL配置符会配置多个，所以以第一个匹配上的为准，所以越具体的匹配符应该配置在前面，越宽泛的匹配符配置在后面</span></span><br><span class="line">            manager.createChain(url, chainDefinition);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> manager;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="DefaultFilterChainManager"><a href="#DefaultFilterChainManager" class="headerlink" title="DefaultFilterChainManager"></a>DefaultFilterChainManager</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">DefaultFilterChainManager</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.filters = <span class="keyword">new</span> LinkedHashMap&lt;String, Filter&gt;();</span><br><span class="line">    <span class="keyword">this</span>.filterChains = <span class="keyword">new</span> LinkedHashMap&lt;String, NamedFilterList&gt;();</span><br><span class="line">    addDefaultFilters(<span class="keyword">false</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">addDefaultFilters</span><span class="params">(<span class="keyword">boolean</span> init)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (DefaultFilter defaultFilter : DefaultFilter.values()) &#123;</span><br><span class="line">        addFilter(defaultFilter.name(), defaultFilter.newInstance(), init, <span class="keyword">false</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="DefaultFilter-过滤器"><a href="#DefaultFilter-过滤器" class="headerlink" title="DefaultFilter 过滤器"></a>DefaultFilter 过滤器</h6><p>11个</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">anon(AnonymousFilter.class),</span><br><span class="line">authc(FormAuthenticationFilter.class),</span><br><span class="line">authcBasic(BasicHttpAuthenticationFilter.class),</span><br><span class="line">logout(LogoutFilter.class),</span><br><span class="line">noSessionCreation(facion ico.class),</span><br><span class="line">perms(PermissionsAuthorizationFilter.class),</span><br><span class="line">port(PortFilter.class),</span><br><span class="line">rest(HttpMethodPermissionFilter.class),</span><br><span class="line">roles(RolesAuthorizationFilter.class),</span><br><span class="line">ssl(SslFilter.class),</span><br><span class="line">user(UserFilter.class);</span><br></pre></td></tr></table></figure>
+<h6 id="filterChains过滤器链"><a href="#filterChains过滤器链" class="headerlink" title="filterChains过滤器链"></a>filterChains过滤器链</h6><p>是一个linkedhashmap,key为配置的url,value为对应的过滤器</p>
+<h4 id="PathMatchingFilterChainResolver"><a href="#PathMatchingFilterChainResolver" class="headerlink" title="PathMatchingFilterChainResolver"></a>PathMatchingFilterChainResolver</h4><p>创建了新的filterchainfilter,然后又被前面创建的覆盖了，有问题！！！</p>
+<ol>
+<li><p>基于ant路径匹配方法匹配配置的url,</p>
+</li>
+<li><p>pathMatchingFilterChainResolver设置创建的FilterChainManager对象，所以URL匹配上后可以获取该URL需要应用的FilterChain了。 </p>
+</li>
+</ol>
+<h3 id="filter执行—匹配filter"><a href="#filter执行—匹配filter" class="headerlink" title="filter执行—匹配filter"></a>filter执行—匹配filter</h3><p>(错误)通过请求的url,获取要走的过滤链，或者说，所有请求都走一样的过滤链，过滤器中由判断自己是否支持该请求</p>
+<p>（正解）,所有的请求走一个过滤器org.springframework.web.filter.DelegatingFilterProxy#doFilter </p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">org.apache.shiro.web.servlet.OncePerRequestFilter#doFilter==执行被代理类doFilter</span><br><span class="line">	org.apache.shiro.web.servlet.AbstractShiroFilter#doFilterInternal	</span><br><span class="line">		createSubject  AbstractShiroFilter#createSubject== 创建subject</span><br><span class="line">		updateSessionLastAccessTime                     == 更新session最后访问时间</span><br><span class="line">		executeChain AbstractShiroFilter#executeChain   ==获取过滤链，执行过滤方法</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">executeChain</span><span class="params">(ServletRequest request, ServletResponse response, FilterChain origChain)</span></span>&#123;</span><br><span class="line">    FilterChain chain = getExecutionChain(request, response, origChain);</span><br><span class="line">    <span class="comment">//获取过滤链：如FormAuthenticationFilter</span></span><br><span class="line">    chain.doFilter(request, response);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">eg:FormAuthenticationFilter#doFilter===父类OncePerRequestFilter的doFilter</span><br><span class="line">		OncePerRequestFilter#doFilter---doFilterInternal---AdviceFilter#doFilterInternal</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">AdviceFilter#doFilterInternal</span><br><span class="line">	preHandle</span><br><span class="line">			AdviceFilter#preHandle  true</span><br><span class="line">			LogoutFilter#preHandle  false</span><br><span class="line">			PathMatchingFilter#preHandle--isFilterChainContinued--onPreHandle</span><br><span class="line">				AnonymousFilter#onPreHandle true</span><br><span class="line">				NoSessionCreationFilter#onPreHandle true</span><br><span class="line">				PathMatchingFilter#onPreHandle  true</span><br><span class="line">				AccessControlFilter#onPreHandle</span><br><span class="line">					isAccessAllowed</span><br><span class="line">					onAccessDenied</span><br><span class="line">			executeChain 							==其他过滤器执行</span><br><span class="line">			postHandle   							==没有实现类</span><br><span class="line">			cleanup</span><br><span class="line">				AdviceFilter#cleanup                  ==没实现</span><br><span class="line">				AuthenticatingFilter#cleanup</span><br><span class="line">					onAccessDenied   </span><br><span class="line">						FormAuthenticationFilter#onAccessDenied   </span><br><span class="line">						BasicHttpAuthenticationFilter#onAccessDenied</span><br></pre></td></tr></table></figure>
+<p>filter 执行顺序</p>
+<p><a href="https://www.cnblogs.com/ljdblog/p/6237683.html" target="_blank" rel="noopener">https://www.cnblogs.com/ljdblog/p/6237683.html</a></p>
+<p><a href="https://www.cnblogs.com/q95265/p/6928081.html" target="_blank" rel="noopener">https://www.cnblogs.com/q95265/p/6928081.html</a></p>
+<h3 id="filter执行—doFilter"><a href="#filter执行—doFilter" class="headerlink" title="filter执行—doFilter"></a>filter执行—doFilter</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">doFilter</span><span class="params">(ServletRequest request, ServletResponse response, FilterChain filterChain)</span></span>&#123;</span><br><span class="line">    String alreadyFilteredAttributeName = getAlreadyFilteredAttributeName();</span><br><span class="line">    <span class="keyword">if</span> ( request.getAttribute(alreadyFilteredAttributeName) != <span class="keyword">null</span> ) &#123;</span><br><span class="line">        <span class="comment">//已经执行过该过滤器</span></span><br><span class="line">        filterChain.doFilter(request, response);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> ( !isEnabled(request, response) ||shouldNotFilter(request) ) &#123;</span><br><span class="line">           <span class="comment">//该过滤器不适合该请求</span></span><br><span class="line">            filterChain.doFilter(request, response);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            request.setAttribute(alreadyFilteredAttributeName, Boolean.TRUE);</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="comment">//执行该过滤器</span></span><br><span class="line">                doFilterInternal(request, response, filterChain);</span><br><span class="line">            &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                <span class="comment">// Once the request has finished, we're done and we don't</span></span><br><span class="line">                <span class="comment">// need to mark as 'already filtered' any more.</span></span><br><span class="line">                request.removeAttribute(alreadyFilteredAttributeName);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>shiro通过一系列url匹配符配置URL应用上的Filter，然后在Filter中完成相应的任务。核心逻辑-doFilterInternal</p>
+<p>OncePerRequestFilter：保证每个filter都执行一次</p>
+<p>​    –AbstractShiroFilter</p>
+<p>​    –AdviceFilter</p>
+<h4 id="AbstractShiroFilter"><a href="#AbstractShiroFilter" class="headerlink" title="AbstractShiroFilter"></a>AbstractShiroFilter</h4><p>springfactorybean返回的bean核心就是这个类，封装为shirofilter</p>
+<p>构造方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    WebEnvironment env = WebUtils.getRequiredWebEnvironment(getServletContext());</span><br><span class="line">    <span class="comment">//SecurityManager</span></span><br><span class="line">    setSecurityManager(env.getWebSecurityManager());</span><br><span class="line">    <span class="comment">//FilterChainResolver</span></span><br><span class="line">    FilterChainResolver resolver = env.getFilterChainResolver();</span><br><span class="line">    <span class="keyword">if</span> (resolver != <span class="keyword">null</span>) &#123;</span><br><span class="line">        setFilterChainResolver(resolver);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doFilterInternal</span><span class="params">(ServletRequest servletRequest, ServletResponse servletResponse, <span class="keyword">final</span> FilterChain chain)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">final</span> ServletRequest request = prepareServletRequest(servletRequest, servletResponse, chain);</span><br><span class="line">    <span class="keyword">final</span> ServletResponse response = prepareServletResponse(request, servletResponse, chain);</span><br><span class="line">    <span class="keyword">final</span> Subject subject = createSubject(request, response);</span><br><span class="line">    <span class="comment">//noinspection unchecked</span></span><br><span class="line">    subject.execute(<span class="keyword">new</span> Callable() &#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> Object <span class="title">call</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">            updateSessionLastAccessTime(request, response);</span><br><span class="line">            executeChain(request, response, chain);</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="createSubject"><a href="#createSubject" class="headerlink" title="createSubject"></a>createSubject</h5><p>每次调用都会创建subject</p>
+<h5 id="executeChain"><a href="#executeChain" class="headerlink" title="executeChain"></a>executeChain</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">executeChain</span><span class="params">(ServletRequest request, ServletResponse response, FilterChain origChain)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//获取当前url匹配的过滤器链</span></span><br><span class="line">    FilterChain chain = getExecutionChain(request, response, origChain);</span><br><span class="line">    <span class="comment">//执行过滤器链中过滤器</span></span><br><span class="line">    chain.doFilter(request, response);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> FilterChain <span class="title">getExecutionChain</span><span class="params">(ServletRequest request, ServletResponse response, FilterChain origChain)</span> </span>&#123;</span><br><span class="line">    FilterChain chain = origChain;</span><br><span class="line">	<span class="comment">//获取过滤器链解析器，即创建的PathMatchingFilterChainResolver对象</span></span><br><span class="line">    FilterChainResolver resolver = getFilterChainResolver();</span><br><span class="line">    <span class="keyword">if</span> (resolver == <span class="keyword">null</span>) &#123;</span><br><span class="line">        log.debug(<span class="string">"No FilterChainResolver configured.  Returning original FilterChain."</span>);</span><br><span class="line">        <span class="keyword">return</span> origChain;</span><br><span class="line">    &#125;</span><br><span class="line">	<span class="comment">// 调用其getChain方法，根据URL匹配相应的过滤器链</span></span><br><span class="line">    FilterChain resolved = resolver.getChain(request, response, origChain);</span><br><span class="line">    <span class="keyword">if</span> (resolved != <span class="keyword">null</span>) &#123;</span><br><span class="line">        log.trace(<span class="string">"Resolved a configured FilterChain for the current request."</span>);</span><br><span class="line">        chain = resolved;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        log.trace(<span class="string">"No FilterChain configured for the current request.  Using the default."</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> chain;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="AdviceFilter"><a href="#AdviceFilter" class="headerlink" title="AdviceFilter"></a>AdviceFilter</h4><p>这个类很多方法实现了spring中的aop特点，prehandle前置通知，posthandle后置通知，异常不执行，afterCompletion （最终通知，一定会执行），可以根据需求覆写这几个方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doFilterInternal</span><span class="params">(ServletRequest request, ServletResponse response, FilterChain chain)</span></span>&#123;</span><br><span class="line">    Exception exception = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="comment">//前置通知，判断该过滤链是否支持该请求</span></span><br><span class="line">        <span class="keyword">boolean</span> continueChain = preHandle(request, response);</span><br><span class="line">        <span class="keyword">if</span> (continueChain) &#123;</span><br><span class="line">            <span class="comment">//执行过滤器链</span></span><br><span class="line">            executeChain(request, response, chain);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//后置通知</span></span><br><span class="line">        postHandle(request, response);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        exception = e;</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">        <span class="comment">//最终通知</span></span><br><span class="line">        cleanup(request, response, exception);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>eg:</p>
+<ul>
+<li>preHandle</li>
+</ul>
+<ol>
+<li>根据配置，访问URL:”/authenticated.jsp”时，会匹配上authc(FormAuthenticationFilter)</li>
+<li>FormAuthenticationFilter继承自PathMatchingFilter，所以返回true ，而logoutfilter会返回false,啥也没有返回给页面，页面显示空白</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">boolean</span> <span class="title">preHandle</span><span class="params">(ServletRequest request, ServletResponse response)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (String path : <span class="keyword">this</span>.appliedPaths.keySet()) &#123;</span><br><span class="line"><span class="comment">// If the path does match, then pass on to the subclass implementation for specific checks</span></span><br><span class="line"><span class="comment">//(first match 'wins'):</span></span><br><span class="line">        <span class="keyword">if</span> (pathsMatch(path, request)) &#123;</span><br><span class="line">log.trace(<span class="string">"Current requestURI matches pattern '&#123;&#125;'.  Determining filter chain execution..."</span>, path);</span><br><span class="line">            Object config = <span class="keyword">this</span>.appliedPaths.get(path);</span><br><span class="line">            <span class="keyword">return</span> isFilterChainContinued(request, response, path, config);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//no path matched, allow the request to go through:</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">isFilterChainContinued</span><span class="params">(ServletRequest request, ServletResponse response,</span></span></span><br><span class="line"><span class="function"><span class="params">                                       String path, Object pathConfig)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> onPreHandle(request, response, pathConfig);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>org.apache.shiro.web.filter.AccessControlFilter#onPreHandle</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onPreHandle</span><span class="params">(ServletRequest request, ServletResponse response, Object mappedValue)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    <span class="comment">//如果isAccessAllowed方法返回false，则会执行onAccessDenied方法</span></span><br><span class="line">    <span class="keyword">return</span> isAccessAllowed(request, response, mappedValue) || onAccessDenied(request, response, mappedValue);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>isAccessAllowed：表示是否允许访问；mappedValue就是[urls]配置中拦截器参数部分，如果允许访问返回true，否则false；</p>
+<p>onAccessDenied：表示当访问拒绝时是否已经处理了；如果返回true表示需要继续处理；如果返回false表示该拦截器实例已经处理了，将直接返回即可</p>
+<p>org.apache.shiro.web.filter.authc.AuthenticatingFilter#isAccessAllowed</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">boolean</span> <span class="title">isAccessAllowed</span><span class="params">(ServletRequest request, ServletResponse response, Object mappedValue)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">super</span>.isAccessAllowed(request, response, mappedValue) ||</span><br><span class="line">            (!isLoginRequest(request, response) &amp;&amp; isPermissive(mappedValue));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>org.apache.shiro.web.filter.authc.AuthenticationFilter#isAccessAllowed</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">boolean</span> <span class="title">isAccessAllowed</span><span class="params">(ServletRequest request, ServletResponse response, Object mappedValue)</span> </span>&#123;</span><br><span class="line">    Subject subject = getSubject(request, response);</span><br><span class="line">    <span class="keyword">return</span> subject.isAuthenticated();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">boolean</span> <span class="title">onAccessDenied</span><span class="params">(ServletRequest request, ServletResponse response)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    <span class="comment">//是否为登陆请求</span></span><br><span class="line">    <span class="keyword">if</span> (isLoginRequest(request, response)) &#123;</span><br><span class="line">        <span class="comment">//是否是POST请求</span></span><br><span class="line">        <span class="keyword">if</span> (isLoginSubmission(request, response)) &#123;</span><br><span class="line">            <span class="keyword">if</span> (log.isTraceEnabled()) &#123;</span><br><span class="line">                log.trace(<span class="string">"Login submission detected.  Attempting to execute login."</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> executeLogin(request, response);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (log.isTraceEnabled()) &#123;</span><br><span class="line">                log.trace(<span class="string">"Login page view."</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//allow them to see the login page ;)</span></span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (log.isTraceEnabled()) &#123;</span><br><span class="line">            log.trace(<span class="string">"Attempting to access a path which requires authentication.  Forwarding to the "</span> +</span><br><span class="line">                      <span class="string">"Authentication url ["</span> + getLoginUrl() + <span class="string">"]"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">		<span class="comment">//执行跳转到登陆界面login.jsp</span></span><br><span class="line">        saveRequestAndRedirectToLogin(request, response);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>login.jsp也会被拦截，执行到这里然后访问login.jsp,</p>
+<p>再然后post请求这个url,就会执行executeLogin</p>
+<p>org.apache.shiro.web.filter.authc.AuthenticatingFilter#executeLogin</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">boolean</span> <span class="title">executeLogin</span><span class="params">(ServletRequest request, ServletResponse response)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    AuthenticationToken token = createToken(request, response);</span><br><span class="line">    <span class="keyword">if</span> (token == <span class="keyword">null</span>) &#123;</span><br><span class="line">        String msg = <span class="string">"createToken method implementation returned null. A valid non-null AuthenticationToken "</span> +</span><br><span class="line">                <span class="string">"must be created in order to execute a login attempt."</span>;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(msg);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        Subject subject = getSubject(request, response);</span><br><span class="line">        subject.login(token);</span><br><span class="line">        <span class="comment">//重定向到上次访问的url,过滤链不再执行</span></span><br><span class="line">        <span class="keyword">return</span> onLoginSuccess(token, subject, request, response);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (AuthenticationException e) &#123;</span><br><span class="line">        <span class="comment">//过滤链继续执行，返回到登陆界面</span></span><br><span class="line">        <span class="keyword">return</span> onLoginFailure(token, e, request, response);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="认证流程"><a href="#认证流程" class="headerlink" title="认证流程"></a>认证流程</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">login</span><span class="params">(AuthenticationToken token)</span> <span class="keyword">throws</span> AuthenticationException </span>&#123;</span><br><span class="line">    clearRunAsIdentitiesInternal();</span><br><span class="line">    <span class="comment">//securityManager 登录</span></span><br><span class="line">    Subject subject = securityManager.login(<span class="keyword">this</span>, token);</span><br><span class="line"></span><br><span class="line">    PrincipalCollection principals;</span><br><span class="line"></span><br><span class="line">    String host = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (subject <span class="keyword">instanceof</span> DelegatingSubject) &#123;</span><br><span class="line">        DelegatingSubject delegating = (DelegatingSubject) subject;</span><br><span class="line">        <span class="comment">//we have to do this in case there are assumed identities - we don't want to lose the 'real' principals:</span></span><br><span class="line">        principals = delegating.principals;</span><br><span class="line">        host = delegating.host;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        principals = subject.getPrincipals();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (principals == <span class="keyword">null</span> || principals.isEmpty()) &#123;</span><br><span class="line">        String msg = <span class="string">"Principals returned from securityManager.login( token ) returned a null or "</span> +</span><br><span class="line">            <span class="string">"empty value.  This value must be non null and populated with one or more elements."</span>;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(msg);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">this</span>.principals = principals;</span><br><span class="line">    <span class="keyword">this</span>.authenticated = <span class="keyword">true</span>;</span><br><span class="line">    <span class="keyword">if</span> (token <span class="keyword">instanceof</span> HostAuthenticationToken) &#123;</span><br><span class="line">        host = ((HostAuthenticationToken) token).getHost();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (host != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">this</span>.host = host;</span><br><span class="line">    &#125;</span><br><span class="line">    Session session = subject.getSession(<span class="keyword">false</span>);</span><br><span class="line">    <span class="keyword">if</span> (session != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">this</span>.session = decorate(session);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">this</span>.session = <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> Subject <span class="title">login</span><span class="params">(Subject subject, AuthenticationToken token)</span> <span class="keyword">throws</span> AuthenticationException </span>&#123;</span><br><span class="line">    AuthenticationInfo info;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="comment">//关键逻辑</span></span><br><span class="line">        info = authenticate(token);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (AuthenticationException ae) &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            onFailedLogin(token, ae, subject);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            <span class="keyword">if</span> (log.isInfoEnabled()) &#123;</span><br><span class="line">                log.info(<span class="string">"onFailedLogin method threw an "</span> +</span><br><span class="line">                         <span class="string">"exception.  Logging and propagating original AuthenticationException."</span>, e);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">throw</span> ae; <span class="comment">//propagate</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//认证成功，重新创建subject</span></span><br><span class="line">    Subject loggedIn = createSubject(token, info, subject);</span><br><span class="line">    <span class="comment">//处理rememberme逻辑</span></span><br><span class="line">    onSuccessfulLogin(token, info, loggedIn);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> loggedIn;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>org.apache.shiro.mgt.AuthenticatingSecurityManager#authenticate</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> AuthenticationInfo <span class="title">authenticate</span><span class="params">(AuthenticationToken token)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.authenticator.authenticate(token);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>org.apache.shiro.authc.AbstractAuthenticator#authenticate</p>
+<p>​    org.apache.shiro.authc.pam.ModularRealmAuthenticator#authenticate</p>
+<p>模板方法模式</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> AuthenticationInfo <span class="title">doAuthenticate</span><span class="params">(AuthenticationToken authenticationToken)</span> <span class="keyword">throws</span> AuthenticationException </span>&#123;</span><br><span class="line">       assertRealmsConfigured();</span><br><span class="line">       Collection&lt;Realm&gt; realms = getRealms();</span><br><span class="line">       <span class="keyword">if</span> (realms.size() == <span class="number">1</span>) &#123;</span><br><span class="line">           <span class="keyword">return</span> doSingleRealmAuthentication(realms.iterator().next(), authenticationToken);</span><br><span class="line">       &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">           <span class="keyword">return</span> doMultiRealmAuthentication(realms, authenticationToken);</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> AuthenticationInfo <span class="title">doMultiRealmAuthentication</span><span class="params">(Collection&lt;Realm&gt; realms, AuthenticationToken token)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//多realm下的认证策略默认实现为AtLeastOneSuccessfulStrategy</span></span><br><span class="line">    AuthenticationStrategy strategy = getAuthenticationStrategy();</span><br><span class="line">    AuthenticationInfo aggregate = strategy.beforeAllAttempts(realms, token);</span><br><span class="line">    <span class="keyword">for</span> (Realm realm : realms) &#123;</span><br><span class="line">        aggregate = strategy.beforeAttempt(realm, token, aggregate);</span><br><span class="line">        <span class="keyword">if</span> (realm.supports(token)) &#123;</span><br><span class="line">            <span class="comment">//关键实现方法</span></span><br><span class="line">            AuthenticationInfo info = realm.getAuthenticationInfo(token);</span><br><span class="line">            aggregate = strategy.afterAttempt(realm, token, info, aggregate, t);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            log.debug(<span class="string">"Realm [&#123;&#125;] does not support token &#123;&#125;.  Skipping realm."</span>, realm, token);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    aggregate = strategy.afterAllAttempts(token, aggregate);</span><br><span class="line">    <span class="keyword">return</span> aggregate;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> AuthenticationInfo <span class="title">getAuthenticationInfo</span><span class="params">(AuthenticationToken token)</span> <span class="keyword">throws</span> AuthenticationException </span>&#123;</span><br><span class="line">    AuthenticationInfo info = getCachedAuthenticationInfo(token);</span><br><span class="line">    <span class="keyword">if</span> (info == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="comment">//覆盖实现核心认证信息</span></span><br><span class="line">        info = doGetAuthenticationInfo(token);</span><br><span class="line">        <span class="keyword">if</span> (token != <span class="keyword">null</span> &amp;&amp; info != <span class="keyword">null</span>) &#123;</span><br><span class="line">            cacheAuthenticationInfoIfPossible(token, info);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (info != <span class="keyword">null</span>) &#123;</span><br><span class="line">        assertCredentialsMatch(token, info);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> info;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>eg:自定义realmA实现AuthenticatingRealm</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ShiroRealmA</span> <span class="keyword">extends</span> <span class="title">AuthenticatingRealm</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> AuthenticationInfo <span class="title">doGetAuthenticationInfo</span><span class="params">(AuthenticationToken token)</span> <span class="keyword">throws</span> AuthenticationException </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"===&gt;ShiroRealmA&lt;====="</span> + JSON.toJSONString(token));</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 1. 吧AuthenticationToken转为usernamepasswordtoken</span></span><br><span class="line"><span class="comment">         * 2. 获取用户名与密码</span></span><br><span class="line"><span class="comment">         * 3. 调用数据库的方法</span></span><br><span class="line"><span class="comment">         * 4. 根据数据库用户情况抛出异常或构建AuthenticationInfo</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        UsernamePasswordToken usernamePasswordToken = (UsernamePasswordToken) token;</span><br><span class="line">        String username = usernamePasswordToken.getUsername();</span><br><span class="line">        <span class="comment">// 数据库获取的密码，，前端加密 密码加密</span></span><br><span class="line">        <span class="comment">//盐值一般是唯一值，可以是用户名</span></span><br><span class="line">        ByteSource salt = ByteSource.Util.bytes(username);</span><br><span class="line">        Object credentials = <span class="string">"123"</span>;</span><br><span class="line">        Object credentialsMD5 = <span class="keyword">new</span> SimpleHash(<span class="string">"MD5"</span>, credentials, salt, <span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (<span class="string">"zs"</span>.equals(username)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> SimpleAuthenticationInfo(username,credentialsMD5, salt, <span class="keyword">this</span>.getName());</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> AuthenticationException();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="授权流程"><a href="#授权流程" class="headerlink" title="授权流程"></a>授权流程</h2><p>perms(PermissionsAuthorizationFilter.class) ：url是否有权限</p>
+<p>roles(RolesAuthorizationFilter.class), ：url是否有该角色</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isAccessAllowed</span><span class="params">(ServletRequest request, ServletResponse response, Object mappedValue)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    Subject subject = getSubject(request, response);</span><br><span class="line">    <span class="comment">//访问需要的权限</span></span><br><span class="line">    String[] perms = (String[]) mappedValue;</span><br><span class="line">    <span class="comment">//subject判断是否有权限</span></span><br><span class="line">    <span class="keyword">boolean</span> isPermitted = <span class="keyword">true</span>;</span><br><span class="line">    <span class="keyword">if</span> (perms != <span class="keyword">null</span> &amp;&amp; perms.length &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (perms.length == <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!subject.isPermitted(perms[<span class="number">0</span>])) &#123;</span><br><span class="line">                isPermitted = <span class="keyword">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (!subject.isPermittedAll(perms)) &#123;</span><br><span class="line">                isPermitted = <span class="keyword">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> isPermitted;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>ModularRealmAuthorizer.isPermitted </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isPermitted</span><span class="params">(PrincipalCollection principals, String permission)</span> </span>&#123;</span><br><span class="line">    assertRealmsConfigured();</span><br><span class="line">    <span class="keyword">for</span> (Realm realm : getRealms()) &#123;</span><br><span class="line">        <span class="keyword">if</span> (!(realm <span class="keyword">instanceof</span> Authorizer)) <span class="keyword">continue</span>;</span><br><span class="line">        <span class="comment">// 调用Realm的isPermitted方法</span></span><br><span class="line">        <span class="keyword">if</span> (((Authorizer) realm).isPermitted(principals, permission)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isPermitted</span><span class="params">(String permission)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> hasPrincipals() &amp;&amp; securityManager.isPermitted(getPrincipals(), permission);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isPermitted</span><span class="params">(PrincipalCollection principals, String permissionString)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.authorizer.isPermitted(principals, permissionString);</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isPermitted</span><span class="params">(PrincipalCollection principals, String permission)</span> </span>&#123;</span><br><span class="line">      Permission p = getPermissionResolver().resolvePermission(permission);</span><br><span class="line">      <span class="keyword">return</span> isPermitted(principals, p);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isPermitted</span><span class="params">(PrincipalCollection principals, Permission permission)</span> </span>&#123;</span><br><span class="line">      AuthorizationInfo info = getAuthorizationInfo(principals);</span><br><span class="line">      <span class="keyword">return</span> isPermitted(permission, info);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> AuthorizationInfo <span class="title">getAuthorizationInfo</span><span class="params">(PrincipalCollection principals)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    AuthorizationInfo info = <span class="keyword">null</span>;</span><br><span class="line">	<span class="comment">//缓存中获取授权信息</span></span><br><span class="line">    Cache&lt;Object, AuthorizationInfo&gt; cache = getAvailableAuthorizationCache();</span><br><span class="line">    <span class="keyword">if</span> (cache != <span class="keyword">null</span>) &#123;</span><br><span class="line">        Object key = getAuthorizationCacheKey(principals);</span><br><span class="line">        info = cache.get(key);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (info == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="comment">// 继承覆盖实现获取授权信息</span></span><br><span class="line">        info = doGetAuthorizationInfo(principals);</span><br><span class="line">        <span class="keyword">if</span> (info != <span class="keyword">null</span> &amp;&amp; cache != <span class="keyword">null</span>) &#123;</span><br><span class="line">            Object key = getAuthorizationCacheKey(principals);</span><br><span class="line">            cache.put(key, info);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> info;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>ModularRealmAuthorizer.isPermittedAll </p>
+<p>AuthorizationFilter#onAccessDenied</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">boolean</span> <span class="title">onAccessDenied</span><span class="params">(ServletRequest request, ServletResponse response)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    Subject subject = getSubject(request, response);</span><br><span class="line">    <span class="comment">//未登陆，跳转到登陆界面</span></span><br><span class="line">    <span class="keyword">if</span> (subject.getPrincipal() == <span class="keyword">null</span>) &#123;</span><br><span class="line">        saveRequestAndRedirectToLogin(request, response);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">//登陆未授权、返回未授权界面或者401状态码</span></span><br><span class="line">        String unauthorizedUrl = getUnauthorizedUrl();</span><br><span class="line">        <span class="keyword">if</span> (StringUtils.hasText(unauthorizedUrl)) &#123;</span><br><span class="line">            WebUtils.issueRedirect(request, response, unauthorizedUrl);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            WebUtils.toHttp(response).sendError(HttpServletResponse.SC_UNAUTHORIZED);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="FormAuthenticationFilter"><a href="#FormAuthenticationFilter" class="headerlink" title="FormAuthenticationFilter"></a>FormAuthenticationFilter</h2><p>Onceperrequestfilter#doFilter</p>
+<p>adviceFilter#doFilterInternal</p>
+<p>AdviceFilter#preHandle  true</p>
+<p>AuthenticatingFilter#cleanup</p>
+<p>FormAuthenticationFilter#onAccessDenied</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">boolean</span> <span class="title">onAccessDenied</span><span class="params">(ServletRequest request, ServletResponse response)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    <span class="comment">//是否为登陆请求</span></span><br><span class="line">    <span class="keyword">if</span> (isLoginRequest(request, response)) &#123;</span><br><span class="line">        <span class="comment">//是否是post请求</span></span><br><span class="line">        <span class="keyword">if</span> (isLoginSubmission(request, response)) &#123;</span><br><span class="line">            <span class="keyword">return</span> executeLogin(request, response);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        saveRequestAndRedirectToLogin(request, response);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>org.apache.shiro.web.filter.authc.AuthenticatingFilter#executeLogin</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">boolean</span> <span class="title">executeLogin</span><span class="params">(ServletRequest request, ServletResponse response)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    AuthenticationToken token = createToken(request, response);</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        Subject subject = getSubject(request, response);</span><br><span class="line">        subject.login(token);</span><br><span class="line">        <span class="keyword">return</span> onLoginSuccess(token, subject, request, response);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (AuthenticationException e) &#123;</span><br><span class="line">        <span class="keyword">return</span> onLoginFailure(token, e, request, response);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>go to 认证流程</p>
+<h2 id="PermissionsAuthorizationFilter"><a href="#PermissionsAuthorizationFilter" class="headerlink" title="PermissionsAuthorizationFilter"></a>PermissionsAuthorizationFilter</h2><p>Onceperrequestfilter#doFilter</p>
+<p>adviceFilter#doFilterInternal</p>
+<p>PathMatchingFilter#preHandle</p>
+<p>AccessControlFilter#onPreHandle</p>
+<p>go to 授权流程</p>
+<p>​    PermissionsAuthorizationFilter#isAccessAllowed</p>
+<p>​    AuthorizationFilter#onAccessDenied</p>
+<h2 id="RolesAuthorizationFilter"><a href="#RolesAuthorizationFilter" class="headerlink" title="RolesAuthorizationFilter"></a>RolesAuthorizationFilter</h2><p>与PermissionsAuthorizationFilter类似</p>
+<h2 id="UserFilter"><a href="#UserFilter" class="headerlink" title="UserFilter"></a>UserFilter</h2><p>是登录页面或者必须登录后获得principalCollection，才能通过</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">boolean</span> <span class="title">isAccessAllowed</span><span class="params">(ServletRequest request, ServletResponse response, Object mappedValue)</span> </span>&#123;  </span><br><span class="line">        <span class="keyword">if</span> (isLoginRequest(request, response)) &#123;  </span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;  </span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;  </span><br><span class="line">            Subject subject = getSubject(request, response);  </span><br><span class="line">            <span class="keyword">return</span> subject.getPrincipal() != <span class="keyword">null</span>;  </span><br><span class="line">        &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">boolean</span> <span class="title">onAccessDenied</span><span class="params">(ServletRequest request, ServletResponse response)</span> <span class="keyword">throws</span> Exception </span>&#123;  </span><br><span class="line">        saveRequestAndRedirectToLogin(request, response);  </span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>参考文献</p>
+<p><a href="https://blog.csdn.net/xtayfjpk/article/details/53729135" target="_blank" rel="noopener">https://blog.csdn.net/xtayfjpk/article/details/53729135</a> </p>
+<p><a href="http://suichangkele.iteye.com/blog/2277023" target="_blank" rel="noopener">http://suichangkele.iteye.com/blog/2277023</a> </p>
+
+          
         
       
     </div>
@@ -1626,12 +1207,12 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://share2u.github.io/2018/08/05/Google-Guava学习笔记/">
+    <link itemprop="mainEntityOfPage" href="http://share2u.github.io/2018/10/25/servlet-filter-listener-interceptor/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Chen">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://ou02tuh60.bkt.clouddn.com/touxiang/avatar.jpg">
+      <meta itemprop="image" content="https://github.com/share2u/share2u.github.io/raw/hexo/images/zhifubao.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -1645,7 +1226,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/08/05/Google-Guava学习笔记/" itemprop="url">Google Guava学习笔记</a></h1>
+                <a class="post-title-link" href="/2018/10/25/servlet-filter-listener-interceptor/" itemprop="url">servlet-filter-listener-interceptor</a></h1>
         
 
         <div class="post-meta">
@@ -1657,8 +1238,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-05T09:05:02+08:00">
-                2018-08-05
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-25T19:08:40+08:00">
+                2018-10-25
               </time>
             
 
@@ -1680,8 +1261,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
+                  <a href="/categories/web/" itemprop="url" rel="index">
+                    <span itemprop="name">web</span>
                   </a>
                 </span>
 
@@ -1698,8 +1279,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/08/05/Google-Guava学习笔记/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2018/08/05/Google-Guava学习笔记/" itemprop="commentCount"></span>
+                <a href="/2018/10/25/servlet-filter-listener-interceptor/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/10/25/servlet-filter-listener-interceptor/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1707,7 +1288,7 @@
 
           
           
-             <span id="/2018/08/05/Google-Guava学习笔记/" class="leancloud_visitors" data-flag-title="Google Guava学习笔记">
+             <span id="/2018/10/25/servlet-filter-listener-interceptor/" class="leancloud_visitors" data-flag-title="servlet-filter-listener-interceptor">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1739,37 +1320,727 @@
 
       
         
-          <ol>
-<li><p>简介</p>
+          
+            <h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><h3 id="servlet"><a href="#servlet" class="headerlink" title="servlet"></a>servlet</h3><ul>
+<li>是一种运行再服务端的java应用程序，具有独立与平台和协议的特性，并且可以动态的生成web页面，它工作在客户端请求和服务端响应的中间层</li>
+<li>创建并返回给客户端完整的html页面</li>
+</ul>
+<h3 id="filter"><a href="#filter" class="headerlink" title="filter"></a>filter</h3><ul>
+<li>过滤器，是一个可以复用的代码片段、可以用来转换http请求、响应和头信息。不像servlet,它不能产生一个请求或响应、只能修改某一资源的请求、或者修改某一资源的响应</li>
+<li>能够在一个请求到达servlet之前预处理用户请求，也可以在离开servlet时处理http响应</li>
+<li>url传来后，检查之后，可保持原来的流程继续向下执行，被下一个filter处理,servlet接收后，不会向下传递。</li>
+</ul>
+<h3 id="listenter"><a href="#listenter" class="headerlink" title="listenter"></a>listenter</h3><ul>
+<li>监听器、通过listener可以监听web服务器中的某一个执行动作、并根据其要求做出相应的响应。再application\session\request三个对象创建消亡或者添加修改属性时自动执行代码的功能组件</li>
+<li>servlet、filter时针对url之类的，而listener是针对对象的操作，在这些对象变化的时候做一些操作</li>
+</ul>
+<h3 id="interceptor"><a href="#interceptor" class="headerlink" title="interceptor"></a>interceptor</h3><ul>
+<li>面向切面编程中，就是再你的servcie或者一个方法前后，比如动态代理就是拦截器的简单实现，只能对controller请求进行拦截</li>
+<li>类似与框架带的filter<ul>
+<li>不在web.xml中配置，框架配置文件中</li>
+<li>由action自己指定用哪个interceptor来接受处理，并且访问action上下文，过滤器可以对几乎所有的请求起作用</li>
+<li>拦截器是基于java 反射的，过滤器是基于函数回调的</li>
+<li>拦截器不依赖与serlvet容器，过滤器依赖于servlet容器</li>
+</ul>
 </li>
-<li><p>基本工具</p>
+</ul>
+<h2 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h2><h3 id="servlet-1"><a href="#servlet-1" class="headerlink" title="servlet"></a>servlet</h3><p>它被装入web服务器的内存，并在web服务器终止或者重新装入servlet时结束。servlet一但装入web服务器，一般就不会在web服务器内存中删除、直到web服务器关闭或重新结束。</p>
+<ol>
+<li>装入：启动服务器时加载servlet的实例</li>
+<li>初始化：web服务器启动时或者接受到请求时，初始化工作init()方法负责执行完成</li>
+<li>调用：从第一次到以后的多次访问，都只调用doget（）或dopost方法</li>
+<li>销毁：停止服务器时调用destory（）方法，销毁实例</li>
+</ol>
+<h3 id="filter-1"><a href="#filter-1" class="headerlink" title="filter"></a>filter</h3><p>Filter接口方法有init().doFilter(),dodestory()</p>
+<ol>
+<li>启动服务器时加载过滤器实例，并调用init()方法来初始化实例</li>
+<li>每一次请求时都只调用方法doFilter()进行处理，调用下一过滤器chain.doFilter</li>
+<li>停止服务器时调用destory()方法，销毁实例</li>
+</ol>
+<h3 id="listener"><a href="#listener" class="headerlink" title="listener"></a>listener</h3><h3 id="interceptor-1"><a href="#interceptor-1" class="headerlink" title="interceptor"></a>interceptor</h3><ul>
+<li>struts 的拦截器在加载xml后，初始化相应拦截器，当action请求来时调用intercept方法，服务器停止销毁interceptor</li>
+<li>prehandle(action执行之前)，posthandle(方法执行之后，不一定会执行)，aftercompletion（最终执行）</li>
+</ul>
+<h2 id="顺序"><a href="#顺序" class="headerlink" title="顺序"></a>顺序</h2><p>web.xml的加载顺序context-param-&gt;listener-&gt;filter-&gt;servlet</p>
+<p>执行顺序：</p>
+<p>filter1————————–web.xml中的配置顺序</p>
+<p>​    -&gt;interceptor1(prehandle)–框架中的拦截器</p>
+<p>​        -&gt;servlet1</p>
+<p>​    -&gt;interceptor1(posthandle,aftercompletion)</p>
+<p>-&gt;filter1</p>
+<p><img src="/2018/10/25/servlet-filter-listener-interceptor/struts结构.png" alt="1540519294642"></p>
+<p><img src="/2018/10/25/servlet-filter-listener-interceptor/springmvc结构.png" alt="springmvc拦截器"></p>
+<h2 id="应用举例"><a href="#应用举例" class="headerlink" title="应用举例"></a>应用举例</h2><h3 id="filter-2"><a href="#filter-2" class="headerlink" title="filter"></a>filter</h3><p>在过滤器中修改字符编码，在过滤器中修改request的参数（链路跟踪）</p>
+<h3 id="interceptor-2"><a href="#interceptor-2" class="headerlink" title="interceptor"></a>interceptor</h3><p>日志，在方法调用前后打印出字符串</p>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p><a href="https://blog.csdn.net/sundenskyqq/article/details/8549932" target="_blank" rel="noopener">https://blog.csdn.net/sundenskyqq/article/details/8549932</a></p>
+<p><a href="https://blog.csdn.net/tanga842428/article/details/52175683" target="_blank" rel="noopener">https://blog.csdn.net/tanga842428/article/details/52175683</a></p>
+<p><a href="https://blog.csdn.net/zxd1435513775/article/details/80556034" target="_blank" rel="noopener">https://blog.csdn.net/zxd1435513775/article/details/80556034</a></p>
+<p><a href="https://www.cnblogs.com/jzb-blog/p/6717349.html" target="_blank" rel="noopener">https://www.cnblogs.com/jzb-blog/p/6717349.html</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://share2u.github.io/2018/10/25/性能监控/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://github.com/share2u/share2u.github.io/raw/hexo/images/zhifubao.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chen's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/10/25/性能监控/" itemprop="url">性能监控</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-25T11:09:58+08:00">
+                2018-10-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/性能监控/" itemprop="url" rel="index">
+                    <span itemprop="name">性能监控</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/10/25/性能监控/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/10/25/性能监控/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2018/10/25/性能监控/" class="leancloud_visitors" data-flag-title="性能监控">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="为什么要性能监控"><a href="#为什么要性能监控" class="headerlink" title="为什么要性能监控"></a>为什么要性能监控</h2><p>了解系统的运行情况，有计划的改善项目的运行，提供系统的性能，保证系统稳定性等</p>
+<h2 id="监控哪些"><a href="#监控哪些" class="headerlink" title="监控哪些"></a>监控哪些</h2><h3 id="系统层面"><a href="#系统层面" class="headerlink" title="系统层面"></a>系统层面</h3><p>last min avg max</p>
+<h4 id="cpu"><a href="#cpu" class="headerlink" title="cpu"></a>cpu</h4><ol>
+<li>cpu jumps<ol>
+<li>context switchs per second：线程的切换，切换过多会导致cpu忙于切换，影响吞吐率</li>
+<li>interrupts per second</li>
+</ol>
 </li>
-<li><p>集合Collections</p>
+<li>cpu load cpu使用队列的长度的统计信息<ol>
+<li>processor load (1 min average per core)</li>
+<li>processor load (5 min average per core)</li>
+<li>processor load (15 min average per core)</li>
+</ol>
 </li>
-<li><p>缓存Caches</p>
+<li>cpu utilization 利用率<ol>
+<li>cpu idle time</li>
+<li>cpu user time</li>
+<li>cpu system time</li>
+<li>cpu iowait time</li>
+<li>cpu nice time</li>
+<li>cpu interrupt time</li>
+<li>cpu steal time</li>
+</ol>
 </li>
-<li><p>函数式风格</p>
+</ol>
+<h4 id="memory内存"><a href="#memory内存" class="headerlink" title="memory内存"></a>memory内存</h4><ol>
+<li>memory usage<ol>
+<li>avaulable memory</li>
+</ol>
 </li>
-<li><p>并发Concurrency</p>
+</ol>
+<h4 id="磁盘"><a href="#磁盘" class="headerlink" title="磁盘"></a>磁盘</h4><ol>
+<li>disk space usage<ol>
+<li>total disk space in</li>
+<li>free disk space on</li>
+</ol>
 </li>
-<li><p>字符串处理Strings</p>
+<li>disk space /opt</li>
+</ol>
+<h4 id="network网络"><a href="#network网络" class="headerlink" title="network网络"></a>network网络</h4><ol>
+<li>network traffic on eth0<ol>
+<li>incoming network traffic on eth0</li>
+<li>outgoing network traffic on eth0</li>
+</ol>
 </li>
-<li><p>原生类型</p>
+</ol>
+<h3 id="软件层面"><a href="#软件层面" class="headerlink" title="软件层面"></a>软件层面</h3><h4 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h4><h4 id="tomcat"><a href="#tomcat" class="headerlink" title="tomcat"></a>tomcat</h4><h4 id="jvm"><a href="#jvm" class="headerlink" title="jvm"></a>jvm</h4><h3 id="应用方面"><a href="#应用方面" class="headerlink" title="应用方面"></a>应用方面</h3><h4 id="应用类型"><a href="#应用类型" class="headerlink" title="应用类型"></a>应用类型</h4><ul>
+<li>IO相关：Io相关的应用通常用来处理大量数据，需要大量内存和存储，频繁IO操作读写操作，而对cpu的要求比较少，大部分时候cpu再等待磁盘eg:数据库服务器、文件服务器</li>
+<li>CPU相关：CPU相关大的应用需要大量cpu资源，比如高并发的web/mail服务器、图像、视频处理、科学计算等</li>
+</ul>
+<h2 id="方法论"><a href="#方法论" class="headerlink" title="方法论"></a>方法论</h2><h3 id="压测"><a href="#压测" class="headerlink" title="压测"></a>压测</h3><h4 id="jmeter"><a href="#jmeter" class="headerlink" title="jmeter"></a>jmeter</h4><p>线程就是并发数、吞吐量就是QPS</p>
+<h3 id="监控工具"><a href="#监控工具" class="headerlink" title="监控工具"></a>监控工具</h3><table>
+<thead>
+<tr>
+<th>工具</th>
+<th>简单介绍</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>top</td>
+<td>查看进程活动状态以及一些系统状况</td>
+</tr>
+<tr>
+<td>vmstat</td>
+<td>查看系统状态、硬件和系统信息等</td>
+</tr>
+<tr>
+<td>iostat</td>
+<td>查看cpu负载、硬盘状态</td>
+</tr>
+<tr>
+<td>sar</td>
+<td>综合工具、查看系统状态</td>
+</tr>
+<tr>
+<td>mpstat</td>
+<td>查看多处理器状况</td>
+</tr>
+<tr>
+<td>netstat</td>
+<td>查看网络状况</td>
+</tr>
+<tr>
+<td>iptraf</td>
+<td>实时网络状况检测</td>
+</tr>
+<tr>
+<td>tcpdump</td>
+<td>抓取网络数据包、详细分析</td>
+</tr>
+<tr>
+<td>mpstat</td>
+<td>查看多处理器状况</td>
+</tr>
+<tr>
+<td>tcptrace</td>
+<td>数据包分析工具</td>
+</tr>
+<tr>
+<td>netperf</td>
+<td>网络带宽工具</td>
+</tr>
+<tr>
+<td>dstat</td>
+<td>综合工具、综合了vmstat\iostat\ifstat\netstat等</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p><a href="https://blog.csdn.net/tianlesoftware/article/details/6198780" target="_blank" rel="noopener">https://blog.csdn.net/tianlesoftware/article/details/6198780</a></p>
+<p><a href="https://blog.csdn.net/marising/article/details/5182771" target="_blank" rel="noopener">https://blog.csdn.net/marising/article/details/5182771</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://share2u.github.io/2018/10/19/缓存初始/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://github.com/share2u/share2u.github.io/raw/hexo/images/zhifubao.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chen's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/10/19/缓存初始/" itemprop="url">缓存初始</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-19T17:24:38+08:00">
+                2018-10-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/缓存/" itemprop="url" rel="index">
+                    <span itemprop="name">缓存</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/10/19/缓存初始/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/10/19/缓存初始/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2018/10/19/缓存初始/" class="leancloud_visitors" data-flag-title="缓存初始">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="什么是缓存"><a href="#什么是缓存" class="headerlink" title="什么是缓存"></a>什么是缓存</h2><p>临时存放数据（读多写少）的地方，介于外部请求和真实数据之间；</p>
+<h2 id="什么情况下要缓存"><a href="#什么情况下要缓存" class="headerlink" title="什么情况下要缓存"></a>什么情况下要缓存</h2><p>数据的类型，业务的特点：读多写少，在正常工作的前提下响应时间尽可能短。</p>
+<h2 id="缓存的类型"><a href="#缓存的类型" class="headerlink" title="缓存的类型"></a>缓存的类型</h2><p>根据缓存位置的不同的不同分为硬件缓存，客户端缓存，服务端缓存</p>
+<ul>
+<li>硬件缓存：硬盘缓存和cpu缓存，提高硬盘和cpu之间的暂存器</li>
+<li>客户端缓存：会把用户之前浏览的东西存在本地，在下次访问是，如果本地的缓存有请求的内容，就直接取，不再向服务器请求</li>
+<li>服务端缓存：如果每次客户端请求都要链接一次数据库，当用户请求多的时候，负载过大，这时把一些经常请求的数据存放在内存中，当有请求时直接返回，不经过数据库，这样就可以减轻数据库负担</li>
+</ul>
+<p>进程缓存or分布式缓存or多级缓存</p>
+<h2 id="失效策略（缓存算法）"><a href="#失效策略（缓存算法）" class="headerlink" title="失效策略（缓存算法）"></a>失效策略（缓存算法）</h2><p>如果缓存满了，而当前请求又没有命中缓存，那么会按照一种策略，把缓存中的某一种旧资源剔除，而把新的资源加入缓存，这些决定应该剔除哪个旧资源的策略就是失效策略</p>
+<ul>
+<li>成本：如果缓存对象有不同的存储成本，应该把那些难以获得的对象保存下来</li>
+<li>容量：如果缓存对象有不同的大小，应该把那些大的缓存清除，让更多的小缓存对象进来</li>
+<li>时间：一些缓存设定有过期时间，应该在到时间之后将他们失效</li>
+</ul>
+<h3 id="常见失效策略"><a href="#常见失效策略" class="headerlink" title="常见失效策略"></a>常见失效策略</h3><h4 id="simple-time-based"><a href="#simple-time-based" class="headerlink" title="simple time-based"></a>simple time-based</h4><hr>
+<p>通过绝对的时间周期删除缓存对象，对于新增的对象，保存设定的时间后，将其失效，原理简单，效果不好</p>
+<h4 id="extended-time-based-expiration"><a href="#extended-time-based-expiration" class="headerlink" title="extended time-based expiration"></a>extended time-based expiration</h4><hr>
+<p>通过相对时间去失效缓存对象，对于新增的缓存对象，会保存特定的时间，比如每5分钟，每天12点</p>
+<h4 id="sliding-time-based-expiration"><a href="#sliding-time-based-expiration" class="headerlink" title="sliding time-based expiration"></a>sliding time-based expiration</h4><hr>
+<p>计算最后访问这个缓存的时间算起，最后一次访问对象1小时后</p>
+<h4 id="FIFO-First-in-First-Out"><a href="#FIFO-First-in-First-Out" class="headerlink" title="FIFO:First in First Out"></a>FIFO:First in First Out</h4><hr>
+<p>判断被存储的时间，最早缓存数据优先被剔除</p>
+<h4 id="LRU-Least-Recently-Used"><a href="#LRU-Least-Recently-Used" class="headerlink" title="LRU:Least Recently Used"></a>LRU:Least Recently Used</h4><hr>
+<p>最近最少，使用一个链表来保存。新数据插入链表头部，命中后，将数据移到链表头部，满了后，尾部数据丢弃,有个热点数据有段时间没访问，会导致这个热点数据淘汰</p>
+<h4 id="LFU-Least-Frequently-Used"><a href="#LFU-Least-Frequently-Used" class="headerlink" title="LFU:Least Frequently Used"></a>LFU:Least Frequently Used</h4><hr>
+<p>最不经常使用原则，在一段时间内，数据命中 次数最少，优先被剔除，利用额外的空间记录每个数据的使用频率，选出频率最低的进行淘汰</p>
+<h3 id="对比与分析"><a href="#对比与分析" class="headerlink" title="对比与分析"></a>对比与分析</h3><p>失效策略出发点有两个，基于时间（FIFO）、基于命中次数(LRU,MRU,2Q),最常使用的时FIFO,LRU,LFU</p>
+<p>不同的访问模型导致命中率变化较大，实际应用中需要根据业务的需求和对数据的访问请求进行选择，并不是命中率越高越好，考虑点包括：命中率，复杂度？，代价（时间复杂度、空间复杂度）等，如何衡量。。。</p>
+<h2 id="更新缓存的方法"><a href="#更新缓存的方法" class="headerlink" title="更新缓存的方法"></a>更新缓存的方法</h2><h3 id="定时失效"><a href="#定时失效" class="headerlink" title="定时失效"></a>定时失效</h3><h3 id="mq通知"><a href="#mq通知" class="headerlink" title="mq通知"></a>mq通知</h3><h2 id="缓存问题"><a href="#缓存问题" class="headerlink" title="缓存问题"></a>缓存问题</h2><h3 id="缓存穿透"><a href="#缓存穿透" class="headerlink" title="缓存穿透"></a>缓存穿透</h3><p>查询一个不存在的数据，首先，缓存命不中，数据库查不到，这样的请求每次都会请求数据库，流量大的时候，可能数据库就挂了。</p>
+<p>解决办法：</p>
+<ul>
+<li>过滤器：布隆过滤器，将所有可能存在的数据哈希到一个足够大的bitmap中，一个一定不存在的数据会被这个bitmap拦截</li>
+<li>设定指定值：如果一个查询返回的数据为空，依然要把空结果进行缓存，缓存的值设定位一个指定值，同时设置它的过期时间很短，最长不超过5分钟</li>
+</ul>
+<h3 id="缓存雪崩"><a href="#缓存雪崩" class="headerlink" title="缓存雪崩"></a>缓存雪崩</h3><p>在某一时刻，大量缓存同时失效，请求全部到数据库，导致数据压力过大</p>
+<p>解决办法：</p>
+<ul>
+<li>加锁或者队列的方式保证缓存的单线程来写，把失效时间分开</li>
+<li>将数据失效时间均匀分布在时间轴上，在原有的失效时间基础上增加一个随机值</li>
+</ul>
+<h3 id="缓存并发"><a href="#缓存并发" class="headerlink" title="缓存并发"></a>缓存并发</h3><p>如果一个缓存如果失效，可能出现多个进程同时查询DB，</p>
+<p>解决办法：</p>
+<p>对缓存查询加锁，如果key不存在，就加锁，然后查DB写入缓存，然后解锁</p>
+<h2 id="大厂经验"><a href="#大厂经验" class="headerlink" title="大厂经验"></a>大厂经验</h2><h3 id="爱奇艺"><a href="#爱奇艺" class="headerlink" title="爱奇艺"></a>爱奇艺</h3><ol>
+<li>数据同步加Redis：依赖于Redis，一旦redis挂了，整个缓存系统不可用</li>
+<li>javamap加redis：进程内缓存作为一级缓存，redis作为二级缓存，进程内缓存无法做到实时更新，当不需要淘汰机制，可以使用map，问题：<ol>
+<li>锁竞争严重</li>
+<li>不支持过期时间</li>
+<li>不支持自动刷新</li>
+</ol>
 </li>
-<li><p>区间Ranges</p>
-</li>
-<li><p>I/O</p>
-</li>
-<li><p>hash</p>
-</li>
-<li><p>事件总线EventBus</p>
-</li>
-<li><p>数学运算Math</p>
-</li>
-<li><p>反射Reflections</p>
+<li>guava cache加redis：设置写后刷新时间，进行刷新，解决了一直不更新的问题，但是依然没有解决实时刷新</li>
+<li>外部缓存异步刷新：利用redis作为消息队列通知机制，通知其他应用进行刷新</li>
+</ol>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ul>
+<li><a href="https://juejin.im/post/5b7593496fb9a009b62904fa#comment" target="_blank" rel="noopener">https://juejin.im/post/5b7593496fb9a009b62904fa#comment</a></li>
+<li><a href="https://juejin.im/post/5b849878e51d4538c77a974a" target="_blank" rel="noopener">https://juejin.im/post/5b849878e51d4538c77a974a</a></li>
+<li><a href="http://twei.site/2017/07/15/%E7%BC%93%E5%AD%98%E9%82%A3%E4%BA%9B%E4%BA%8B-%E4%BB%80%E4%B9%88%E6%98%AF%E7%BC%93%E5%AD%98%EF%BC%8C%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%94%A8%E7%BC%93%E5%AD%98/" target="_blank" rel="noopener">http://twei.site/2017/07/15/%E7%BC%93%E5%AD%98%E9%82%A3%E4%BA%9B%E4%BA%8B-%E4%BB%80%E4%B9%88%E6%98%AF%E7%BC%93%E5%AD%98%EF%BC%8C%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%94%A8%E7%BC%93%E5%AD%98/</a></li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://share2u.github.io/2018/10/19/mybatis代码生成工具/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://github.com/share2u/share2u.github.io/raw/hexo/images/zhifubao.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chen's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/10/19/mybatis代码生成工具/" itemprop="url">mybatis代码生成工具</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-19T13:52:20+08:00">
+                2018-10-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/mybatis/" itemprop="url" rel="index">
+                    <span itemprop="name">mybatis</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/10/19/mybatis代码生成工具/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/10/19/mybatis代码生成工具/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2018/10/19/mybatis代码生成工具/" class="leancloud_visitors" data-flag-title="mybatis代码生成工具">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>使用方式之一====MAVEN</p>
+<p>XML配置参数说明</p>
+<p>其他注意事项</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/08/05/Google-Guava学习笔记/#more" rel="contents">
+            <a class="btn" href="/2018/10/19/mybatis代码生成工具/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1821,6 +2092,7 @@
   
   
   <div class="post-block">
+<<<<<<< HEAD
 <<<<<<< HEAD
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/29/test-my/">
 
@@ -1834,11 +2106,14 @@
       <meta itemprop="name" content="Hexo">
 =======
     <link itemprop="mainEntityOfPage" href="http://share2u.github.io/2018/08/04/Powermockto/">
+=======
+    <link itemprop="mainEntityOfPage" href="http://share2u.github.io/2018/10/15/位操作符/">
+>>>>>>> 0f213b7beea57e32c61335a4afa4b5bef67476e3
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Chen">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://ou02tuh60.bkt.clouddn.com/touxiang/avatar.jpg">
+      <meta itemprop="image" content="https://github.com/share2u/share2u.github.io/raw/hexo/images/zhifubao.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -1854,10 +2129,14 @@
           <h1 class="post-title" itemprop="name headline">
                 
 <<<<<<< HEAD
+<<<<<<< HEAD
                 <a class="post-title-link" href="/2018/07/29/test-my/" itemprop="url">test_my</a></h1>
 =======
                 <a class="post-title-link" href="/2018/08/04/Powermockto/" itemprop="url">Powermockto</a></h1>
 >>>>>>> 479ab716553f23a9510aa424ddb2a977045eb398
+=======
+                <a class="post-title-link" href="/2018/10/15/位操作符/" itemprop="url">位操作符</a></h1>
+>>>>>>> 0f213b7beea57e32c61335a4afa4b5bef67476e3
         
 
         <div class="post-meta">
@@ -1875,9 +2154,14 @@
 =======
                 <span class="post-meta-item-text">发表于</span>
               
+<<<<<<< HEAD
               <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-04T23:30:36+08:00">
                 2018-08-04
 >>>>>>> 479ab716553f23a9510aa424ddb2a977045eb398
+=======
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-15T14:36:06+08:00">
+                2018-10-15
+>>>>>>> 0f213b7beea57e32c61335a4afa4b5bef67476e3
               </time>
             
 
@@ -1904,8 +2188,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/工具/" itemprop="url" rel="index">
-                    <span itemprop="name">工具</span>
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
                   </a>
                 </span>
 
@@ -1922,8 +2206,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/08/04/Powermockto/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2018/08/04/Powermockto/" itemprop="commentCount"></span>
+                <a href="/2018/10/15/位操作符/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/10/15/位操作符/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1933,8 +2217,12 @@
           
           
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
              <span id="/2018/08/04/Powermockto/" class="leancloud_visitors" data-flag-title="Powermockto">
+=======
+             <span id="/2018/10/15/位操作符/" class="leancloud_visitors" data-flag-title="位操作符">
+>>>>>>> 0f213b7beea57e32c61335a4afa4b5bef67476e3
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1968,15 +2256,19 @@
       
         
 <<<<<<< HEAD
+<<<<<<< HEAD
           
             
           
 =======
           <p>mock是模拟对象，用于模拟真实对象的行为<br>powermock拓展了esaymock和mockito框架，增加了对static 和final方法mock支持等功能，</p>
 <p>本文阐述powermockto简单用法，未包含 answer,spy,captor等</p>
+=======
+          <p>基本数据类型，进制以及常用的用法</p>
+>>>>>>> 0f213b7beea57e32c61335a4afa4b5bef67476e3
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/08/04/Powermockto/#more" rel="contents">
+            <a class="btn" href="/2018/10/15/位操作符/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -2029,6 +2321,7 @@
   
   <div class="post-block">
 <<<<<<< HEAD
+<<<<<<< HEAD
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/29/hello-world/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2041,11 +2334,14 @@
       <meta itemprop="name" content="Hexo">
 =======
     <link itemprop="mainEntityOfPage" href="http://share2u.github.io/2018/08/01/java8学习笔记/">
+=======
+    <link itemprop="mainEntityOfPage" href="http://share2u.github.io/2018/09/29/fastjson/">
+>>>>>>> 0f213b7beea57e32c61335a4afa4b5bef67476e3
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Chen">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://ou02tuh60.bkt.clouddn.com/touxiang/avatar.jpg">
+      <meta itemprop="image" content="https://github.com/share2u/share2u.github.io/raw/hexo/images/zhifubao.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -2061,10 +2357,14 @@
           <h1 class="post-title" itemprop="name headline">
                 
 <<<<<<< HEAD
+<<<<<<< HEAD
                 <a class="post-title-link" href="/2018/07/29/hello-world/" itemprop="url">Hello World</a></h1>
 =======
                 <a class="post-title-link" href="/2018/08/01/java8学习笔记/" itemprop="url">java8学习笔记</a></h1>
 >>>>>>> 479ab716553f23a9510aa424ddb2a977045eb398
+=======
+                <a class="post-title-link" href="/2018/09/29/fastjson/" itemprop="url">fastjson</a></h1>
+>>>>>>> 0f213b7beea57e32c61335a4afa4b5bef67476e3
         
 
         <div class="post-meta">
@@ -2082,9 +2382,14 @@
 =======
                 <span class="post-meta-item-text">发表于</span>
               
+<<<<<<< HEAD
               <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-01T21:47:39+08:00">
                 2018-08-01
 >>>>>>> 479ab716553f23a9510aa424ddb2a977045eb398
+=======
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-29T11:45:18+08:00">
+                2018-09-29
+>>>>>>> 0f213b7beea57e32c61335a4afa4b5bef67476e3
               </time>
             
 
@@ -2111,8 +2416,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
+                  <a href="/categories/json/" itemprop="url" rel="index">
+                    <span itemprop="name">json</span>
                   </a>
                 </span>
 
@@ -2129,8 +2434,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/08/01/java8学习笔记/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2018/08/01/java8学习笔记/" itemprop="commentCount"></span>
+                <a href="/2018/09/29/fastjson/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/09/29/fastjson/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -2140,8 +2445,12 @@
           
           
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
              <span id="/2018/08/01/java8学习笔记/" class="leancloud_visitors" data-flag-title="java8学习笔记">
+=======
+             <span id="/2018/09/29/fastjson/" class="leancloud_visitors" data-flag-title="fastjson">
+>>>>>>> 0f213b7beea57e32c61335a4afa4b5bef67476e3
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -2174,6 +2483,7 @@
 
       
         
+<<<<<<< HEAD
 <<<<<<< HEAD
           
             <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
@@ -2197,9 +2507,12 @@
 <li>新时间日期API</li>
 <li>其他新特性</li>
 </ul>
+=======
+          <p>json基本格式，以及fastjson基本用法，包括序列化与反序列化</p>
+>>>>>>> 0f213b7beea57e32c61335a4afa4b5bef67476e3
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/08/01/java8学习笔记/#more" rel="contents">
+            <a class="btn" href="/2018/09/29/fastjson/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -2244,7 +2557,7 @@
 <<<<<<< HEAD
 =======
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 >>>>>>> 479ab716553f23a9510aa424ddb2a977045eb398
@@ -2284,7 +2597,7 @@
               <p class="site-author-name" itemprop="name">John Doe</p>
 =======
               <img class="site-author-image" itemprop="image"
-                src="http://ou02tuh60.bkt.clouddn.com/touxiang/avatar.jpg"
+                src="https://github.com/share2u/share2u.github.io/raw/hexo/images/zhifubao.jpg"
                 alt="Chen" />
             
               <p class="site-author-name" itemprop="name">Chen</p>
@@ -2300,10 +2613,14 @@
                 <a href="/archives/">
               
 <<<<<<< HEAD
+<<<<<<< HEAD
                   <span class="site-state-item-count">2</span>
                   <span class="site-state-item-name">posts</span>
 =======
                   <span class="site-state-item-count">16</span>
+=======
+                  <span class="site-state-item-count">24</span>
+>>>>>>> 0f213b7beea57e32c61335a4afa4b5bef67476e3
                   <span class="site-state-item-name">日志</span>
 >>>>>>> 479ab716553f23a9510aa424ddb2a977045eb398
                 </a>
@@ -2319,7 +2636,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -2330,7 +2647,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-count">32</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
