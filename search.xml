@@ -1,9 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[并发编程实战学习笔记]]></title>
+    <url>%2F2019%2F02%2F21%2F%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E5%AE%9E%E6%88%98%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%2F</url>
+    <content type="text"><![CDATA[哈哈 awf]]></content>
+      <categories>
+        <category>多线程</category>
+      </categories>
+      <tags>
+        <tag>多线程</tag>
+        <tag>学习笔记</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[线程池]]></title>
+    <url>%2F2019%2F02%2F18%2F%E7%BA%BF%E7%A8%8B%E6%B1%A0%2F</url>
+    <content type="text"><![CDATA[线程池的产生 创建、销毁线程伴随着系统开销、线程是可以重复适用的 线程并发数量过多，抢占系统资源从而导致阻塞 对线程要进行管理 Executor 具体实现类是ThreadPoolExecutor类 核心参数corePoolSize线程池的基本大小，即 在没有任务需要执行的时候线程池的大小，并且只有在工作队列满了的情况下才会创建超过这个数量的线程。在刚刚创建threadpoolexecutor的时候，线程不会立即启动，而是在有任务提交的时候才会启动，除非调用了prtestartCoreThread/prestartAllcoreThreads事先启动核心线程，没有任务执行的时候，线程池的大小不一定是corepoolSize maximumPoolSize线程池允许的最大线程数，线程池中的当前线程数目不会超过这个值，如果队列中任务已满，并且当前线程个数小于maximumpoolsize,那么会创建新的线程来执行任务。 keepAliveTime如果一个线程处于空闲状态的时间超过该属性，就会因为超时而退出，如果这个线程是核心线程，线程退出取决于allowCoreThreadTimeOut queueCapacity阻塞队列 任务队列容量 blockingQueue1、ArrayBlockingQueue：是一个基于数组结构的有界阻塞队列，此队列按 FIFO（先进先出）原则对元素进行排序。2、LinkedBlockingQueue：一个基于链表结构的阻塞队列，此队列按FIFO （先进先出） 排序元素，吞吐量通常要高于ArrayBlockingQueue。静态工厂方法Executors.newFixedThreadPool()使用了这个队列，使用此阻塞队列时maximumPoolSizes就相当于无效3、SynchronousQueue：一个不存储元素的阻塞队列。每个插入操作必须等到另一个线程调用移除操作，否则插入操作一直处于阻塞状态，吞吐量通常要高于 LinkedBlockingQueue，静态工厂方法Executors.newCachedThreadPool使用了这个队列。可以避免在处理可能具有内部依赖性的请求集时出现锁。 4、PriorityBlockingQueue：一个具有优先级的无限阻塞队列。 rejectedExecutionHandler当线程池发生两种情况，此时拒绝增加新的任务，将会采用线程池的饱和策略 两种情况 当线程已经达到maxpoolsize时，且队列已满，会拒绝新任务 当线程池被调用shutdown时，会等待线程池里的任务执行完毕再shutdown 饱和策略的类型 AbortPolicy 丢弃任务，抛运行时异常RejectedExecutionException 默认策略 CallerRunsPolicy 由调用者线程执行任务，如果调用者已关闭，则丢弃 DiscardPolicy 忽略 DiscardOldestPolicy 从队列中踢出最先进入队列的惹怒五 实现RejectedExecutionHandler接口，可自定义处理器 执行顺序123451. 当线程数小于核心线程数时，创建线程。2. 当线程数大于等于核心线程数，且任务队列未满时，将任务放入任务队列。3. 当线程数大于等于核心线程数，且任务队列已满 - 若线程数小于最大线程数，创建线程 - 若线程数等于最大线程数，抛出异常，拒绝任务 线程池的关闭 shutdown 与shutdownnow 常见的几种线程池Executors.newCachedThreadPool(); //创建一个缓冲池，缓冲池容量大小为Integer.MAX_VALUEExecutors.newSingleThreadExecutor(); //创建容量为1的缓冲池Executors.newFixedThreadPool(int); //创建固定容量大小的缓冲池 线程池监控actuator 组件来做线程池的监控。 ThreadPool api 参数设置的方法任务的类型 cpu密集型， 较小的线程池，cpu核心数+1，cpu密集型任务会使cpu使用率很高，若开过多的线程数，只会增加上下文切换的次数，带来额外的开销 io密集型 cpu使用率不高，可以让cpu在等待io的时候去处理别的任务，充分利用cpu的时间 混合型 分别用不同的线程池去处理，两个任务的结束时间取决与后执行完的任务，适用于两个任务的执行时间相差不大 2N+1N为cpu核数 根据几个值设置12345678910111213141516* 需要根据几个值来决定 - tasks ：每秒的任务数，假设为500~1000 - taskcost：每个任务花费时间，假设为0.1s - responsetime：系统允许容忍的最大响应时间，假设为1s* 做几个计算 - corePoolSize = 每秒需要多少个线程处理？ * threadcount = tasks/(1/taskcost) =tasks*taskcout = (500~1000)*0.1 = 50~100 个线程。corePoolSize设置应该大于50 * 根据8020原则，如果80%的每秒任务数小于800，那么corePoolSize设置为80即可 - queueCapacity = (coreSizePool/taskcost)*responsetime * 计算可得 queueCapacity = 80/0.1*1 = 80。意思是队列里的线程可以等待1s，超过了的需要新开线程来执行 * 切记不能设置为Integer.MAX_VALUE，这样队列会很大，线程数只会保持在corePoolSize大小，当任务陡增时，不能新开线程来执行，响应时间会随之陡增。 - maxPoolSize = (max(tasks)- queueCapacity)/(1/taskcost) * 计算可得 maxPoolSize = (1000-80)/10 = 92 * （最大任务数-队列容量）/每个线程每秒处理能力 = 最大线程数 - rejectedExecutionHandler：根据具体情况来决定，任务不重要可丢弃，任务重要则要利用一些缓冲机制来处理 - keepAliveTime和allowCoreThreadTimeout采用默认通常能满足 源码分析线程池的创建 添加任务 任务的获取 任务的执行 https://blog.csdn.net/tbdp6411/article/details/78443732]]></content>
+  </entry>
+  <entry>
+    <title><![CDATA[数据结构与算法]]></title>
+    <url>%2F2019%2F01%2F02%2F%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%2F</url>
+    <content type="text"><![CDATA[本文源于极客时间的数据结构和算法的读书笔记 数据结构是一组数据的存储结构， 算法是操作数据的一组方法 来历，特点，适合解决的问题，和实际的应用场景 复杂度分析代码运行的更快，代码更节省空间，执行效率是算法的一个非常重要的考量指标； 所有代码的执行时间T(n)与每行代码的执行次数n成正比 123T(n)=O(f(n))n为数据规模的大小，f（n）表示每行代码执行的次数总和，T(n)表示代码随数据规模增长的变化趋势。当n很大时，f(n)公式中的低阶，常量，系数并不能左右增长趋势，我们只需要记录一个最大量级。 时间复杂度分析技巧 只关注循环执行次数最多的一段代码 加法法则：总复杂度等于量级最大的那段代码的复杂度 乘法法则：嵌套代码的复杂度等于嵌套内外代码复杂度的乘积 常见的时间复杂度 O(1) O(logn) O(n) ,O(nlogn) O(n2) 最好、最坏、平均、均摊时间复杂度最好：在最理想的情况下，执行这段代码的时间复杂度 最坏：在最糟糕的情况下，执行这段代码的时间复杂度 平均情况时间复杂度：代码在所有情况下执行的次数的加权平均值（概率乘以时间复杂度）表示 均摊时间复杂度：在代码执行的所有复杂度情况中绝大部分是低级别的复杂度，个别情况是高级别复杂度且发生具有时序关系时，可以将个别高级别复杂度均摊到低级别复杂度上，基本上均摊结果就等于低级别复杂度。 线性表与非线性表 线性表是数据排成一条线一样的结构，每个线性表上的数据最多只有前后两个方向。 数组、链表、队列、栈都是线性表结构 非线性表，数据不是简单的前后关系 二叉树、堆、图等就是非线性 数组数组为什么要从0开始，而不是1开始 数组是一种线性表数据结构，用一组连续的内存空间，来存储一组相同类型的数据 数组的特点 随机访问：由于其线性表的结构、连续的内存空间和相同类型的数据； 插入、删除慢：平均复杂度为O(n) 链表零散的内存块串联起来使用，常见的单链表、双向链表、循环链表 结点：每个内存块都叫做结点，结点存储数据以及记录链上的下一个结点的地址(后继指针next) 头结点、为链表第一个结点、记录链表的基地址 尾结点：为链表的最后一个结点，指向一个空地址NULL 循环链表是一种特殊的单链表：尾结点指向链表的头结点，这样从链尾到链头比较方便 双向链表：支持两个方向，有前区指针prev和后继指针next 链表的特点 插入、删除快，时间复杂度O(1) 随机访问慢：O(n) 单链表反转//一边走，一边调整指针 链表中环的检测//快慢指针 两个有序的链表合并//两个指针 删除链表倒数第 n 个结点//n+1长度的队列 求链表的中间结点//快慢指针，奇偶之分 206，141，21，19，876 栈后进者先出，先进者后出，操作受限的线性表 入栈：栈顶插入一个数据 出栈：从栈顶删除一个数据 用数组实现的栈叫做顺序栈、用链表实现的栈叫做链式栈。 应用：函数调用，运算符、浏览器前进后退 20,155,232,844,224,682,496. 队列先进先出就是队列 入队：放一个数据到队列尾部 出队：从队列头部取一个元素 用数组实现的叫做顺序队列、用链表实现的叫做链式队列 队列的应用：循环队列、阻塞队列、并发队列 递归使用递归的三个条件： 一个问题的解可以分解为几个子问题的解 这个问题与分解之后的子问题，除了数据规模不同，求解思路完全一样 存在递归终止条件 递归思路：找到如何将大问题分解为小问题的规律，并且写出递推公式、找到终止条件 注意点： 避免去想一层一层的调用关系、不要试图分解递归的每个步骤，只需要抽象为一个递推公式 警惕堆栈溢出 重复计算：通过散列表保存出现过的结果，递归过程中先从里面取 排序如何分析一个排序算法： 排序算法的执行效率 最好情况、最坏情况、平均情况时间复杂度：算法在不同数据（有序等）下的性能是不同的 时间复杂度的系数、常数、低阶：数据规模，考虑实际使用场景 比较次数和交换（移动）次数 排序算法的内存消耗：原地排序（空间复杂度O1）的排序算法 排序算法的稳定性：待排序的序列中存在值相等的元素，排序之后，相等元素之间原有顺序不变 冒泡、插入、选择O(n2)冒泡排序1//冒泡排序 最好：一次冒泡O(n)，最坏：n次冒泡O(n2);平均复杂度：通过有序度于逆序度来分析O(n2) ​ - 有序度是具有有序关系的元素对的个数，排序就是增加有序度，减少逆序度的过程，最终达到满有序度的状态，逆序度数为排序的最少交换次数 原地排序：空间复杂度1 稳定排序算法 插入排序原理：动态的往有序集合中添加元素 方案：将数组中的元素分为两个区间、已排序区间和未排序区间，初始已排序区间只有一个元素，然后取未排序区间中的元素，在已排序区间中找到合适的插入未知将其插入，并保证已排序区间数据一直有序。 1//插入排序 最好：O(n);最坏：O(n2);;平均：O(n2) 原地排序 稳定排序 选择排序原理：类似插入排序，不同的是每次都从未排序的集合中选择最小元素与到排序集合的末尾元素进行交换 最好，最坏，平均都是O(n2) 不稳定排序 为什么推荐插入排序：从代码实现，比较和交换次数上考虑 https://mp.weixin.qq.com/s/HQg3BzzQfJXcWyltsgOfCQ https://visualgo.net 快排、归并O(nlongn)快排核心思想:选择一个合适的结点作为分区点，将小于分区点的放到左边，将大于分区点的放到右边，然后递归解决两个数组 递推公式：quick_sort(p…r) = quick_sort(p…q-1) + quick_sort(q+1, r) 终止条件：p &gt;= r 123456789101112// 快速排序，A 是数组，n 表示数组的大小quick_sort(A, n) &#123; quick_sort_c(A, 0, n-1)&#125;// 快速排序递归函数，p,r 为下标quick_sort_c(A, p, r) &#123; if p &gt;= r then return q = partition(A, p, r) // 获取分区点 quick_sort_c(A, p, q-1) quick_sort_c(A, q+1, r)&#125; 归并核心思想：排序一个数组，先把数组从中间分为前后两部分、然后对前后两部分分别排序，再将排好序的两部分合并在一起，整个数组就有序了。 书写方法：递归思想，写出递推公式、和终止条件 递推公式：merge_sort(p…r) = merge(merge_sort(p…q), merge_sort(q+1…r)) 终止条件：p &gt;= r 不用再继续分解 转化为代码 1234567891011121314//归并排序n个元素Amerger_sort(A,n)&#123; merger_sort_c(A,0,n-1);&#125;//将p到r的A数组进行排序merger_sort_c(A,p,r)&#123; if p&gt;= r then return; q= (p+r)/2;中间位置 //分治递归 merger_sort_c(A,p,q); merger_sort_c(A,q+1,r); //将两个有序数组合并和一个有序数组 merge(A[p..r],A[p...q],A[q+1...r]);&#125; 稳定排序 时间复杂度分析：写递推公式 T(a) = T(b) + T(c) + K 其中K等于将两个子问题b+c的结果合并为问题a的结果所消耗的时间 123456789101112T(1) = C； n=1 时，只需要常量级的执行时间，所以表示为 C。T(n) = 2*T(n/2) + n； n&gt;1T(n) = 2*T(n/2) + n = 2*(2*T(n/4) + n/2) + n = 4*T(n/4) + 2*n = 4*(2*T(n/8) + n/4) + 2*n = 8*T(n/8) + 3*n = 8*(2*T(n/16) + n/8) + 3*n = 16*T(n/16) + 4*n ...... = 2^k * T(n/2^k) + k * n ......当n/2*k =1 的时候，终止，k=log2nT(n)=Cn+nlog2n = O(nlogn) 空间复杂度L合并数组需要额外的空间，O(n) 桶、计数、基数O(n)桶计数基数查找]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>数据结构</tag>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[跨域]]></title>
     <url>%2F2018%2F12%2F29%2F%E8%B7%A8%E5%9F%9F%2F</url>
-    <content type="text"><![CDATA[跨域 浏览器的同源策略 跨域资源共享cors 跨域在html中&lt;a&gt;, &lt;form&gt;, &lt;img&gt;, &lt;script&gt;, &lt;iframe&gt;, &lt;link&gt; 等标签以及 Ajax 都可以指向一个资源地址，当发起请求的域与请求的域不一样的时候就是跨域请求； 同域：协议+域名+端口号均相同 由于浏览器的同源策略，对跨域请求做出限制； 原因： csrf攻击：跨站请求伪造，Cross-site request forgery ，攻击者盗用你的身份（session,cookie），以你的名义发送请求 同源策略浏览器基本的安全策略 具体实现例子： DOM层面，限制来自不同源的Document对象js对象获取当前对象的读取或设置这些属性 Cookie和xmlhttprequest层面的同源策略：禁止Ajax直接发起跨域请求（请求可以发送，结果北浏览器拦截，不展示），同时ajax不能携带域本网站不同源的cookie img,scriptm等带有src属性的标签可以从不同域加载和执行资源 跨域解决方案 jSONP: 利用同源策略的非绝对性，与服务端约定号一个回调函数名，服务端接收到请求吼，回传一段js,在js代码中调用约定号的回调函数，并且将参数进行传递，当网页接收到这段js后，就会执行这个回调函数 只支持get请求 CORS Cross-Origin Resource Sharing 跨源资源共享：它使用额外的http头来告诉浏览器，让web应用被准许访问来自不同源服务器上的指定的资源 比较老的浏览器不支持 spring设置CORS（响应头加参数） servlet Filter CrossOrigin 全局cors配置 参考文献https://www.jianshu.com/p/f880878c1398 https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Access_control_CORS https://www.jianshu.com/p/9203e9b14465 ###]]></content>
+    <content type="text"><![CDATA[跨域 浏览器的同源策略 跨域资源共享cors 跨域在html中&lt;a&gt;, &lt;form&gt;, &lt;img&gt;, &lt;script&gt;, &lt;iframe&gt;, &lt;link&gt; 等标签以及 Ajax 都可以指向一个资源地址，当发起请求的域与请求的域不一样的时候就是跨域请求； 同域：协议+域名+端口号均相同 由于浏览器的同源策略，对跨域请求做出限制； 原因： csrf攻击：跨站请求伪造，Cross-site request forgery ，攻击者盗用你的身份（session,cookie），以你的名义发送请求 同源策略浏览器基本的安全策略 具体实现例子： DOM层面，限制来自不同源的Document对象js对象获取当前对象的读取或设置这些属性 Cookie和xmlhttprequest层面的同源策略：禁止Ajax直接发起跨域请求（请求可以发送，结果北浏览器拦截，不展示），同时ajax不能携带域本网站不同源的cookie img,scriptm等带有src属性的标签可以从不同域加载和执行资源 跨域解决方案 jSONP: 利用同源策略的非绝对性，与服务端约定号一个回调函数名，服务端接收到请求吼，回传一段js,在js代码中调用约定号的回调函数，并且将参数进行传递，当网页接收到这段js后，就会执行这个回调函数 只支持get请求 CORS Cross-Origin Resource Sharing 跨源资源共享：它使用额外的http头来告诉浏览器，让web应用被准许访问来自不同源服务器上的指定的资源 简单请求：在头信息中，增加一个origin字段（表明来自哪个源），服务器根据这个字段决定是否同意这次请求，请求成功回在response中待Access-Control-Allow_origin字段 1234Access-Control-Allow-Origin: * Access-Control-Allow-Credentials: true 是否允许发送cookie,服务端要同意接收cookie，要发送cookie的话，上面就不能是*，与请求页面一致的域名Access-Control-Expose-Headers: FooBarContent-Type: text/html; charset=utf-8 非简单请求 比较老的浏览器不支持 spring设置CORS（响应头加参数） servlet Filter CrossOrigin 全局cors配置 参考文献https://www.jianshu.com/p/f880878c1398 https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Access_control_CORS https://www.jianshu.com/p/9203e9b14465 ###]]></content>
       <tags>
         <tag>跨域</tag>
       </tags>
@@ -279,14 +308,14 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[categories]]></title>
-    <url>%2Fcategories%2Findex.html</url>
-    <content type="text"></content>
-  </entry>
-  <entry>
     <title><![CDATA[来聊啊]]></title>
     <url>%2Fabout%2Findex.html</url>
     <content type="text"><![CDATA[微信]]></content>
+  </entry>
+  <entry>
+    <title><![CDATA[categories]]></title>
+    <url>%2Fcategories%2Findex.html</url>
+    <content type="text"></content>
   </entry>
   <entry>
     <title><![CDATA[tags]]></title>
