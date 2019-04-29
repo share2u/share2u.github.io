@@ -77,18 +77,18 @@
 
 
 
-<meta name="description" content="哈哈">
+<meta name="description" content="简介 线程安全性，对象的共享，基础构建模块 任务执行，取消与关闭，线程池的关闭 活跃性，性能与测试 显式锁、自定义同步工具、原子变量与非阻塞同步机制 java内存模型">
 <meta name="keywords" content="多线程,学习笔记">
 <meta property="og:type" content="article">
 <meta property="og:title" content="并发编程实战学习笔记">
 <meta property="og:url" content="http://share2u.github.io/2019/02/21/并发编程实战学习笔记/index.html">
 <meta property="og:site_name" content="Chen&#39;s Blog">
-<meta property="og:description" content="哈哈">
+<meta property="og:description" content="简介 线程安全性，对象的共享，基础构建模块 任务执行，取消与关闭，线程池的关闭 活跃性，性能与测试 显式锁、自定义同步工具、原子变量与非阻塞同步机制 java内存模型">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-02-21T01:26:15.245Z">
+<meta property="og:updated_time" content="2019-02-22T03:25:08.312Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="并发编程实战学习笔记">
-<meta name="twitter:description" content="哈哈">
+<meta name="twitter:description" content="简介 线程安全性，对象的共享，基础构建模块 任务执行，取消与关闭，线程池的关闭 活跃性，性能与测试 显式锁、自定义同步工具、原子变量与非阻塞同步机制 java内存模型">
 
 
 
@@ -385,10 +385,35 @@
       
 
       
-        <p>哈哈</p>
+        <p>简介</p>
+<p>线程安全性，对象的共享，基础构建模块</p>
+<p>任务执行，取消与关闭，线程池的关闭</p>
+<p>活跃性，性能与测试</p>
+<p>显式锁、自定义同步工具、原子变量与非阻塞同步机制</p>
+<p>java内存模型</p>
 <a id="more"></a>
-<p>awf</p>
-
+<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><h2 id="线程why"><a href="#线程why" class="headerlink" title="线程why"></a>线程why</h2><p>与进程相比，</p>
+<ul>
+<li>线程上下文切换花销少，切换快</li>
+<li>线程之间方便的通信机制</li>
+<li>线程是cpu调度的最小单位</li>
+</ul>
+<h2 id="优劣势"><a href="#优劣势" class="headerlink" title="优劣势"></a>优劣势</h2><p>优势：</p>
+<ul>
+<li>充分利用多处理器的性能</li>
+<li>分工明确，模型理解简单</li>
+<li>异步提高响应</li>
+</ul>
+<p>劣势：</p>
+<p>最关键的问题在于资源共享与同步问题，会导致安全性，活跃性，性能问题</p>
+<p>安全性问题：竞态条件下按照特定顺序执行</p>
+<p>活跃性问题：死锁、饥饿，活锁</p>
+<p>性能问题：运行时的上下文切换</p>
+<h1 id="线程安全性，对象的共享，基础构建模块"><a href="#线程安全性，对象的共享，基础构建模块" class="headerlink" title="线程安全性，对象的共享，基础构建模块"></a>线程安全性，对象的共享，基础构建模块</h1><h2 id="线程安全性"><a href="#线程安全性" class="headerlink" title="线程安全性"></a>线程安全性</h2><p>​    对状态变量的访问，出现竞态条件下，不能表现出正确的行为，采用同步机制来保证。</p>
+<p>​    状态：对象的状态是指存储在状态变量（实例、静态域）中的数据，特别是共享的可变的状态变量，即可以由多个线程同时访问。</p>
+<p>​    竞态条件：由于不正确的运行时序而出现不正确的结果</p>
+<p>​    同步机制：synchronized,volatile类型的变量，显示锁以及原子变量。</p>
+<h2 id="对象的共享"><a href="#对象的共享" class="headerlink" title="对象的共享"></a>对象的共享</h2><h2 id="基础构建模块"><a href="#基础构建模块" class="headerlink" title="基础构建模块"></a>基础构建模块</h2><h1 id="任务执行，取消与关闭，线程池的关闭"><a href="#任务执行，取消与关闭，线程池的关闭" class="headerlink" title="任务执行，取消与关闭，线程池的关闭"></a>任务执行，取消与关闭，线程池的关闭</h1><h2 id="任务执行"><a href="#任务执行" class="headerlink" title="任务执行"></a>任务执行</h2><h2 id="取消与关闭"><a href="#取消与关闭" class="headerlink" title="取消与关闭"></a>取消与关闭</h2><h2 id="线程池的关闭"><a href="#线程池的关闭" class="headerlink" title="线程池的关闭"></a>线程池的关闭</h2><h1 id="活跃性，性能与测试"><a href="#活跃性，性能与测试" class="headerlink" title="活跃性，性能与测试"></a>活跃性，性能与测试</h1><h2 id="活跃性"><a href="#活跃性" class="headerlink" title="活跃性"></a>活跃性</h2><h2 id="性能"><a href="#性能" class="headerlink" title="性能"></a>性能</h2><h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><h1 id="显式锁、自定义同步工具、原子变量与非阻塞同步机制"><a href="#显式锁、自定义同步工具、原子变量与非阻塞同步机制" class="headerlink" title="显式锁、自定义同步工具、原子变量与非阻塞同步机制"></a>显式锁、自定义同步工具、原子变量与非阻塞同步机制</h1><h2 id="显式锁"><a href="#显式锁" class="headerlink" title="显式锁"></a>显式锁</h2><h2 id="自定义同步工具"><a href="#自定义同步工具" class="headerlink" title="自定义同步工具"></a>自定义同步工具</h2><h2 id="原子变量与非阻塞同步机制"><a href="#原子变量与非阻塞同步机制" class="headerlink" title="原子变量与非阻塞同步机制"></a>原子变量与非阻塞同步机制</h2><h1 id="java内存模型"><a href="#java内存模型" class="headerlink" title="java内存模型"></a>java内存模型</h1><h2 id="java内存模型-1"><a href="#java内存模型-1" class="headerlink" title="java内存模型"></a>java内存模型</h2>
       
     </div>
     
@@ -448,6 +473,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2019/03/01/数据库索引/" rel="prev" title="数据库索引">
+                数据库索引 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -501,8 +530,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -521,7 +559,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-count">31</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -532,7 +570,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-count">16</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -543,7 +581,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">36</span>
+                  <span class="site-state-item-count">42</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -566,6 +604,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#线程why"><span class="nav-number">1.1.</span> <span class="nav-text">线程why</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优劣势"><span class="nav-number">1.2.</span> <span class="nav-text">优劣势</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#线程安全性，对象的共享，基础构建模块"><span class="nav-number">2.</span> <span class="nav-text">线程安全性，对象的共享，基础构建模块</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#线程安全性"><span class="nav-number">2.1.</span> <span class="nav-text">线程安全性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对象的共享"><span class="nav-number">2.2.</span> <span class="nav-text">对象的共享</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基础构建模块"><span class="nav-number">2.3.</span> <span class="nav-text">基础构建模块</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#任务执行，取消与关闭，线程池的关闭"><span class="nav-number">3.</span> <span class="nav-text">任务执行，取消与关闭，线程池的关闭</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#任务执行"><span class="nav-number">3.1.</span> <span class="nav-text">任务执行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#取消与关闭"><span class="nav-number">3.2.</span> <span class="nav-text">取消与关闭</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线程池的关闭"><span class="nav-number">3.3.</span> <span class="nav-text">线程池的关闭</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#活跃性，性能与测试"><span class="nav-number">4.</span> <span class="nav-text">活跃性，性能与测试</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#活跃性"><span class="nav-number">4.1.</span> <span class="nav-text">活跃性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#性能"><span class="nav-number">4.2.</span> <span class="nav-text">性能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测试"><span class="nav-number">4.3.</span> <span class="nav-text">测试</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#显式锁、自定义同步工具、原子变量与非阻塞同步机制"><span class="nav-number">5.</span> <span class="nav-text">显式锁、自定义同步工具、原子变量与非阻塞同步机制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#显式锁"><span class="nav-number">5.1.</span> <span class="nav-text">显式锁</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义同步工具"><span class="nav-number">5.2.</span> <span class="nav-text">自定义同步工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#原子变量与非阻塞同步机制"><span class="nav-number">5.3.</span> <span class="nav-text">原子变量与非阻塞同步机制</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#java内存模型"><span class="nav-number">6.</span> <span class="nav-text">java内存模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#java内存模型-1"><span class="nav-number">6.1.</span> <span class="nav-text">java内存模型</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

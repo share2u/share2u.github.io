@@ -1,9 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[spring_事务]]></title>
+    <url>%2F2019%2F04%2F29%2Fspring-%E4%BA%8B%E5%8A%A1%2F</url>
+    <content type="text"></content>
+  </entry>
+  <entry>
+    <title><![CDATA[数据库锁]]></title>
+    <url>%2F2019%2F03%2F01%2F%E6%95%B0%E6%8D%AE%E5%BA%93%E9%94%81%2F</url>
+    <content type="text"><![CDATA[全局锁、表级锁、行级锁 全局锁：对整个数据库实例加锁 flush tables with read lock 适用场景：全库逻辑备份 风险： 主库备份，在备份期间不能更新，业务停摆 从库备份，备份期间不能执行主从库同步的binlog，导致主从延迟 推荐适用自带逻辑备份工具mysqldump,使用参数 – single-transaction的时候，会启动一个事务，确保拿到一致性视图，但是只有innndb支持事务 表级锁表锁、元数据锁 meta data lock MDL 表锁会限制别的线程的读写 元数据锁会在访问一个表的时候自动添加，保证读写的正确性，在对一个表做增删改查操作，加MDL读锁，当要对表结构变更的时候，加MDL写锁。 读锁之间不互斥(共享）：读读不互斥，读写互斥 读写锁互斥（独占）：有这个锁的线程具有读的权限 行锁innodb支持行级锁 两阶段锁协议：行锁在需要的时候才加上的，等事务结束的时候才释放。如果你的事务中需要锁定多行，需要把最可能操作锁冲突，最可能影响并发度的锁尽量往后放。 死锁与死锁检测 直接进入等待，直到超时，超时时间参数innodb_locl_wait_timeout，默认50s 等待时间太长 改小，如果发生锁等待，出现误伤 死锁检测，发现死锁后，主动回滚死锁链条中的某一个事务，让其他事务继续执行，innodb_deadlock_detect设置为on,开启此逻辑 每个发生锁等待的线程，都要判断是不是由于自己的加入导致了死锁，时间复杂度O(n),期间要消耗大量的cpu资源]]></content>
+      <categories>
+        <category>数据库锁</category>
+      </categories>
+      <tags>
+        <tag>行级锁</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[数据库事务]]></title>
+    <url>%2F2019%2F03%2F01%2F%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BA%8B%E5%8A%A1%2F</url>
+    <content type="text"><![CDATA[事务的acid特性：原子性，持久性，隔离性，一致性 隔离级别：读未提交，读已提交，可重复读，串行化 隔离的实现：每个事务开启，都面对的是一个数据库的视图，每个事务中的操作，都对应这一个回滚步骤，形成了回滚日志。如果出现长事务，将会导致巨量的回滚日志，因此设置事务自动提交，监控innodb_tdx表中的长事务。]]></content>
+      <categories>
+        <category>数据库</category>
+      </categories>
+      <tags>
+        <tag>事务</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[数据库索引]]></title>
+    <url>%2F2019%2F03%2F01%2F%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B4%A2%E5%BC%95%2F</url>
+    <content type="text"><![CDATA[索引的基本数据结构哈希表 查找快，链表数组 不适合范围查询 有序数组 查找块，适用范围查询 更新复杂度高 树 二叉树的基本数据结构，时间复杂度和有序数组一样 B+树的数据结构，可以存储更多数据，查询io小 索引的类型主键索引 辅助索引 联合索引 覆盖索引]]></content>
+      <categories>
+        <category>数据库</category>
+      </categories>
+      <tags>
+        <tag>数据库</tag>
+        <tag>索引</tag>
+        <tag>覆盖索引</tag>
+        <tag>联合索引</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[并发编程实战学习笔记]]></title>
     <url>%2F2019%2F02%2F21%2F%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E5%AE%9E%E6%88%98%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%2F</url>
-    <content type="text"><![CDATA[哈哈 awf]]></content>
+    <content type="text"><![CDATA[简介 线程安全性，对象的共享，基础构建模块 任务执行，取消与关闭，线程池的关闭 活跃性，性能与测试 显式锁、自定义同步工具、原子变量与非阻塞同步机制 java内存模型 简介线程why与进程相比， 线程上下文切换花销少，切换快 线程之间方便的通信机制 线程是cpu调度的最小单位 优劣势优势： 充分利用多处理器的性能 分工明确，模型理解简单 异步提高响应 劣势： 最关键的问题在于资源共享与同步问题，会导致安全性，活跃性，性能问题 安全性问题：竞态条件下按照特定顺序执行 活跃性问题：死锁、饥饿，活锁 性能问题：运行时的上下文切换 线程安全性，对象的共享，基础构建模块线程安全性​ 对状态变量的访问，出现竞态条件下，不能表现出正确的行为，采用同步机制来保证。 ​ 状态：对象的状态是指存储在状态变量（实例、静态域）中的数据，特别是共享的可变的状态变量，即可以由多个线程同时访问。 ​ 竞态条件：由于不正确的运行时序而出现不正确的结果 ​ 同步机制：synchronized,volatile类型的变量，显示锁以及原子变量。 对象的共享基础构建模块任务执行，取消与关闭，线程池的关闭任务执行取消与关闭线程池的关闭活跃性，性能与测试活跃性性能测试显式锁、自定义同步工具、原子变量与非阻塞同步机制显式锁自定义同步工具原子变量与非阻塞同步机制java内存模型java内存模型]]></content>
       <categories>
         <category>多线程</category>
       </categories>
@@ -313,13 +354,13 @@
     <content type="text"><![CDATA[微信]]></content>
   </entry>
   <entry>
-    <title><![CDATA[categories]]></title>
-    <url>%2Fcategories%2Findex.html</url>
+    <title><![CDATA[tags]]></title>
+    <url>%2Ftags%2Findex.html</url>
     <content type="text"></content>
   </entry>
   <entry>
-    <title><![CDATA[tags]]></title>
-    <url>%2Ftags%2Findex.html</url>
+    <title><![CDATA[categories]]></title>
+    <url>%2Fcategories%2Findex.html</url>
     <content type="text"></content>
   </entry>
 </search>
